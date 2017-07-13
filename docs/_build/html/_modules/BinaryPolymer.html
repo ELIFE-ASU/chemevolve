@@ -1,0 +1,450 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>BinaryPolymer &mdash; ChemEvolve 0.01.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="ChemEvolve 0.01.1 documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../index.html" class="fa fa-home"> ChemEvolve</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">ChemEvolve</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      
+    <li>BinaryPolymer</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for BinaryPolymer</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">from</span> <span class="nn">InitializeFunctions</span> <span class="k">import</span> <span class="o">*</span>
+<span class="c1">####################################################</span>
+<div class="viewcode-block" id="check_mass"><a class="viewcode-back" href="../index.html#BinaryPolymer.check_mass">[docs]</a><span class="k">def</span> <span class="nf">check_mass</span><span class="p">(</span><span class="n">original_mass</span><span class="p">,</span> <span class="n">CRS</span><span class="p">,</span> <span class="n">concentrations</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39; Checks conservation of mass</span>
+<span class="sd">	Arguements</span>
+<span class="sd">		- original_mass: integer mass of the original system</span>
+<span class="sd">		- CRS: CRS object</span>
+<span class="sd">		- concentrations: array of molecule abundances</span>
+
+<span class="sd">		 &#39;&#39;&#39;</span>
+	<span class="n">mass_conserved</span> <span class="o">=</span> <span class="kc">False</span>
+	<span class="n">test_mass</span> <span class="o">=</span> <span class="mf">0.0</span>
+	<span class="n">molecules</span> <span class="o">=</span> <span class="n">CRS</span><span class="o">.</span><span class="n">molecule_list</span>
+	<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">molecules</span><span class="p">:</span>
+		<span class="n">index</span> <span class="o">=</span>	<span class="n">molecules</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+		<span class="n">molecule_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+		<span class="n">molecule_count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">concentrations</span><span class="p">[:,:,</span><span class="n">index</span><span class="p">])</span>
+		<span class="n">mass</span> <span class="o">=</span> <span class="n">molecule_count</span><span class="o">*</span><span class="n">molecule_size</span>
+
+		<span class="n">test_mass</span> <span class="o">+=</span> <span class="n">mass</span> 
+	<span class="k">if</span> <span class="n">test_mass</span> <span class="o">==</span> <span class="n">original_mass</span><span class="p">:</span>
+		<span class="n">mass_conserved</span> <span class="o">=</span> <span class="kc">True</span>
+	<span class="k">return</span> <span class="n">mass_conserved</span><span class="p">,</span> <span class="n">test_mass</span></div>
+
+<span class="c1">####################################################</span>
+<div class="viewcode-block" id="generate_all_binary_reactions"><a class="viewcode-back" href="../index.html#BinaryPolymer.generate_all_binary_reactions">[docs]</a><span class="k">def</span> <span class="nf">generate_all_binary_reactions</span><span class="p">(</span><span class="n">max_length</span><span class="p">,</span> <span class="n">fconstant</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">bconstant</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39; Generates all possible reactions between binary molecules up to size max_length assigns all reactions the same constant and standard prorpenisty</span>
+<span class="sd">	Arguements:</span>
+<span class="sd">		- max_length: the maximum length of polymers</span>
+<span class="sd">		- fconstant: reaction rate constant for forward reactions</span>
+<span class="sd">		- bconstant: reaction rate constant for reverse reactions, if None given, it will be assigned to be equal to fconstant</span>
+<span class="sd">	 &#39;&#39;&#39;</span>
+	<span class="kn">import</span> <span class="nn">CoreClasses</span> <span class="k">as</span> <span class="nn">Core</span>
+	<span class="kn">import</span> <span class="nn">itertools</span>
+	<span class="n">rxn_IDs</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">reaction_list</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">molecule_list</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">molecule_dict</span> <span class="o">=</span> <span class="p">{}</span>
+	<span class="n">rxn_ID</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="c1">#molecule_ID = 0</span>
+	<span class="n">monomers</span> <span class="o">=</span> <span class="s1">&#39;AB&#39;</span>
+	<span class="c1"># If the backward constant is not specified, make it equal the forward constant</span>
+	<span class="k">if</span> <span class="n">bconstant</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="n">bconstant</span> <span class="o">=</span> <span class="n">fconstant</span>
+	<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">max_length</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+		<span class="c1"># Generate all sequences of length l+1</span>
+		<span class="n">sequences</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">monomers</span><span class="p">,</span> <span class="n">repeat</span> <span class="o">=</span> <span class="n">l</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">:</span>
+			<span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+			<span class="n">molecule_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+			<span class="n">molecule_dict</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">molecule_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+			<span class="c1">#print s</span>
+			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">l</span><span class="p">):</span>
+				<span class="c1"># Forward Reaction</span>
+				<span class="n">rxn_ID</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">reaction_list</span><span class="p">)</span>
+				<span class="n">reactants</span> <span class="o">=</span> <span class="p">[</span> <span class="n">molecule_dict</span><span class="p">[</span><span class="n">s</span><span class="p">[:</span><span class="n">i</span><span class="p">]],</span> <span class="n">molecule_dict</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">:]]</span> <span class="p">]</span>
+				<span class="n">reactant_coeff</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+				<span class="n">product_coeff</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+				<span class="n">products</span> <span class="o">=</span> <span class="p">[</span> <span class="n">molecule_dict</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="p">]</span>
+				<span class="n">reaction_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">Core</span><span class="o">.</span><span class="n">Reaction</span><span class="p">(</span><span class="n">rxn_ID</span><span class="p">,</span> <span class="n">reactants</span> <span class="o">=</span> <span class="n">reactants</span><span class="p">,</span> <span class="n">reactant_coeff</span> <span class="o">=</span> <span class="n">reactant_coeff</span> <span class="p">,</span> <span class="n">products</span> <span class="o">=</span> <span class="n">products</span><span class="p">,</span> <span class="n">product_coeff</span> <span class="o">=</span> <span class="n">product_coeff</span><span class="p">,</span> <span class="n">constant</span> <span class="o">=</span> <span class="n">fconstant</span><span class="p">,</span> <span class="n">prop</span> <span class="o">=</span> <span class="s1">&#39;STD&#39;</span><span class="p">)</span> <span class="p">)</span>
+				<span class="c1">#print &#39;Reaction List index: &#39;, rxn_ID, &#39;Reaction ID: &#39;, reaction_list[rxn_ID].ID </span>
+				<span class="n">rxn_IDs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rxn_ID</span><span class="p">)</span>
+				
+				<span class="c1"># Backward Reaction</span>
+				<span class="n">rxn_ID</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">reaction_list</span><span class="p">)</span>
+				<span class="n">reaction_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">Core</span><span class="o">.</span><span class="n">Reaction</span><span class="p">(</span><span class="n">rxn_ID</span><span class="p">,</span> <span class="n">products</span> <span class="o">=</span> <span class="n">reactants</span><span class="p">,</span> <span class="n">product_coeff</span> <span class="o">=</span> <span class="n">reactant_coeff</span><span class="p">,</span> <span class="n">reactants</span> <span class="o">=</span> <span class="n">products</span><span class="p">,</span> <span class="n">reactant_coeff</span><span class="o">=</span> <span class="n">reactant_coeff</span><span class="p">,</span> <span class="n">constant</span> <span class="o">=</span> <span class="n">bconstant</span><span class="p">,</span> <span class="n">prop</span> <span class="o">=</span> <span class="s1">&#39;STD&#39;</span><span class="p">)</span> <span class="p">)</span>
+				<span class="c1">#print &#39;Reaction List index: &#39;, rxn_ID, &#39;Reaction ID: &#39;, reaction_list[rxn_ID].ID </span>
+				<span class="n">rxn_IDs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rxn_ID</span><span class="p">)</span>
+				
+	<span class="c1">#print molecule_dict</span>
+	<span class="n">newCRS</span> <span class="o">=</span> <span class="n">Core</span><span class="o">.</span><span class="n">CRS</span><span class="p">(</span><span class="n">molecule_list</span> <span class="o">=</span> <span class="n">molecule_list</span><span class="p">,</span> <span class="n">molecule_dict</span> <span class="o">=</span> <span class="n">molecule_dict</span><span class="p">,</span> <span class="n">reactions</span> <span class="o">=</span> <span class="n">reaction_list</span><span class="p">)</span>
+	<span class="c1">#print newCRS.molecule_dict</span>
+	<span class="c1"># fname = &#39;reversible_binary_length_%i.txt&#39; % max_length</span>
+	<span class="c1"># newCRS.savetxt(fname)</span>
+	<span class="k">return</span> <span class="n">newCRS</span></div>
+
+<span class="c1">####################################################	</span>
+<div class="viewcode-block" id="generate_wim_RAF"><a class="viewcode-back" href="../index.html#BinaryPolymer.generate_wim_RAF">[docs]</a><span class="k">def</span> <span class="nf">generate_wim_RAF</span><span class="p">(</span><span class="n">max_length</span><span class="p">,</span> <span class="n">fconstant</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">bconstant</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">f_cat</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39; Generates all possible reactions between binary molecules up to size max_length assigns all reactions the same constant and standard prorpenisty</span>
+<span class="sd">	Arguements:</span>
+<span class="sd">		- max_length: the maximum length of polymers</span>
+<span class="sd">		- fconstant: reaction rate constant for forward reactions</span>
+<span class="sd">		- bconstant: reaction rate constant for reverse reactions, if None given, it will be assigned to be equal to fconstant</span>
+<span class="sd">	 &#39;&#39;&#39;</span>
+	<span class="kn">import</span> <span class="nn">CoreClasses</span> <span class="k">as</span> <span class="nn">Core</span>
+	<span class="kn">import</span> <span class="nn">itertools</span>
+	<span class="n">rxn_IDs</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">reaction_list</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">molecule_list</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">molecule_dict</span> <span class="o">=</span> <span class="p">{}</span>
+	<span class="n">rxn_ID</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="c1">#molecule_ID = 0</span>
+	<span class="n">monomers</span> <span class="o">=</span> <span class="s1">&#39;AB&#39;</span>
+	<span class="c1"># If the backward constant is not specified, make it equal the forward constant</span>
+	<span class="k">if</span> <span class="n">bconstant</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="n">bconstant</span> <span class="o">=</span> <span class="n">fconstant</span>
+	<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">max_length</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+		<span class="c1"># Generate all sequences of length l+1</span>
+		<span class="n">sequences</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">monomers</span><span class="p">,</span> <span class="n">repeat</span> <span class="o">=</span> <span class="n">l</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">:</span>
+			<span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+			<span class="n">molecule_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+			<span class="n">molecule_dict</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">molecule_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+			<span class="c1">#print s</span>
+	<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">molecule_list</span><span class="p">:</span>
+		<span class="n">l</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">l</span><span class="p">):</span>
+			<span class="c1"># Forward Reaction</span>
+			<span class="n">rxn_ID</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">reaction_list</span><span class="p">)</span>
+			<span class="n">reactants</span> <span class="o">=</span> <span class="p">[</span> <span class="n">molecule_dict</span><span class="p">[</span><span class="n">s</span><span class="p">[:</span><span class="n">i</span><span class="p">]],</span> <span class="n">molecule_dict</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">:]]</span> <span class="p">]</span>
+			<span class="n">reactant_coeff</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+			<span class="n">product_coeff</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+			<span class="n">products</span> <span class="o">=</span> <span class="p">[</span> <span class="n">molecule_dict</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="p">]</span>
+			<span class="n">catalysts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+			<span class="n">f_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+			<span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;AA&#39;</span><span class="p">:</span>
+				<span class="k">if</span> <span class="p">[</span><span class="n">s</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">:]]</span><span class="o">==</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">]:</span>
+					<span class="c1"># print s, s[:i], s[i:]</span>
+					<span class="n">catalysts</span> <span class="o">=</span> <span class="p">[</span><span class="n">molecule_dict</span><span class="p">[</span><span class="s1">&#39;AAA&#39;</span><span class="p">]]</span>
+					<span class="n">f_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">f_cat</span><span class="p">]</span>
+			<span class="k">elif</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;AAA&#39;</span><span class="p">:</span>
+				<span class="k">if</span> <span class="p">[</span><span class="n">s</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">:]]</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;AA&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">]:</span>
+					<span class="c1"># print s, s[:i], s[i:]</span>
+					<span class="n">catalysts</span> <span class="o">=</span> <span class="p">[</span><span class="n">molecule_dict</span><span class="p">[</span><span class="s1">&#39;AAA&#39;</span><span class="p">]]</span>
+					<span class="n">f_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">f_cat</span><span class="p">]</span>
+			<span class="k">elif</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;BAA&#39;</span><span class="p">:</span>
+				<span class="k">if</span> <span class="p">[</span><span class="n">s</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">:]]</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;BA&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">]:</span>
+					<span class="nb">print</span> <span class="n">s</span><span class="p">,</span> <span class="n">s</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span>
+					<span class="n">catalysts</span> <span class="o">=</span> <span class="p">[</span><span class="n">molecule_dict</span><span class="p">[</span><span class="s1">&#39;AAA&#39;</span><span class="p">]]</span>
+					<span class="n">f_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">f_cat</span><span class="p">]</span>
+			<span class="k">elif</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;BB&#39;</span><span class="p">:</span>
+				<span class="k">if</span> <span class="p">[</span><span class="n">s</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">:]]</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">]:</span>
+					<span class="c1"># print s, s[:i], s[i:]</span>
+					<span class="n">catalysts</span> <span class="o">=</span> <span class="p">[</span><span class="n">molecule_dict</span><span class="p">[</span><span class="s1">&#39;BBB&#39;</span><span class="p">]]</span>
+					<span class="n">f_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">f_cat</span><span class="p">]</span>
+			<span class="k">elif</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;BBB&#39;</span><span class="p">:</span>
+				<span class="k">if</span> <span class="p">[</span><span class="n">s</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">:]]</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;BB&#39;</span><span class="p">]:</span>
+					<span class="c1"># print s, s[:i], s[i:]</span>
+					<span class="n">catalysts</span> <span class="o">=</span> <span class="p">[</span><span class="n">molecule_dict</span><span class="p">[</span><span class="s1">&#39;BBB&#39;</span><span class="p">]]</span>
+					<span class="n">f_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">f_cat</span><span class="p">]</span>
+			<span class="k">elif</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;ABB&#39;</span><span class="p">:</span>
+				<span class="k">if</span> <span class="p">[</span><span class="n">s</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">:]]</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;AB&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">]:</span>
+					<span class="c1"># print s, s[:i], s[i:]</span>
+					<span class="n">catalysts</span> <span class="o">=</span> <span class="p">[</span><span class="n">molecule_dict</span><span class="p">[</span><span class="s1">&#39;BBB&#39;</span><span class="p">]]</span>
+					<span class="n">f_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">f_cat</span><span class="p">]</span>
+			
+			<span class="n">reaction_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">Core</span><span class="o">.</span><span class="n">Reaction</span><span class="p">(</span><span class="n">rxn_ID</span><span class="p">,</span> <span class="n">reactants</span> <span class="o">=</span> <span class="n">reactants</span><span class="p">,</span> <span class="n">reactant_coeff</span> <span class="o">=</span> <span class="n">reactant_coeff</span> <span class="p">,</span> <span class="n">products</span> <span class="o">=</span> <span class="n">products</span><span class="p">,</span> <span class="n">product_coeff</span> <span class="o">=</span> <span class="n">product_coeff</span><span class="p">,</span> <span class="n">constant</span> <span class="o">=</span> <span class="n">fconstant</span><span class="p">,</span> <span class="n">catalysts</span> <span class="o">=</span> <span class="n">catalysts</span><span class="p">,</span> <span class="n">catalyzed_constants</span> <span class="o">=</span> <span class="n">f_list</span><span class="p">,</span> <span class="n">prop</span> <span class="o">=</span> <span class="s1">&#39;STD&#39;</span><span class="p">)</span> <span class="p">)</span>
+			<span class="c1">#print &#39;Reaction List index: &#39;, rxn_ID, &#39;Reaction ID: &#39;, reaction_list[rxn_ID].ID </span>
+			<span class="n">rxn_IDs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rxn_ID</span><span class="p">)</span>
+			
+			<span class="c1"># Backward Reaction</span>
+			<span class="n">rxn_ID</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">reaction_list</span><span class="p">)</span>
+			<span class="n">reaction_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">Core</span><span class="o">.</span><span class="n">Reaction</span><span class="p">(</span><span class="n">rxn_ID</span><span class="p">,</span> <span class="n">products</span> <span class="o">=</span> <span class="n">reactants</span><span class="p">,</span> <span class="n">product_coeff</span> <span class="o">=</span> <span class="n">reactant_coeff</span><span class="p">,</span> <span class="n">reactants</span> <span class="o">=</span> <span class="n">products</span><span class="p">,</span> <span class="n">reactant_coeff</span><span class="o">=</span> <span class="n">reactant_coeff</span><span class="p">,</span> <span class="n">constant</span> <span class="o">=</span> <span class="n">bconstant</span><span class="p">,</span> <span class="n">prop</span> <span class="o">=</span> <span class="s1">&#39;STD&#39;</span><span class="p">)</span> <span class="p">)</span>
+			<span class="c1">#print &#39;Reaction List index: &#39;, rxn_ID, &#39;Reaction ID: &#39;, reaction_list[rxn_ID].ID </span>
+			<span class="n">rxn_IDs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rxn_ID</span><span class="p">)</span>
+			
+	<span class="c1">#print molecule_dict</span>
+	<span class="n">newCRS</span> <span class="o">=</span> <span class="n">Core</span><span class="o">.</span><span class="n">CRS</span><span class="p">(</span><span class="n">molecule_list</span> <span class="o">=</span> <span class="n">molecule_list</span><span class="p">,</span> <span class="n">molecule_dict</span> <span class="o">=</span> <span class="n">molecule_dict</span><span class="p">,</span> <span class="n">reactions</span> <span class="o">=</span> <span class="n">reaction_list</span><span class="p">)</span>
+	<span class="c1">#print newCRS.molecule_dict</span>
+	<span class="n">fname</span> <span class="o">=</span> <span class="s1">&#39;RandomRAF/data/wim_RAF/wim_RAF_f_</span><span class="si">%.4f</span><span class="s1">_length_</span><span class="si">%i</span><span class="s1">.txt&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">f_cat</span><span class="p">,</span> <span class="n">max_length</span><span class="p">)</span>
+	<span class="n">newCRS</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+	<span class="nb">print</span> <span class="s2">&quot;Wim CRS saved&quot;</span>
+	<span class="k">return</span> <span class="n">fname</span></div>
+
+<span class="c1">####################################################</span>
+<div class="viewcode-block" id="generate_random_rate_polymerization_reactions"><a class="viewcode-back" href="../index.html#BinaryPolymer.generate_random_rate_polymerization_reactions">[docs]</a><span class="k">def</span> <span class="nf">generate_random_rate_polymerization_reactions</span><span class="p">(</span><span class="n">output_name</span><span class="p">,</span> <span class="n">max_length</span><span class="p">,</span> <span class="n">fconstant</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">bconstant</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">fdis_type</span> <span class="o">=</span> <span class="s1">&#39;exp&#39;</span><span class="p">,</span> <span class="n">bdis_type</span><span class="o">=</span> <span class="s1">&#39;exp&#39;</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39; Generates all possible polymerization reactions for molecules up to size max_length assigns all reactions a random constant and standard prorpenisty</span>
+<span class="sd">	Arguements:</span>
+<span class="sd">		- output_name: filename to save as output (should be .txt)</span>
+<span class="sd">		- max_length: the maximum length of polymers</span>
+<span class="sd">		- fconstant: mean reaction rate constant for forward reactions</span>
+<span class="sd">		- bconstant: mean reaction rate constant for reverse reactions, if None given, it will be assigned to be equal to fconstant</span>
+<span class="sd">	 &#39;&#39;&#39;</span>
+	<span class="kn">import</span> <span class="nn">CoreClasses</span> <span class="k">as</span> <span class="nn">Core</span>
+	<span class="kn">import</span> <span class="nn">itertools</span>
+	<span class="n">rxn_IDs</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">reaction_list</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">molecule_list</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">molecule_dict</span> <span class="o">=</span> <span class="p">{}</span>
+	<span class="n">rxn_ID</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="c1">#molecule_ID = 0</span>
+	<span class="n">monomers</span> <span class="o">=</span> <span class="s1">&#39;AB&#39;</span>
+	<span class="c1"># If the backward constant is not specified, make it equal the forward constant</span>
+	<span class="k">if</span> <span class="n">bconstant</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="n">bconstant</span> <span class="o">=</span> <span class="n">fconstant</span>
+	<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">max_length</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+		<span class="c1"># Generate all sequences of length l+1</span>
+		<span class="n">sequences</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">monomers</span><span class="p">,</span> <span class="n">repeat</span> <span class="o">=</span> <span class="n">l</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">:</span>
+			<span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+			<span class="n">molecule_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+			<span class="n">molecule_dict</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">molecule_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+			<span class="k">if</span> <span class="n">l</span> <span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+				<span class="c1"># Forward Reaction</span>
+				<span class="k">if</span> <span class="n">fdis_type</span> <span class="o">==</span> <span class="s1">&#39;exp&#39;</span><span class="p">:</span>
+					<span class="n">f_rate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">exponential</span><span class="p">(</span><span class="n">scale</span> <span class="o">=</span> <span class="n">fconstant</span> <span class="p">)</span>
+				<span class="k">elif</span> <span class="n">fdis_type</span> <span class="o">==</span> <span class="s1">&#39;heavy_tail&#39;</span><span class="p">:</span>
+					<span class="n">alpha</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="n">fconstant</span><span class="p">)</span>
+					<span class="n">f_rate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">pareto</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+				<span class="n">rxn_ID</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">reaction_list</span><span class="p">)</span>
+				<span class="n">reactants</span> <span class="o">=</span> <span class="p">[</span> <span class="n">molecule_dict</span><span class="p">[</span><span class="n">s</span><span class="p">[:(</span><span class="n">l</span><span class="o">-</span><span class="mi">1</span><span class="p">)]],</span> <span class="n">molecule_dict</span><span class="p">[</span><span class="n">s</span><span class="p">[(</span><span class="n">l</span><span class="o">-</span><span class="mi">1</span><span class="p">):]]</span> <span class="p">]</span>
+
+				<span class="n">reactant_coeff</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+				<span class="n">product_coeff</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+				<span class="n">products</span> <span class="o">=</span> <span class="p">[</span> <span class="n">molecule_dict</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="p">]</span>
+				<span class="n">reaction_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">Core</span><span class="o">.</span><span class="n">Reaction</span><span class="p">(</span><span class="n">rxn_ID</span><span class="p">,</span> <span class="n">reactants</span> <span class="o">=</span> <span class="n">reactants</span><span class="p">,</span> <span class="n">reactant_coeff</span> <span class="o">=</span> <span class="n">reactant_coeff</span> <span class="p">,</span> <span class="n">products</span> <span class="o">=</span> <span class="n">products</span><span class="p">,</span> <span class="n">product_coeff</span> <span class="o">=</span> <span class="n">product_coeff</span><span class="p">,</span> <span class="n">constant</span> <span class="o">=</span> <span class="n">f_rate</span><span class="p">,</span> <span class="n">prop</span> <span class="o">=</span> <span class="s1">&#39;STD&#39;</span><span class="p">)</span> <span class="p">)</span>
+				<span class="c1">#print &#39;Reaction List index: &#39;, rxn_ID, &#39;Reaction ID: &#39;, reaction_list[rxn_ID].ID </span>
+				<span class="n">rxn_IDs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rxn_ID</span><span class="p">)</span>
+				
+				<span class="c1"># Backward Reaction</span>
+				<span class="k">if</span> <span class="n">bdis_type</span> <span class="o">==</span> <span class="s1">&#39;exp&#39;</span><span class="p">:</span>
+					<span class="n">b_rate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">exponential</span><span class="p">(</span><span class="n">scale</span> <span class="o">=</span> <span class="n">bconstant</span> <span class="p">)</span>
+				<span class="k">elif</span> <span class="n">bdis_type</span> <span class="o">==</span> <span class="s1">&#39;heavy_tail&#39;</span><span class="p">:</span>
+					<span class="n">alpha</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="n">bconstant</span><span class="p">)</span>
+					<span class="n">b_rate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">pareto</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+				<span class="n">rxn_ID</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">reaction_list</span><span class="p">)</span>
+				<span class="n">reaction_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">Core</span><span class="o">.</span><span class="n">Reaction</span><span class="p">(</span><span class="n">rxn_ID</span><span class="p">,</span> <span class="n">products</span> <span class="o">=</span> <span class="n">reactants</span><span class="p">,</span> <span class="n">product_coeff</span> <span class="o">=</span> <span class="n">reactant_coeff</span><span class="p">,</span> <span class="n">reactants</span> <span class="o">=</span> <span class="n">products</span><span class="p">,</span> <span class="n">reactant_coeff</span><span class="o">=</span> <span class="n">reactant_coeff</span><span class="p">,</span> <span class="n">constant</span> <span class="o">=</span> <span class="n">b_rate</span><span class="p">,</span> <span class="n">prop</span> <span class="o">=</span> <span class="s1">&#39;STD&#39;</span><span class="p">)</span> <span class="p">)</span>
+				<span class="c1">#print &#39;Reaction List index: &#39;, rxn_ID, &#39;Reaction ID: &#39;, reaction_list[rxn_ID].ID </span>
+				<span class="n">rxn_IDs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rxn_ID</span><span class="p">)</span>
+
+				<span class="k">if</span> <span class="n">s</span><span class="p">[:(</span><span class="n">l</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span> <span class="o">!=</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">l</span><span class="p">]</span> <span class="ow">and</span> <span class="n">l</span><span class="o">&gt;</span><span class="mi">2</span><span class="p">:</span>
+					<span class="k">if</span> <span class="n">fdis_type</span> <span class="o">==</span> <span class="s1">&#39;exp&#39;</span><span class="p">:</span>
+						<span class="n">f_rate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">exponential</span><span class="p">(</span><span class="n">scale</span> <span class="o">=</span> <span class="n">fconstant</span> <span class="p">)</span>
+					<span class="k">elif</span> <span class="n">fdis_type</span> <span class="o">==</span> <span class="s1">&#39;heavy_tail&#39;</span><span class="p">:</span>
+						<span class="n">alpha</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="n">fconstant</span><span class="p">)</span>
+						<span class="n">f_rate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">pareto</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+					<span class="n">rxn_ID</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">reaction_list</span><span class="p">)</span>
+					<span class="n">reactants</span> <span class="o">=</span> <span class="p">[</span> <span class="n">molecule_dict</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">molecule_dict</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">l</span><span class="p">]]</span> <span class="p">]</span>
+
+					<span class="n">reactant_coeff</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+					<span class="n">product_coeff</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+					<span class="n">products</span> <span class="o">=</span> <span class="p">[</span> <span class="n">molecule_dict</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="p">]</span>
+					<span class="n">reaction_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">Core</span><span class="o">.</span><span class="n">Reaction</span><span class="p">(</span><span class="n">rxn_ID</span><span class="p">,</span> <span class="n">reactants</span> <span class="o">=</span> <span class="n">reactants</span><span class="p">,</span> <span class="n">reactant_coeff</span> <span class="o">=</span> <span class="n">reactant_coeff</span> <span class="p">,</span> <span class="n">products</span> <span class="o">=</span> <span class="n">products</span><span class="p">,</span> <span class="n">product_coeff</span> <span class="o">=</span> <span class="n">product_coeff</span><span class="p">,</span> <span class="n">constant</span> <span class="o">=</span> <span class="n">f_rate</span><span class="p">,</span> <span class="n">prop</span> <span class="o">=</span> <span class="s1">&#39;STD&#39;</span><span class="p">)</span> <span class="p">)</span>
+					<span class="c1">#print &#39;Reaction List index: &#39;, rxn_ID, &#39;Reaction ID: &#39;, reaction_list[rxn_ID].ID </span>
+					<span class="n">rxn_IDs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rxn_ID</span><span class="p">)</span>
+					
+					<span class="c1"># Backward Reaction</span>
+					<span class="k">if</span> <span class="n">bdis_type</span> <span class="o">==</span> <span class="s1">&#39;exp&#39;</span><span class="p">:</span>
+						<span class="n">b_rate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">exponential</span><span class="p">(</span><span class="n">scale</span> <span class="o">=</span> <span class="n">bconstant</span> <span class="p">)</span>
+					<span class="k">elif</span> <span class="n">bdis_type</span> <span class="o">==</span> <span class="s1">&#39;heavy_tail&#39;</span><span class="p">:</span>
+						<span class="n">alpha</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="n">bconstant</span><span class="p">)</span>
+						<span class="n">b_rate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">pareto</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+					<span class="n">rxn_ID</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">reaction_list</span><span class="p">)</span>
+					<span class="n">reaction_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">Core</span><span class="o">.</span><span class="n">Reaction</span><span class="p">(</span><span class="n">rxn_ID</span><span class="p">,</span> <span class="n">products</span> <span class="o">=</span> <span class="n">reactants</span><span class="p">,</span> <span class="n">product_coeff</span> <span class="o">=</span> <span class="n">reactant_coeff</span><span class="p">,</span> <span class="n">reactants</span> <span class="o">=</span> <span class="n">products</span><span class="p">,</span> <span class="n">reactant_coeff</span><span class="o">=</span> <span class="n">reactant_coeff</span><span class="p">,</span> <span class="n">constant</span> <span class="o">=</span> <span class="n">b_rate</span><span class="p">,</span> <span class="n">prop</span> <span class="o">=</span> <span class="s1">&#39;STD&#39;</span><span class="p">)</span> <span class="p">)</span>
+					<span class="c1">#print &#39;Reaction List index: &#39;, rxn_ID, &#39;Reaction ID: &#39;, reaction_list[rxn_ID].ID </span>
+					<span class="n">rxn_IDs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rxn_ID</span><span class="p">)</span>
+
+				
+	<span class="c1">#print molecule_dict</span>
+	<span class="n">newCRS</span> <span class="o">=</span> <span class="n">Core</span><span class="o">.</span><span class="n">CRS</span><span class="p">(</span><span class="n">molecule_list</span> <span class="o">=</span> <span class="n">molecule_list</span><span class="p">,</span> <span class="n">molecule_dict</span> <span class="o">=</span> <span class="n">molecule_dict</span><span class="p">,</span> <span class="n">reactions</span> <span class="o">=</span> <span class="n">reaction_list</span><span class="p">)</span>
+	<span class="c1">#print newCRS.molecule_dict</span>
+	
+	<span class="n">newCRS</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">output_name</span><span class="p">)</span>
+	<span class="nb">print</span> <span class="s2">&quot;New CRS saved&quot;</span></div>
+
+<span class="c1">####################################################</span>
+<span class="k">def</span> <span class="nf">generate_uniform_monomers</span><span class="p">(</span><span class="n">CRS</span><span class="p">,</span> <span class="n">N_L</span><span class="p">,</span> <span class="n">total_mass</span><span class="p">):</span>
+	<span class="kn">import</span> <span class="nn">itertools</span>
+	<span class="n">concentrations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N_L</span><span class="p">,</span> <span class="n">N_L</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">CRS</span><span class="o">.</span><span class="n">molecule_list</span><span class="p">))</span>  <span class="p">)</span>
+	<span class="n">num_sites</span> <span class="o">=</span> <span class="n">N_L</span><span class="o">**</span><span class="mi">2</span>
+	<span class="n">per_site_mass</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">total_mass</span><span class="p">)</span><span class="o">/</span><span class="n">num_sites</span><span class="p">)</span>
+	<span class="n">per_monomer_per_site_mass</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">per_site_mass</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span>
+
+	<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_L</span><span class="p">):</span>
+		<span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_L</span><span class="p">):</span>
+			<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+				<span class="n">concentrations</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">per_monomer_per_site_mass</span>
+	
+	<span class="c1">#concentrations = np.ascontiguousarray(concentrations, np.int32)</span>
+	<span class="k">return</span> <span class="n">concentrations</span> 
+
+<span class="c1">####################################################</span>
+<span class="k">def</span> <span class="nf">generate_uniform_monomers_dimers</span><span class="p">(</span><span class="n">CRS</span><span class="p">,</span> <span class="n">N_L</span><span class="p">,</span> <span class="n">total_mass</span><span class="p">):</span>
+	<span class="kn">import</span> <span class="nn">itertools</span>
+
+	<span class="n">concentrations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N_L</span><span class="p">,</span> <span class="n">N_L</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">CRS</span><span class="o">.</span><span class="n">molecule_list</span><span class="p">))</span>  <span class="p">)</span>
+	<span class="n">num_sites</span> <span class="o">=</span> <span class="n">N_L</span><span class="o">**</span><span class="mi">2</span>
+	<span class="n">per_site_concentration</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">total_mass</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">10</span><span class="o">*</span><span class="n">num_sites</span><span class="p">))</span>
+	
+	<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_L</span><span class="p">):</span>
+		<span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_L</span><span class="p">):</span>
+			<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+				<span class="n">concentrations</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">per_site_concentration</span>
+	<span class="k">return</span> <span class="n">concentrations</span> 
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Cole Mathis.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.01.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

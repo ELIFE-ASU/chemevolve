@@ -1,0 +1,501 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>CoreClasses &mdash; ChemEvolve 0.01.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="ChemEvolve 0.01.1 documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../index.html" class="fa fa-home"> ChemEvolve</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">ChemEvolve</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      
+    <li>CoreClasses</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for CoreClasses</h1><div class="highlight"><pre>
+<span></span><span class="c1"># class definitions for CoreEvolve</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">deque</span><span class="p">,</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">copy</span><span class="p">,</span><span class="n">deepcopy</span>
+<span class="kn">import</span> <span class="nn">random</span>
+        
+<span class="c1">## Reaction Class        </span>
+<div class="viewcode-block" id="Reaction"><a class="viewcode-back" href="../index.html#CoreClasses.Reaction">[docs]</a><span class="k">class</span> <span class="nc">Reaction</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Reaction object containing an ID and reaction members (IDs not strings) as well as reaction coefficients and rate constants</span>
+<span class="sd">    reactants, and products lists should contain integers which are the IDs of the reactant molecules and the product molecules</span>
+<span class="sd">    reactant_coeff and product_coeff contain ints which are the reaction coefficients. The indices must match the corresponding </span>
+<span class="sd">    ID lists</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        - ID: unique int which indentifies the reaction</span>
+<span class="sd">        - reactants: a list of molecule IDs which stores the reactants</span>
+<span class="sd">        - reactant_coeff: a list of integers which contains the reactant coefficients  (if reactant_coeff is not provided all reactants are assumed to have coefficients of 1)</span>
+<span class="sd">        - products: a list of molecule IDs which stores the products</span>
+<span class="sd">        - product_coeff: a list of integers which contains the product_coeff coefficients</span>
+<span class="sd">        - constant: a floating point number, the reaction rate constant </span>
+<span class="sd">        - catalysts: a list of molecule IDs which specify which molecules catalyze this reaction</span>
+<span class="sd">        - catalyzed_constants: a list of floating point numbers giving the catalytic effect of each molecule</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ID</span><span class="p">,</span> <span class="n">reactants</span><span class="o">=</span><span class="nb">list</span><span class="p">(),</span> <span class="n">reactant_coeff</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(),</span> <span class="n">products</span><span class="o">=</span><span class="nb">list</span><span class="p">(),</span> <span class="n">product_coeff</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(),</span> <span class="n">constant</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">catalysts</span><span class="o">=</span><span class="nb">list</span><span class="p">(),</span> <span class="n">catalyzed_constants</span><span class="o">=</span><span class="nb">list</span><span class="p">(),</span> <span class="n">prop</span> <span class="o">=</span> <span class="nb">str</span><span class="p">()):</span>
+        <span class="c1">#initialise reaction </span>
+        <span class="c1"># if reactant_coeff == None:</span>
+        <span class="c1">#     reactant_coeff = [1]*len(reactants)</span>
+        <span class="c1"># if product_coeff == None:</span>
+        <span class="c1">#     product_coeff = [1]*len(products)</span>
+         
+        <span class="c1"># Sort of all molecule lists       </span>
+        <span class="n">react_tuples</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">reactants</span><span class="p">,</span> <span class="n">reactant_coeff</span><span class="p">)</span>
+        <span class="n">prod_tuples</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">products</span><span class="p">,</span> <span class="n">product_coeff</span><span class="p">)</span>
+        
+        <span class="n">react_tuples</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">react_tuples</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">prod_tuples</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">prod_tuples</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        
+        <span class="n">reactants</span><span class="p">,</span> <span class="n">reactant_coeff</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">react_tuples</span><span class="p">)</span>
+        <span class="n">products</span><span class="p">,</span> <span class="n">product_coeff</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">prod_tuples</span><span class="p">)</span>
+        
+        <span class="n">reactants</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">reactants</span><span class="p">)</span>
+        <span class="n">products</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">products</span><span class="p">)</span>
+        <span class="n">reactant_coeff</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">reactant_coeff</span><span class="p">)</span>
+        <span class="n">product_coeff</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">product_coeff</span><span class="p">)</span>
+
+        <span class="c1"># If the reaction is catalyzed, do the same for the catalysts</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">catalysts</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">cat_tuples</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">catalysts</span><span class="p">,</span> <span class="n">catalyzed_constants</span><span class="p">)</span>
+            <span class="n">cat_tuples</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">cat_tuples</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">catalysts</span><span class="p">,</span> <span class="n">catalyzed_constants</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">cat_tuples</span><span class="p">)</span>
+            <span class="n">catalysts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">catalysts</span><span class="p">)</span>
+            <span class="n">catalyzed_constants</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">catalyzed_constants</span><span class="p">)</span>
+
+        <span class="c1"># Find duplicates </span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">reactants</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span><span class="mi">0</span> 
+            <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">reactants</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">reactants</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">reactants</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">reactant_coeff</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">reactant_coeff</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">del</span> <span class="n">reactant_coeff</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">del</span> <span class="n">reactants</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">reactants</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">break</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">products</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span><span class="mi">0</span> 
+            <span class="k">while</span> <span class="p">(</span><span class="n">i</span><span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">products</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">products</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">products</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">product_coeff</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">product_coeff</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">del</span> <span class="n">product_coeff</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">del</span> <span class="n">products</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">products</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">break</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">catalysts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span><span class="mi">0</span> 
+            <span class="k">while</span> <span class="p">(</span><span class="n">i</span><span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">catalysts</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">catalysts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">catalysts</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="k">del</span> <span class="n">catalyzed_constants</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">del</span> <span class="n">catalysts</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">catalysts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">break</span>
+    
+        <span class="bp">self</span><span class="o">.</span><span class="n">ID</span> <span class="o">=</span> <span class="n">ID</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reactants</span> <span class="o">=</span> <span class="n">reactants</span> <span class="c1"># List of reactant IDs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reactant_coeff</span> <span class="o">=</span> <span class="n">reactant_coeff</span> <span class="c1"># List of reactant stochiometric coefficients</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">products</span> <span class="o">=</span> <span class="n">products</span> <span class="c1"># List of Product IDs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">product_coeff</span> <span class="o">=</span> <span class="n">product_coeff</span> <span class="c1"># List of product stochiometric coefficients  </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">catalysts</span> <span class="o">=</span> <span class="n">catalysts</span> <span class="c1"># List of catalysts for the reaction</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">constant</span> <span class="o">=</span> <span class="n">constant</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">catalyzed_constants</span> <span class="o">=</span> <span class="n">catalyzed_constants</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prop</span> <span class="o">=</span> <span class="n">prop</span> <span class="c1">#Propensity Str to indicate function </span>
+        
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1">#returns unique reaction string (without catalysts)</span>
+        <span class="n">rep</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="c1"># Add reactants</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reactants</span><span class="p">)):</span>
+            <span class="n">rep</span> <span class="o">+=</span>  <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reactant_coeff</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;[&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reactants</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;] + &#39;</span>
+        <span class="n">rep</span> <span class="o">=</span> <span class="n">rep</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">rep</span> <span class="o">+=</span> <span class="s1">&#39;-- &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">constant</span><span class="p">)</span> <span class="o">+</span><span class="s1">&#39; -&gt; &#39;</span>
+        <span class="c1"># Add products</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">products</span><span class="p">)):</span>
+            <span class="n">rep</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">product_coeff</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;[&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">products</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;] + &#39;</span>
+        <span class="n">rep</span> <span class="o">=</span> <span class="n">rep</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">rep</span></div>
+        
+        
+<span class="c1">## Reaction System Class     </span>
+<div class="viewcode-block" id="CRS"><a class="viewcode-back" href="../index.html#CoreClasses.CRS">[docs]</a><span class="k">class</span> <span class="nc">CRS</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A chemical reaction system comprising a list of molecules, and allowed reactions</span>
+<span class="sd">    molecule_list contains strings, indexing molecules by their ID</span>
+<span class="sd">    molecule_dict maps molecule strings to IDs (indices)</span>
+<span class="sd">    reactions contains a list of reaction objects</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">            - molecule_list: a list of molecule strings, indexed by their ID (which is an int)</span>
+<span class="sd">            - molecule_dict: a dictionary that maps molecule strings to IDs </span>
+<span class="sd">            - reactions: a list of all reaction objects allowed in the Reaction System, indexed by their ID</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">#molecules and reactions are implemented as sets.</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule_list</span><span class="o">=</span><span class="nb">list</span><span class="p">(),</span> <span class="n">molecule_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(),</span> <span class="n">reactions</span><span class="o">=</span><span class="nb">list</span><span class="p">()):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">molecule_list</span> <span class="o">=</span> <span class="n">molecule_list</span> <span class="c1">#list of molecules indexed by ID| molecule_list[ID] = m</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">molecule_dict</span> <span class="o">=</span> <span class="n">molecule_dict</span> <span class="c1"># Maps molecule strings to IDs| {&#39;string&#39;: ID}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reactions</span> <span class="o">=</span> <span class="n">reactions</span> <span class="c1">#List of reactions to iterate over </span>
+       
+        
+    <span class="c1"># def __str__(self):</span>
+    <span class="c1">#     rep = &quot;Reaction set containing:\n&quot;</span>
+    <span class="c1">#     for r in self.reaction_dict:</span>
+    <span class="c1">#         rep += self.reaction_dict[r].__str__()+&quot;\n&quot;</span>
+    <span class="c1">#     return rep</span>
+   
+        
+<div class="viewcode-block" id="CRS.savetxt"><a class="viewcode-back" href="../index.html#CoreClasses.CRS.savetxt">[docs]</a>    <span class="k">def</span> <span class="nf">savetxt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Writes CRS to textfile&quot;&quot;&quot;</span>
+        <span class="c1">#open text file and write header</span>
+        <span class="n">text_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">text_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&lt;meta-data&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">text_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;nrMolecules = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">molecule_list</span><span class="p">))</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">text_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;nrReactions = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reactions</span><span class="p">))</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&lt;molecules&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1">#write molecule entries</span>
+        <span class="k">for</span> <span class="n">ID</span><span class="p">,</span><span class="n">molecule</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">molecule_list</span><span class="p">):</span>
+            <span class="c1">#print ID, molecule</span>
+            <span class="n">text_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">ID</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;] &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">molecule</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="c1">#write reactions</span>
+        <span class="n">text_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&lt;reactions&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">rxn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">reactions</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="s2">&quot;[&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">rxn</span><span class="o">.</span><span class="n">ID</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;] &quot;</span>
+
+            <span class="n">num_reactants</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rxn</span><span class="o">.</span><span class="n">reactants</span><span class="p">)</span>
+            <span class="n">num_products</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rxn</span><span class="o">.</span><span class="n">products</span><span class="p">)</span>
+            <span class="c1"># Write Reactants</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_reactants</span><span class="p">):</span> 
+                <span class="n">molecule</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">molecule_list</span><span class="p">[</span><span class="n">rxn</span><span class="o">.</span><span class="n">reactants</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+                <span class="n">line</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">rxn</span><span class="o">.</span><span class="n">reactant_coeff</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;[&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">molecule</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;] + &#39;</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+            <span class="c1"># Write Constant</span>
+            <span class="n">line</span> <span class="o">+=</span> <span class="s1">&#39;-- &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rxn</span><span class="o">.</span><span class="n">constant</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; -&gt; &#39;</span>
+            <span class="c1"># Write Products</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_products</span><span class="p">):</span>
+                <span class="n">molecule</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">molecule_list</span><span class="p">[</span><span class="n">rxn</span><span class="o">.</span><span class="n">products</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+                <span class="n">line</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">rxn</span><span class="o">.</span><span class="n">product_coeff</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;[&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">molecule</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;] + &#39;</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+            <span class="c1"># Write Propensity</span>
+            <span class="n">line</span> <span class="o">+=</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">rxn</span><span class="o">.</span><span class="n">prop</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span>
+            <span class="c1"># Write catalysts</span>
+            <span class="k">if</span> <span class="n">rxn</span><span class="o">.</span><span class="n">catalysts</span> <span class="o">!=</span> <span class="p">[]:</span>
+                <span class="n">num_catalysts</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rxn</span><span class="o">.</span><span class="n">catalysts</span><span class="p">)</span>
+                <span class="n">line</span> <span class="o">+=</span> <span class="s1">&#39; (&#39;</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_catalysts</span><span class="p">):</span>
+                    <span class="n">molecule</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">molecule_list</span><span class="p">[</span><span class="n">rxn</span><span class="o">.</span><span class="n">catalysts</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+                    <span class="n">line</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">rxn</span><span class="o">.</span><span class="n">catalyzed_constants</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span><span class="s1">&#39;[&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">molecule</span><span class="p">)</span> <span class="o">+</span><span class="s1">&#39;]&#39;</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">line</span> <span class="o">+=</span> <span class="s1">&#39;)&#39;</span>
+            <span class="n">line</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="n">text_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+        <span class="n">text_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+        
+<div class="viewcode-block" id="CRS.readtxt"><a class="viewcode-back" href="../index.html#CoreClasses.CRS.readtxt">[docs]</a>    <span class="k">def</span> <span class="nf">readtxt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reads from text file. The current data is discarded.&quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">read_m</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+            <span class="c1">#subfunction to read molecule entry</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">IDstr</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">IDstr</span> <span class="o">=</span> <span class="n">IDstr</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">IDstr</span> <span class="o">=</span> <span class="n">IDstr</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="n">ID</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">IDstr</span><span class="p">)</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">ID</span><span class="p">,</span> <span class="n">m</span>
+
+        <span class="k">def</span> <span class="nf">read_r</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+            <span class="c1">#subfunction to read reaction entry</span>
+
+            <span class="c1"># Initialize lists</span>
+            <span class="n">reactants</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">reactant_coeff</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">products</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">product_coeff</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">catalysts</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">catalyzed_constants</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">constant</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="c1"># Clear some newlines split by whitespace</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="c1">#print s</span>
+            <span class="c1"># The first element contains the reaction ID</span>
+            <span class="n">IDstr</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">IDstr</span><span class="p">)</span>
+            <span class="n">IDstr</span> <span class="o">=</span> <span class="n">IDstr</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">IDstr</span> <span class="o">=</span> <span class="n">IDstr</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="n">ID</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">IDstr</span><span class="p">)</span>
+            <span class="c1">#print ID</span>
+            
+            <span class="c1"># Seperate everything else into reactants or product-propensity-catalysts</span>
+            <span class="n">split_r</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+            <span class="n">split_psc</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;-&gt;&#39;</span><span class="p">)</span>
+            <span class="n">constant</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">split_r</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">s</span><span class="p">[:</span><span class="n">split_r</span><span class="p">]</span>
+
+            <span class="n">psc</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">split_psc</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="c1">#print &quot;Reactants: &quot;, r</span>
+            <span class="c1">#print &quot;product-catalysts: &quot;, psc</span>
+            <span class="c1"># Get the reactants and their coefficients</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">item</span> <span class="o">!=</span> <span class="s1">&#39;+&#39;</span><span class="p">:</span>
+                    <span class="n">coef</span><span class="p">,</span> <span class="n">molecule</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="p">)</span>
+                    <span class="n">molecule</span> <span class="o">=</span> <span class="n">molecule</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">reactants</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">molecule</span><span class="p">)</span>
+                    <span class="n">reactant_coeff</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">coef</span><span class="p">))</span>
+
+            <span class="c1"># Get the catalyst IDs</span>
+            <span class="n">catStr</span> <span class="o">=</span> <span class="n">psc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="c1">#print catStr</span>
+            <span class="k">if</span> <span class="s1">&#39;(&#39;</span> <span class="ow">in</span> <span class="n">catStr</span> <span class="ow">and</span> <span class="s1">&#39;)&#39;</span> <span class="ow">in</span> <span class="n">catStr</span><span class="p">:</span> 
+                <span class="n">cats</span> <span class="o">=</span> <span class="n">catStr</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+                <span class="c1">#print cats</span>
+                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cats</span><span class="p">:</span>
+                    <span class="n">c</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">)</span>
+                    <span class="n">c</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
+                    <span class="n">const</span><span class="p">,</span> <span class="n">molecule</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="p">)</span>
+                    <span class="n">molecule</span> <span class="o">=</span> <span class="n">molecule</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">catalysts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">molecule</span><span class="p">)</span>
+                    <span class="n">catalyzed_constants</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">const</span><span class="p">))</span>
+                <span class="c1">#print &#39;Catalysts: &#39;, catalysts, &#39; Constants: &#39;, catalyzed_constants</span>
+                <span class="k">del</span> <span class="n">psc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">del</span> <span class="n">psc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+               
+            <span class="c1"># Get the propensity string</span>
+            <span class="n">propStr</span> <span class="o">=</span> <span class="n">psc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="c1">#print propStr</span>
+            <span class="k">del</span> <span class="n">psc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">del</span> <span class="n">psc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="c1">#print psc</span>
+            <span class="c1"># Get the products and their coefficients</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">psc</span><span class="p">:</span>
+
+                <span class="k">if</span> <span class="n">item</span> <span class="o">!=</span> <span class="s1">&#39;+&#39;</span> <span class="ow">and</span> <span class="n">item</span> <span class="o">!=</span> <span class="s1">&#39; &#39;</span><span class="p">:</span>
+                    <span class="c1">#print item</span>
+                    <span class="n">coef</span><span class="p">,</span> <span class="n">molecule</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="p">)</span>
+                    <span class="n">molecule</span> <span class="o">=</span> <span class="n">molecule</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">products</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">molecule</span><span class="p">)</span>
+                    <span class="n">product_coeff</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">coef</span><span class="p">))</span>
+            <span class="c1">#print ID, constant, reactants, reactant_coeff, products, product_coeff, catalyzed_constants, catalysts</span>
+            <span class="c1">#raw_input(&quot;Enter&quot;)         </span>
+            <span class="k">return</span> <span class="n">ID</span><span class="p">,</span> <span class="n">constant</span><span class="p">,</span> <span class="n">reactants</span><span class="p">,</span> <span class="n">reactant_coeff</span><span class="p">,</span> <span class="n">products</span><span class="p">,</span> <span class="n">product_coeff</span><span class="p">,</span> <span class="n">catalysts</span><span class="p">,</span> <span class="n">catalyzed_constants</span><span class="p">,</span> <span class="n">propStr</span>
+
+        <span class="c1">#open text file and read in all lines    </span>
+        <span class="n">text_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">text_file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="n">text_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        
+        <span class="c1">#use deque instead of list because we are looking at the first element</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+        <span class="c1">#print l.popleft()</span>
+        <span class="c1">#check and read header</span>
+        <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&lt;meta-data&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">:</span>
+            <span class="n">s</span><span class="o">=</span><span class="n">l</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+            <span class="n">num_M</span><span class="o">=</span><span class="n">s</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">):</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">s</span><span class="o">=</span><span class="n">l</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+            <span class="n">num_R</span><span class="o">=</span><span class="n">s</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">):</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+            
+            <span class="n">m_list</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">num_M</span><span class="p">)</span> <span class="c1"># This maps molecule IDs to molecule objects</span>
+            <span class="n">r_list</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">num_R</span><span class="p">)</span> <span class="c1"># This maps reaction IDs to reaction objects</span>
+            <span class="n">m_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span> <span class="c1"># This maps molecule strings to IDs</span>
+            <span class="c1">#read molecules</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">num_M</span><span class="p">)):</span>
+                <span class="n">ID</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="n">read_m</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span> <span class="p">)</span>
+                <span class="n">m_list</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span> <span class="o">=</span>  <span class="n">m</span>
+                <span class="c1">#print &quot;Molecule: &quot;, m, &#39;ID: &#39;, ID</span>
+                <span class="n">m_dict</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">ID</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+             
+            <span class="c1">#read reactions</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">num_R</span><span class="p">)):</span>
+                <span class="c1"># Read Line</span>
+                <span class="n">rID</span><span class="p">,</span> <span class="n">rconstant</span><span class="p">,</span> <span class="n">reactant_molecules</span><span class="p">,</span> <span class="n">reactant_coeff</span><span class="p">,</span> <span class="n">product_molecules</span><span class="p">,</span> <span class="n">product_coeff</span><span class="p">,</span> <span class="n">catalyst_molecules</span><span class="p">,</span> <span class="n">catalyzed_constants</span><span class="p">,</span> <span class="n">propStr</span> <span class="o">=</span> <span class="n">read_r</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span> <span class="p">)</span>
+                
+                <span class="c1"># Convert molecule strings to IDs</span>
+                <span class="n">reactant_IDs</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">product_IDs</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">catalyst_IDs</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="c1"># Get reactant IDs</span>
+                <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">reactant_molecules</span><span class="p">:</span>
+                    <span class="n">reactant_IDs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m_dict</span><span class="p">[</span><span class="n">r</span><span class="p">])</span>
+                <span class="c1"># Get Product IDs</span>
+                <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">product_molecules</span><span class="p">:</span>
+                    <span class="n">product_IDs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m_dict</span><span class="p">[</span><span class="n">p</span><span class="p">])</span>
+                <span class="c1"># Get Catalyst IDs</span>
+                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">catalyst_molecules</span><span class="p">:</span>
+                    <span class="n">catalyst_IDs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m_dict</span><span class="p">[</span><span class="n">c</span><span class="p">])</span>
+                <span class="c1">#print rID, rconstant, reactant_molecules, reactant_coeff, product_molecules, product_coeff, catalyst_molecules, catalyzed_constants, propStr</span>
+                <span class="n">r_list</span><span class="p">[</span><span class="n">rID</span><span class="p">]</span> <span class="o">=</span> <span class="n">Reaction</span><span class="p">(</span><span class="n">rID</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span> <span class="n">rconstant</span><span class="p">,</span> <span class="n">reactants</span> <span class="o">=</span> <span class="n">reactant_IDs</span><span class="p">,</span> <span class="n">reactant_coeff</span> <span class="o">=</span> <span class="n">reactant_coeff</span><span class="p">,</span> <span class="n">products</span> <span class="o">=</span> <span class="n">product_IDs</span><span class="p">,</span> <span class="n">product_coeff</span> <span class="o">=</span> <span class="n">product_coeff</span><span class="p">,</span> <span class="n">catalysts</span> <span class="o">=</span> <span class="n">catalyst_IDs</span><span class="p">,</span> <span class="n">catalyzed_constants</span> <span class="o">=</span> <span class="n">catalyzed_constants</span><span class="p">,</span> <span class="n">prop</span> <span class="o">=</span> <span class="n">propStr</span><span class="p">)</span>
+                <span class="c1"># print r_list[rID].catalysts</span>
+                <span class="c1"># raw_input(&quot;Enter&quot;)</span>
+                <span class="c1"># print &#39;Reactants: &#39;, reactant_molecules,&#39;Reactant IDs: &#39;, reactant_IDs, &#39; Coefficients: &#39;, reactant_coeff</span>
+                <span class="c1"># print &#39;Products: &#39;, product_molecules, &#39;Product IDs: &#39;, product_IDs, &#39; Coefficients: &#39;, product_coeff</span>
+                <span class="c1"># print &#39;Catalysts: &#39;, catalyst_IDs</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reactions</span> <span class="o">=</span> <span class="n">r_list</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">molecule_dict</span> <span class="o">=</span> <span class="n">m_dict</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">molecule_list</span> <span class="o">=</span> <span class="n">m_list</span>
+            <span class="c1">#self.update_molecules()</span>
+        <span class="k">else</span><span class="p">:</span>
+            
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;invalid file&quot;</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Cole Mathis.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.01.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

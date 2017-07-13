@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>OutputFunctions &mdash; ChemEvolve 0.01.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="ChemEvolve 0.01.1 documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../index.html" class="fa fa-home"> ChemEvolve</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">ChemEvolve</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      
+    <li>OutputFunctions</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for OutputFunctions</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="c1">########################################################################################</span>
+<span class="k">def</span> <span class="nf">output_concentrations</span><span class="p">(</span><span class="n">concentrations</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">time</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+	<span class="kn">import</span> <span class="nn">pickle</span>
+	<span class="sd">&#39;&#39;&#39;Outputs an .dat file</span>
+
+<span class="sd">	Arguements:</span>
+<span class="sd">		- concentrations: a numpy array which contains the concentrations of all molecules indexed by (position, molecule)</span>
+<span class="sd">		- prefix: a string which will be the prefix to the saved file</span>
+<span class="sd">		- time (optional): number which will be inserted into the file name &#39;&#39;&#39;</span>
+	<span class="n">fname</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;_ts.dat&#39;</span>
+	<span class="k">if</span> <span class="n">time</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="n">fname</span> <span class="o">=</span>  <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;_ts_&#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.dat&#39;</span>
+	<span class="c1">#np.save(fname, concentrations)</span>
+	<span class="n">outfile1</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;w+b&#39;</span><span class="p">)</span>
+	<span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">concentrations</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">outfile1</span><span class="p">)</span>
+	<span class="n">outfile1</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="c1">########################################################################################</span>
+<div class="viewcode-block" id="tidy_timeseries"><a class="viewcode-back" href="../index.html#OutputFunctions.tidy_timeseries">[docs]</a><span class="k">def</span> <span class="nf">tidy_timeseries</span><span class="p">(</span><span class="n">molecules</span><span class="p">,</span><span class="n">prefix</span><span class="p">,</span> <span class="n">delete_dat</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+	
+	<span class="sd">&#39;&#39;&#39; This function replaces the seperate time-series .dat files with a tidy dataframe containing all the time series data </span>
+
+<span class="sd">	Arguements:</span>
+<span class="sd">		- prefix: string which is the prefix used to save the time-series data files</span>
+<span class="sd">		- delete_dat (optional): if False the .npy files will be saved, otherwise they will be deleted, default: True</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+	<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> 
+	<span class="kn">import</span> <span class="nn">glob</span>
+	<span class="kn">import</span> <span class="nn">pickle</span>
+	<span class="kn">import</span> <span class="nn">os</span>
+
+	<span class="c1"># Get the moleucles list </span>
+	<span class="c1"># with open(prefix+ &#39;_molecules.txt&#39;, &#39;rb&#39;) as f:</span>
+	<span class="c1"># 	molecules = pickle.load(f)</span>
+	<span class="n">num_molecules</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">molecules</span><span class="p">)</span>
+
+	<span class="c1"># Initialize the tidy dataframe</span>
+	<span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;position&#39;</span><span class="p">,</span> <span class="s1">&#39;molecule&#39;</span><span class="p">,</span> <span class="s1">&#39;abundance&#39;</span><span class="p">]</span>
+	
+	<span class="c1"># Get all the time series files</span>
+	<span class="n">ts_prefix</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;_ts_&#39;</span> 
+	
+	<span class="n">fnames</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">ts_prefix</span><span class="o">+</span><span class="s1">&#39;*.dat&#39;</span><span class="p">)</span>
+	<span class="c1">#print fnames</span>
+	<span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="n">tidy_df_dict</span> <span class="o">=</span> <span class="p">{}</span>
+	<span class="c1"># Get all the data</span>
+	<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fnames</span><span class="p">:</span>
+		<span class="c1">#print f</span>
+		<span class="n">infile1</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;r+b&#39;</span><span class="p">)</span>
+		<span class="n">file1</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">infile1</span><span class="p">)</span> <span class="c1"># This is a list</span>
+		<span class="n">infile1</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+		<span class="n">concentrations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">file1</span><span class="p">)</span>
+		<span class="n">t</span> <span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+		<span class="c1">#print t</span>
+		<span class="n">t</span> <span class="o">=</span><span class="n">t</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">ts_prefix</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+		<span class="c1"># The time value is embedded in the filename</span>
+
+		<span class="n">time</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+		<span class="c1"># Initialize a dummy lattice to make iteration over the indices of the concentration array easier</span>
+		<span class="n">lattice_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">concentrations</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+		<span class="n">lattice_shape</span> <span class="o">=</span> <span class="n">concentrations</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">dummy_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">lattice_size</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">lattice_shape</span><span class="p">)</span>
+		<span class="c1"># Iterate over the dummy array, use only index information</span>
+		<span class="k">for</span> <span class="n">position_index</span><span class="p">,</span> <span class="n">dummy_site</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndenumerate</span><span class="p">(</span><span class="n">dummy_arr</span><span class="p">):</span>
+			<span class="n">position_index</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">position_index</span><span class="p">])</span>
+			<span class="n">positions</span> <span class="o">=</span> <span class="p">[</span><span class="n">position_index</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">molecules</span><span class="p">)</span>
+			<span class="n">times</span> <span class="o">=</span> <span class="p">[</span><span class="n">time</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">molecules</span><span class="p">)</span>
+			<span class="n">observations</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">molecules</span><span class="p">,</span> <span class="n">concentrations</span><span class="p">[</span><span class="n">position_index</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+			<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_molecules</span><span class="p">):</span>
+				
+				<span class="n">observation</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">observations</span><span class="p">[</span><span class="n">m</span><span class="p">])</span>
+				<span class="n">tidy_df_dict</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">observation</span>
+				<span class="n">index</span> <span class="o">+=</span><span class="mi">1</span>	
+				<span class="c1">#print observation</span>
+				<span class="c1">#raw_input(&quot;Enter&quot;)</span>
+		<span class="k">if</span> <span class="n">delete_dat</span><span class="p">:</span>
+			<span class="c1"># Delete the File when we&#39;re done with it</span>
+			<span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+	<span class="n">tidy_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">tidy_df_dict</span><span class="p">,</span> <span class="n">orient</span> <span class="o">=</span> <span class="s1">&#39;index&#39;</span><span class="p">)</span>
+	<span class="n">tidy_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">features</span>
+	<span class="c1"># Name the dataframe and save it</span>
+	<span class="n">df_name</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;_time_series_df.csv&#39;</span>
+	<span class="n">tidy_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">df_name</span><span class="p">,</span> <span class="n">index_label</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="c1"># index label = False is better for importing to R</span></div>
+	
+<span class="c1">########################################################################################</span>
+<span class="k">def</span> <span class="nf">generate_ts_df</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="n">outname</span><span class="p">):</span>
+
+	<span class="c1"># Load Tidy Data File</span>
+	<span class="n">tidy_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">infile</span><span class="p">)</span>
+
+	<span class="c1"># Get the times</span>
+	<span class="n">times</span> <span class="o">=</span> <span class="n">tidy_df</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+	<span class="c1"># Get Molecules</span>
+	<span class="n">molecules</span>  <span class="o">=</span> <span class="n">tidy_df</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+
+	<span class="n">timeseries_df</span>  <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="n">molecules</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">times</span><span class="p">)</span>
+	<span class="c1">#print timeseries_df</span>
+		
+	<span class="c1">#For each time, construct a new entry in the time series df</span>
+	<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">times</span><span class="p">:</span>
+		<span class="n">t_df</span> <span class="o">=</span> <span class="n">tidy_df</span><span class="p">[</span><span class="n">tidy_df</span><span class="o">.</span><span class="n">time</span> <span class="o">==</span> <span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;abundance&#39;</span><span class="p">])</span>
+		<span class="n">t_df</span> <span class="o">=</span> <span class="n">t_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">molecules</span><span class="p">)</span>
+		<span class="c1">#print t_df</span>
+		<span class="n">timeseries_df</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">t_df</span>
+	<span class="c1"># print timeseries_df</span>
+	<span class="c1"># raw_input(&quot;Enter&quot;)</span>
+	<span class="n">timeseries_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">outname</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Cole Mathis.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.01.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

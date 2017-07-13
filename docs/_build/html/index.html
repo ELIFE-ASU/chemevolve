@@ -1,0 +1,595 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ChemEvolve &mdash; ChemEvolve 0.01.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ChemEvolve 0.01.1 documentation" href="#"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="#" class="fa fa-home"> ChemEvolve</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">ChemEvolve</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#tutorial">Tutorial</a><ul>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a><ul>
+<li><a class="reference internal" href="#grant-support">Grant Support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="#">ChemEvolve</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="#">Docs</a> &raquo;</li>
+      
+    <li>ChemEvolve</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="chemevolve">
+<h1>ChemEvolve<a class="headerlink" href="#chemevolve" title="Permalink to this headline">¶</a></h1>
+<p>ChemEvolve is a Python package which provides a suite of chemical evolution tools. ChemEvolve is designed to allow for the rapid development and exploration of a chemical reaction systems with standardized input and outputs. CoreEvolve (currently) utilizes the <a class="reference external" href="https://en.wikipedia.org/wiki/Gillespie_algorithm">Simplified Stochastic or Gillispie Algorithm</a> to exactly simulate chemical systems.</p>
+<p>ChemEvolve provides a standard format to specify chemical reaction systems (including the rate constants, catalytic effects, and a choice of propensity functions). It also allows users to simulate these reaction systems in spatially explicit models (e.g. solve Reaction-Diffusion Equations). All ouptut files are saved in <a class="reference external" href="http://vita.had.co.nz/papers/tidy-data.pdf">Tidy Data</a>  format, to allow for easy plotting using standard data visualization tools ( e.g. <a class="reference external" href="http://seaborn.pydata.org/">Seaborn</a> , or <a class="reference external" href="https://www.r-project.org/">R</a> )</p>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>ChemEvolve requires Python 2.7.x, with <a class="reference external" href="http://www.numpy.org/">NumPy</a>, <a class="reference external" href="http://pandas.pydata.org/">pandas</a>, and both <a class="reference external" href="https://matplotlib.org/">matplotlib</a> and  <a class="reference external" href="http://seaborn.pydata.org/">Seaborn</a> for plotting and visualization.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>To install, first download and install the package using pip,</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install chemevolve
+</pre></div>
+</div>
+</div></blockquote>
+<p>Then just throw this import line into the top of your python script:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">chemevolve</span> <span class="kn">as</span> <span class="nn">ce</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>That’s it! You should be good to go!</p>
+</div>
+<div class="section" id="tutorial">
+<h2>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h2>
+<p>This tutorial is intended to provide some basic instruction for using ChemEvolve to evaluate Chemical Reaction Systems. For clarity this tutorial is seperated into three sections: 1) setting up a chemical reaction system, 2) specifying some initial conditions, 3) time evolving the system, and 4) plotting the output.</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">Setting up a chemical reaction system (CRS)</p>
+<p>This is the most conceptually important part of using ChemEvolve. Setting up the CRS involves specifying the molecules which can exist in the system as well as the reactions the molecules are involved in. Each molecule must be given an ID numer (which is just an integer), as well as a name (which is a string). Each reaction must be assigned a set of reactants, reactant coefficients, products, product coefficients, a rate constant, any catalysts, and a propensity function.</p>
+<p>ChemEvolve has three important objects: Reactions, which contain information about an individual chemical reaction, and CRS which contain lists of reactions as well as information about the molecules involved in those reactions, and an array which contains the abundance of each molecule. First lets think about Reaction and CRS objects.</p>
+<p>As an illustrative example, let’s consider a system where all the molcules are made up of strings of As and Bs. Let’s consider all possible strings of As and Bs up to length 6. Let’s say all strings can form by concatenating smaller strings, and all strings can fragment at any location. Let’s say that the concatenation reactions happen with a propensity proportional to <span class="math">\(k_l [x_i][x_j]\)</span>, where <span class="math">\([x_i]\)</span> is the concentration of one of the reactants and <span class="math">\(k_l\)</span> is the rate constant associated with concatanation reactions. We can also say that dissocation reactions happen with a propensity proportional to <span class="math">\(k_d [x_i]\)</span>, where <span class="math">\(k_d\)</span> is now the rate constant associated with dissocation reactions. For simplicity let’s assume that <span class="math">\(k_d\)</span>, is the same for all molecules, and <span class="math">\(k_l\)</span> is the same for all assoication reactions.</p>
+<p>How do we make this reaction system? Luckily ChemEvolve has a function to do it for us! It’s called <code class="code docutils literal"><span class="pre">generate_all_binary_reactions</span></code>.You can check out the details of the function if you want, but using it is fairly simple, it’s under the <code class="code docutils literal"><span class="pre">BinaryPolyer</span></code> module, so we’ll import that. The propensities described above are what ChemEvolve considers ‘standard’ propensity functions, e.g. the reaction propensity depends linearly on the reactants involved and needs only one postive real valued rate constant. So for our example, let’s assume <span class="math">\(k_l = 0.001\)</span>, and <span class="math">\(k_d = 1.0\)</span>. Then generating a CRS for this system is as easy as</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">chemevolve</span> <span class="kn">as</span> <span class="nn">ce</span>
+<span class="kn">from</span> <span class="nn">chemevolve</span> <span class="kn">import</span> <span class="n">BinaryPolymer</span> <span class="k">as</span> <span class="n">BinPoly</span>
+<span class="n">max_length</span> <span class="o">=</span> <span class="mi">6</span> <span class="c1"># Maximum Length of binary polymers</span>
+<span class="n">k_l</span> <span class="o">=</span> <span class="mf">0.001</span> <span class="c1"># Forward (ligation) Reaction Rate constant</span>
+<span class="n">k_d</span> <span class="o">=</span> <span class="mf">1.0</span>   <span class="c1"># Backward (degradation) Reaction Rate constant</span>
+<span class="n">CRS</span> <span class="o">=</span> <span class="n">BinPoly</span><span class="o">.</span><span class="n">generate_all_binary_reactions</span><span class="p">(</span><span class="n">max_length</span><span class="p">,</span> <span class="n">fconstant</span> <span class="o">=</span> <span class="n">k_l</span><span class="p">,</span> <span class="n">bconstant</span> <span class="o">=</span> <span class="n">k_d</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Specifying initial conditions</p>
+<p>Once you’ve generated a CRS (either from a file or a function), you’ll need to specify the initial concentrations of molecules. ChemEvolve stores abundance information in a 3D array. The first two indicies are used to indicate spatial positions, x and y. The third index specifies the molecule of interest. For now, let’s just consider a well mixed system, so that all molecules are located in the same position. It makes sense to call the array storing concentration information, <code class="code docutils literal"><span class="pre">concentrations</span></code>, but you could make it something different if you wanted.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">N_L</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Size of the lattice (diffusion not yet implemented, fix at 1)</span>
+<span class="n">total_mass</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">num_molecules</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">CRS</span><span class="o">.</span><span class="n">molecule_list</span><span class="p">)</span>
+<span class="c1"># Initialize array</span>
+<span class="n">concentrations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">(</span><span class="n">N_L</span><span class="p">,</span> <span class="n">N_L</span><span class="p">,</span> <span class="n">num_molecules</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span> <span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>We’ll assume that we start with an equal abundance of monomers in the system and nothing else. Since this is a binary polymer model, there’s only two monomer types and they’ll always be stored in the first two indices of the molecule list. However, we can always find the indices of a molecule, from the <code class="code docutils literal"><span class="pre">molecule_dict</span></code> dictionary assoicated with the CRS. To find the indices of the monomers and the initial conditions to be half of the total mass we’ll do</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Aindex</span> <span class="o">=</span> <span class="n">CRS</span><span class="o">.</span><span class="n">molecule_dict</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span>
+<span class="n">Bindex</span> <span class="o">=</span> <span class="n">CRS</span><span class="o">.</span><span class="n">molecule_dict</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span>
+<span class="c1"># Set monomer values</span>
+<span class="n">concentrations</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">Aindex</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_mass</span><span class="o">/</span><span class="mf">2.0</span>
+<span class="n">concentrations</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">Bindex</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_mass</span><span class="o">/</span><span class="mf">2.0</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Remember, even though we don’t have any spatial extant in this model, we need to index the position, which is <code class="code docutils literal"><span class="pre">x=</span> <span class="pre">0,</span> <span class="pre">y</span> <span class="pre">=</span> <span class="pre">0</span></code>.</p>
+</li>
+<li><p class="first">Time Evolving and Outputting Data</p>
+<p>Now that we’ve got the <code class="code docutils literal"><span class="pre">CRS</span></code> and the initial conditions set, we can time evolve the system using the Gillispie Algorithm! To do this we’ll use a function called <code class="code docutils literal"><span class="pre">SSA_evolve</span></code>. In order to use this functions, we’ll need to know who long we want the system to evolve for, the simulation will run between times <code class="code docutils literal"><span class="pre">tau</span></code> and <code class="code docutils literal"><span class="pre">tau_max</span></code>. We’ll also need to set the random number generator seed, this is important for making sure different realizations of the time evolution are actually different. Even though the Gillispie Algorithm is stochasitic, it’s powered by pseudo random number generators and we should make sure they are seeded differently, which is why you have to provide it to <code class="code docutils literal"><span class="pre">SSA_evolve</span></code>. If we just want to update the <code class="code docutils literal"><span class="pre">concentrations</span></code> array due to the time evolution, that’s all we’ll need. However, if we want <code class="code docutils literal"><span class="pre">SSA_evolve</span></code> to output time series data (and who wouldn’t want that!?) we’ll need to provide it with two more parameters, a string called <code class="code docutils literal"><span class="pre">output_prefix</span></code>:, and a float called <code class="code docutils literal"><span class="pre">t_out</span></code>. The string tells <code class="code docutils literal"><span class="pre">SSA_evolve</span></code> where to save our data and what to call it, your time series data will be saved as: <code class="code docutils literal"><span class="pre">output_prefix+</span> <span class="pre">'_time_series_df.csv'</span></code>, so you can include any path or naming scheme you want. <code class="code docutils literal"><span class="pre">t_out</span></code> specifies how frequently the data should be output. Keep in mind due to the stochastic nature of the Gillispie Algorithm you’ll only output data approximately that frequently. Here’s an example of using this all together.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1">### Time Evolve</span>
+<span class="n">tau</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1"># Set current time</span>
+<span class="n">tau_max</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="c1"># Total Integration Interval</span>
+<span class="n">t_output</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="c1"># How frequently should data be output</span>
+<span class="n">freq_counter</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1"># Counts which output is coming next</span>
+<span class="n">rand_seed</span> <span class="o">=</span> <span class="mi">1337</span> <span class="c1"># Seed for random number generator</span>
+<span class="n">output_prefix</span> <span class="o">=</span> <span class="s1">&#39;tutorial_data&#39;</span> <span class="c1"># This is a string that will procceed all file names assoicated with the outputs of this simulation</span>
+<span class="n">concentrations</span> <span class="o">=</span> <span class="n">ce</span><span class="o">.</span><span class="n">SSA_evolve</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">tau_max</span><span class="p">,</span> <span class="n">concentrations</span><span class="p">,</span> <span class="n">CRS</span><span class="p">,</span> <span class="n">rand_seed</span><span class="p">,</span> <span class="n">output_prefix</span> <span class="o">=</span> <span class="n">output_prefix</span><span class="p">,</span> <span class="n">t_out</span> <span class="o">=</span> <span class="n">t_output</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>During the computation <code class="code docutils literal"><span class="pre">SSA_evolve</span></code> will save temporary files in your directory, when it is done with the time evolution it will automatically save your data in the file ‘tutorial_data_time_series_df.csv’, since we provided it with the output prefix ‘tutorial_data’.</p>
+</li>
+<li><p class="first">Plotting the output</p>
+<p>All the outputs of ChemEvolve come in Tidy Data formats. This is done after the simulation is completed, so if you termiated the computation early the data will not be in the correct format. ChemEvolve has a few functions built in to plot the data, including looking at the molecule distribution, length distribution, and the time series of particular molcules. They are included in the <code class="code docutils literal"><span class="pre">Plotting</span> <span class="pre">module</span></code>. Here’s an example of plotting the length distribution, then the molecule distribution, and then the time series abundance of the monomers:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">chemevolve</span> <span class="kn">import</span> <span class="n">Plotting</span> <span class="k">as</span> <span class="n">Plots</span>
+<span class="n">Plots</span><span class="o">.</span><span class="n">plot_length_distribution</span><span class="p">(</span><span class="n">output_prefix</span> <span class="o">+</span> <span class="s1">&#39;_time_series_df.csv&#39;</span><span class="p">)</span>
+<span class="n">Plots</span><span class="o">.</span><span class="n">plot_molecule_distribution</span><span class="p">(</span><span class="n">output_prefix</span> <span class="o">+</span> <span class="s1">&#39;_time_series_df.csv&#39;</span><span class="p">)</span>
+<span class="n">Plots</span><span class="o">.</span><span class="n">plot_time_series</span><span class="p">(</span><span class="n">output_prefix</span> <span class="o">+</span> <span class="s1">&#39;_time_series_df.csv&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div></blockquote>
+<div class="section" id="indices-and-tables">
+<h3>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+<span class="target" id="module-InitializeFunctions"></span><dl class="function">
+<dt id="InitializeFunctions.convert_CRS_to_npArrays">
+<code class="descclassname">InitializeFunctions.</code><code class="descname">convert_CRS_to_npArrays</code><span class="sig-paren">(</span><em>CRS</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/InitializeFunctions.html#convert_CRS_to_npArrays"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#InitializeFunctions.convert_CRS_to_npArrays" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function converts ChemEvolve CRS objects into 4 numpy arrays. This allows the information to be easily passed to C.</p>
+<dl class="docutils">
+<dt>Input:</dt>
+<dd><ul class="first last simple">
+<li>CRS: Chemical Reaction System Object</li>
+</ul>
+</dd>
+<dt>Output:</dt>
+<dd><ul class="first last simple">
+<li>constants: np double array with reaction constant values</li>
+<li>propensity_ints: np int32 array with integer identifying which propensity function to use</li>
+<li><dl class="first docutils">
+<dt>reaction_arr: np int32 array with integers indicating the stochimetry of each reaction. </dt>
+<dd>Each row is a reaction, each column is a molecule. Reactants are negative, products are postive</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>catalyst_arr: np double array with the effect of each molecule for each reaction.</dt>
+<dd>Rows are reactions, columns are molecule, non-zero value indicate catalysis</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="InitializeFunctions.create_concentration_files">
+<code class="descclassname">InitializeFunctions.</code><code class="descname">create_concentration_files</code><span class="sig-paren">(</span><em>file_prefix</em>, <em>N_L</em>, <em>molecules</em>, <em>concentrations</em>, <em>coordinates</em>, <em>dimensions=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/InitializeFunctions.html#create_concentration_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#InitializeFunctions.create_concentration_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a concentration file to load as a np array
+dimensions - int, number of spatial dimensions
+N_L - int, size of one side of regular lattice
+molecules - list of strings representing molecules
+concentrations - list of ints representing abdunace of molecule at a particular site
+coordinates - list of tuples, coordinates in the lattice</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="InitializeFunctions.create_concentration_files_old">
+<code class="descclassname">InitializeFunctions.</code><code class="descname">create_concentration_files_old</code><span class="sig-paren">(</span><em>file_prefix</em>, <em>N_L</em>, <em>molecules</em>, <em>concentrations</em>, <em>coordinates</em>, <em>dimensions=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/InitializeFunctions.html#create_concentration_files_old"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#InitializeFunctions.create_concentration_files_old" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a concentration file to load as a np array
+dimensions - int, number of spatial dimensions
+N_L - int, size of one side of regular lattice
+molecules - list of strings representing molecules
+concentrations - list of ints representing abdunace of molecule at a particular site
+coordinates - list of tuples, coordinates in the lattice</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="InitializeFunctions.create_reaction_system">
+<code class="descclassname">InitializeFunctions.</code><code class="descname">create_reaction_system</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/InitializeFunctions.html#create_reaction_system"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#InitializeFunctions.create_reaction_system" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a saved Reaction System and returns the CRS object</p>
+<dl class="docutils">
+<dt>Arguements:</dt>
+<dd><ul class="first last simple">
+<li>filename: the path to the saved Reaction System file (str)</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>CRS: Reaction System Object of the CRS class.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="InitializeFunctions.get_c_pointers">
+<code class="descclassname">InitializeFunctions.</code><code class="descname">get_c_pointers</code><span class="sig-paren">(</span><em>concentrations</em>, <em>constants</em>, <em>propensity_ints</em>, <em>reaction_arr</em>, <em>catalyst_arr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/InitializeFunctions.html#get_c_pointers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#InitializeFunctions.get_c_pointers" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns the C pointers to the input arrays. Pointers must be pasted to SSA library functions</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><ul class="first last simple">
+<li>concentrations: array of doubles containing molecule abundances</li>
+<li>constants: array of np doubles containing reaction constants</li>
+<li>propensity_ints: array of np int32 containing propesity integer codes</li>
+<li><dl class="first docutils">
+<dt>reaction_arr: np int32 array with integers indicating the stochimetry of each reaction. </dt>
+<dd>Each row is a reaction, each column is a molecule. Reactants are negative, products are postive</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>catalyst_arr: np double array with the effect of each molecule for each reaction.</dt>
+<dd>Rows are reactions, columns are molecule, non-zero value indicate catalysis</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Return:</dt>
+<dd><ul class="first last simple">
+<li>concentrations_ptr: points to concentration array</li>
+<li>constants_ptr: points to constants array</li>
+<li>propensity_ints_ptr: points to propensity_ints array</li>
+<li>reaction_arr_ptr: points to reaction_arr array</li>
+<li>catalyst_arr_ptr: points to catalyst_arr</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="InitializeFunctions.read_concentration_files">
+<code class="descclassname">InitializeFunctions.</code><code class="descname">read_concentration_files</code><span class="sig-paren">(</span><em>file_prefix</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/InitializeFunctions.html#read_concentration_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#InitializeFunctions.read_concentration_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens a concentration file (.dat pickle list) and a molecule list file 
+returns the numpy array with concentrations the last index identifying the molecular species
+the molecules list maps array indexes to molecular identities</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="InitializeFunctions.read_concentration_files_old">
+<code class="descclassname">InitializeFunctions.</code><code class="descname">read_concentration_files_old</code><span class="sig-paren">(</span><em>file_prefix</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/InitializeFunctions.html#read_concentration_files_old"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#InitializeFunctions.read_concentration_files_old" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens a concentration file (.npy array) and a molecule list file 
+returns the numpy array with concentrations the last index identifying the molecular species
+the molecules list maps array indexes to molecular identities</p>
+</dd></dl>
+
+<span class="target" id="module-PropensityFunctions"></span><dl class="function">
+<dt id="PropensityFunctions.calculate_propensities">
+<code class="descclassname">PropensityFunctions.</code><code class="descname">calculate_propensities</code><span class="sig-paren">(</span><em>CRS</em>, <em>concentrations</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PropensityFunctions.html#calculate_propensities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PropensityFunctions.calculate_propensities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the propensity of a reaction according to the concentrations and propensity function</p>
+<dl class="docutils">
+<dt>Arguements: </dt>
+<dd><ul class="first last simple">
+<li>CRS: CRS object</li>
+<li>concentrations: array of molecule concentrations indexed by (position,ID)</li>
+<li>propensity_function: function option used to calculate reaction propensities</li>
+</ul>
+</dd>
+<dt>Return:</dt>
+<dd>propensity_arr: an array of floats giving the total reaction propensity at each point in the system</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="PropensityFunctions.replicator_composition_propensity_envMutation">
+<code class="descclassname">PropensityFunctions.</code><code class="descname">replicator_composition_propensity_envMutation</code><span class="sig-paren">(</span><em>rxn</em>, <em>CRS</em>, <em>concentrations</em>, <em>mu=0.001</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PropensityFunctions.html#replicator_composition_propensity_envMutation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PropensityFunctions.replicator_composition_propensity_envMutation" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Replication Propensity function calculates propensity as the concentrations of the replicator and the composition of the enivornment </dt>
+<dd>This propensity function calcuates the mutation propensity as a function of the resources availible</dd>
+<dt>Arguements:</dt>
+<dd><ul class="first last simple">
+<li>rxn: Reaction object</li>
+<li>CRS: CRS object for system</li>
+<li>concentrations: list of molecule concentrations indexed by ID</li>
+</ul>
+</dd>
+<dt>Return:</dt>
+<dd><ul class="first last simple">
+<li>Ap: float, propensity of rxn given the current concentrations</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="PropensityFunctions.standard_propensity">
+<code class="descclassname">PropensityFunctions.</code><code class="descname">standard_propensity</code><span class="sig-paren">(</span><em>rxn</em>, <em>CRS</em>, <em>concentrations</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PropensityFunctions.html#standard_propensity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PropensityFunctions.standard_propensity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standard Propensity function calculates propensity as the concentrations of the reactants raised to their coefficients</p>
+<dl class="docutils">
+<dt>Arguements:</dt>
+<dd><ul class="first last simple">
+<li>rxn: Reaction object</li>
+<li>CRS: CRS object for system</li>
+<li>concentrations: list of molecule concentrations indexed by ID</li>
+</ul>
+</dd>
+<dt>Return:</dt>
+<dd><ul class="first last simple">
+<li>Ap: float, propensity of rxn given the current concentrations</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-OutputFunctions"></span><dl class="function">
+<dt id="OutputFunctions.tidy_timeseries">
+<code class="descclassname">OutputFunctions.</code><code class="descname">tidy_timeseries</code><span class="sig-paren">(</span><em>molecules</em>, <em>prefix</em>, <em>delete_dat=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/OutputFunctions.html#tidy_timeseries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OutputFunctions.tidy_timeseries" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function replaces the seperate time-series .dat files with a tidy dataframe containing all the time series data</p>
+<dl class="docutils">
+<dt>Arguements:</dt>
+<dd><ul class="first last simple">
+<li>prefix: string which is the prefix used to save the time-series data files</li>
+<li>delete_dat (optional): if False the .npy files will be saved, otherwise they will be deleted, default: True</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-CoreClasses"></span><dl class="class">
+<dt id="CoreClasses.CRS">
+<em class="property">class </em><code class="descclassname">CoreClasses.</code><code class="descname">CRS</code><span class="sig-paren">(</span><em>molecule_list=[]</em>, <em>molecule_dict={}</em>, <em>reactions=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CoreClasses.html#CRS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CoreClasses.CRS" title="Permalink to this definition">¶</a></dt>
+<dd><p>A chemical reaction system comprising a list of molecules, and allowed reactions
+molecule_list contains strings, indexing molecules by their ID
+molecule_dict maps molecule strings to IDs (indices)
+reactions contains a list of reaction objects</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><ul class="first last simple">
+<li>molecule_list: a list of molecule strings, indexed by their ID (which is an int)</li>
+<li>molecule_dict: a dictionary that maps molecule strings to IDs</li>
+<li>reactions: a list of all reaction objects allowed in the Reaction System, indexed by their ID</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="CoreClasses.CRS.readtxt">
+<code class="descname">readtxt</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CoreClasses.html#CRS.readtxt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CoreClasses.CRS.readtxt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads from text file. The current data is discarded.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CoreClasses.CRS.savetxt">
+<code class="descname">savetxt</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CoreClasses.html#CRS.savetxt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CoreClasses.CRS.savetxt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes CRS to textfile</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="CoreClasses.Reaction">
+<em class="property">class </em><code class="descclassname">CoreClasses.</code><code class="descname">Reaction</code><span class="sig-paren">(</span><em>ID</em>, <em>reactants=[]</em>, <em>reactant_coeff=[]</em>, <em>products=[]</em>, <em>product_coeff=[]</em>, <em>constant=1.0</em>, <em>catalysts=[]</em>, <em>catalyzed_constants=[]</em>, <em>prop=”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CoreClasses.html#Reaction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CoreClasses.Reaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reaction object containing an ID and reaction members (IDs not strings) as well as reaction coefficients and rate constants
+reactants, and products lists should contain integers which are the IDs of the reactant molecules and the product molecules
+reactant_coeff and product_coeff contain ints which are the reaction coefficients. The indices must match the corresponding 
+ID lists</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><ul class="first last simple">
+<li>ID: unique int which indentifies the reaction</li>
+<li>reactants: a list of molecule IDs which stores the reactants</li>
+<li>reactant_coeff: a list of integers which contains the reactant coefficients  (if reactant_coeff is not provided all reactants are assumed to have coefficients of 1)</li>
+<li>products: a list of molecule IDs which stores the products</li>
+<li>product_coeff: a list of integers which contains the product_coeff coefficients</li>
+<li>constant: a floating point number, the reaction rate constant</li>
+<li>catalysts: a list of molecule IDs which specify which molecules catalyze this reaction</li>
+<li>catalyzed_constants: a list of floating point numbers giving the catalytic effect of each molecule</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-Plotting"></span><dl class="function">
+<dt id="Plotting.plot_length_distribution">
+<code class="descclassname">Plotting.</code><code class="descname">plot_length_distribution</code><span class="sig-paren">(</span><em>filename</em>, <em>savename=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Plotting.html#plot_length_distribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Plotting.plot_length_distribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the time averaged length distribution of molecules in the entire system. Shows plot unless a savename is specified</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Plotting.plot_molecule_distribution">
+<code class="descclassname">Plotting.</code><code class="descname">plot_molecule_distribution</code><span class="sig-paren">(</span><em>filename</em>, <em>savename=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Plotting.html#plot_molecule_distribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Plotting.plot_molecule_distribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the time averaged molecule distribution of molecules in the entire system. Shows plot unless a savename is specified</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Plotting.plot_time_series">
+<code class="descclassname">Plotting.</code><code class="descname">plot_time_series</code><span class="sig-paren">(</span><em>filename</em>, <em>print_molcules</em>, <em>savename=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Plotting.html#plot_time_series"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Plotting.plot_time_series" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the time series of molecule names in print_molcules, if savename provide figure will be saved</p>
+</dd></dl>
+
+<span class="target" id="module-BinaryPolymer"></span><dl class="function">
+<dt id="BinaryPolymer.check_mass">
+<code class="descclassname">BinaryPolymer.</code><code class="descname">check_mass</code><span class="sig-paren">(</span><em>original_mass</em>, <em>CRS</em>, <em>concentrations</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/BinaryPolymer.html#check_mass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinaryPolymer.check_mass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks conservation of mass
+Arguements</p>
+<blockquote>
+<div><ul class="simple">
+<li>original_mass: integer mass of the original system</li>
+<li>CRS: CRS object</li>
+<li>concentrations: array of molecule abundances</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="BinaryPolymer.generate_all_binary_reactions">
+<code class="descclassname">BinaryPolymer.</code><code class="descname">generate_all_binary_reactions</code><span class="sig-paren">(</span><em>max_length</em>, <em>fconstant=1.0</em>, <em>bconstant=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/BinaryPolymer.html#generate_all_binary_reactions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinaryPolymer.generate_all_binary_reactions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates all possible reactions between binary molecules up to size max_length assigns all reactions the same constant and standard prorpenisty
+Arguements:</p>
+<blockquote>
+<div><ul class="simple">
+<li>max_length: the maximum length of polymers</li>
+<li>fconstant: reaction rate constant for forward reactions</li>
+<li>bconstant: reaction rate constant for reverse reactions, if None given, it will be assigned to be equal to fconstant</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="BinaryPolymer.generate_random_rate_polymerization_reactions">
+<code class="descclassname">BinaryPolymer.</code><code class="descname">generate_random_rate_polymerization_reactions</code><span class="sig-paren">(</span><em>output_name</em>, <em>max_length</em>, <em>fconstant=1.0</em>, <em>bconstant=None</em>, <em>fdis_type=’exp’</em>, <em>bdis_type=’exp’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/BinaryPolymer.html#generate_random_rate_polymerization_reactions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinaryPolymer.generate_random_rate_polymerization_reactions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates all possible polymerization reactions for molecules up to size max_length assigns all reactions a random constant and standard prorpenisty
+Arguements:</p>
+<blockquote>
+<div><ul class="simple">
+<li>output_name: filename to save as output (should be .txt)</li>
+<li>max_length: the maximum length of polymers</li>
+<li>fconstant: mean reaction rate constant for forward reactions</li>
+<li>bconstant: mean reaction rate constant for reverse reactions, if None given, it will be assigned to be equal to fconstant</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="BinaryPolymer.generate_wim_RAF">
+<code class="descclassname">BinaryPolymer.</code><code class="descname">generate_wim_RAF</code><span class="sig-paren">(</span><em>max_length</em>, <em>fconstant=1.0</em>, <em>bconstant=None</em>, <em>f_cat=1.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/BinaryPolymer.html#generate_wim_RAF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinaryPolymer.generate_wim_RAF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates all possible reactions between binary molecules up to size max_length assigns all reactions the same constant and standard prorpenisty
+Arguements:</p>
+<blockquote>
+<div><ul class="simple">
+<li>max_length: the maximum length of polymers</li>
+<li>fconstant: reaction rate constant for forward reactions</li>
+<li>bconstant: reaction rate constant for reverse reactions, if None given, it will be assigned to be equal to fconstant</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<div class="section" id="grant-support">
+<h4>Grant Support<a class="headerlink" href="#grant-support" title="Permalink to this headline">¶</a></h4>
+<p>This project is supported in part by a grant provided by the Templeton World Charity Foundation as part of the <a class="reference external" href="http://www.templetonworldcharity.org/what-we-fund/themes-of-interest/power-of-information">Power Of Information Initiative</a>.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Cole Mathis.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.01.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

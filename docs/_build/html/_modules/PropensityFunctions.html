@@ -1,0 +1,300 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PropensityFunctions &mdash; ChemEvolve 0.01.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="ChemEvolve 0.01.1 documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../index.html" class="fa fa-home"> ChemEvolve</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">ChemEvolve</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      
+    <li>PropensityFunctions</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for PropensityFunctions</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<div class="viewcode-block" id="standard_propensity"><a class="viewcode-back" href="../index.html#PropensityFunctions.standard_propensity">[docs]</a><span class="k">def</span> <span class="nf">standard_propensity</span><span class="p">(</span><span class="n">rxn</span><span class="p">,</span> <span class="n">CRS</span><span class="p">,</span> <span class="n">concentrations</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39; Standard Propensity function calculates propensity as the concentrations of the reactants raised to their coefficients </span>
+
+<span class="sd">	Arguements:</span>
+<span class="sd">		- rxn: Reaction object</span>
+<span class="sd">		- CRS: CRS object for system</span>
+<span class="sd">		- concentrations: list of molecule concentrations indexed by ID</span>
+
+<span class="sd">	Return:</span>
+<span class="sd">		- Ap: float, propensity of rxn given the current concentrations</span>
+
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="c1"># Get data out of rxn and concentration objects</span>
+	<span class="n">reactant_concentrations</span> <span class="o">=</span> <span class="n">concentrations</span><span class="p">[</span><span class="n">rxn</span><span class="o">.</span><span class="n">reactants</span><span class="p">]</span>
+	<span class="n">catalyst_concentrations</span> <span class="o">=</span> <span class="n">concentrations</span><span class="p">[</span><span class="n">rxn</span><span class="o">.</span><span class="n">catalysts</span><span class="p">]</span>
+	<span class="n">reactant_coeff</span> <span class="o">=</span> <span class="n">rxn</span><span class="o">.</span><span class="n">reactant_coeff</span>
+	<span class="n">catalyzed_constants</span> <span class="o">=</span> <span class="n">rxn</span><span class="o">.</span><span class="n">catalyzed_constants</span>
+
+	<span class="c1">#Calculate Propensity</span>
+	<span class="n">Ap</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="c1">#rxn.constant #*np.prod( np.power(reactant_concentrations, reactant_coeff) )</span>
+	<span class="n">num_reactants</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">reactant_concentrations</span><span class="p">)</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_reactants</span><span class="p">):</span>
+		<span class="n">Ap</span> <span class="o">=</span> <span class="n">Ap</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">rxn</span><span class="o">.</span><span class="n">constant</span><span class="o">*</span><span class="n">reactant_concentrations</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">reactant_coeff</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+	
+	<span class="c1"># Ap = rxn.constant</span>
+	<span class="c1">#Ap = Ap*np.prod(std_propensity_helper1(reactant_concentrations, reactant_coeff))</span>
+	
+	<span class="n">enhancement</span> <span class="o">=</span> <span class="mf">0.0</span>
+	<span class="c1">#if catalyst_concentrations != [] and sum(catalyst_concentrations) != 0.0:</span>
+	
+	<span class="n">num_cats</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">catalyst_concentrations</span><span class="p">)</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_cats</span><span class="p">):</span>
+		<span class="c1">#print &#39;catalyst: &#39;, rxn.catalysts[i]</span>
+
+		<span class="n">enhancement</span> <span class="o">+=</span> <span class="n">catalyst_concentrations</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">catalyzed_constants</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+		<span class="c1">#print &#39;enhancement: &#39;, enhancement</span>
+		<span class="c1">#enhancement += np.sum( std_propensity_helper2(catalyst_concentrations,catalyzed_constants) )</span>
+	<span class="n">Ap</span> <span class="o">=</span> <span class="n">Ap</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">enhancement</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">Ap</span></div>
+
+
+	
+<div class="viewcode-block" id="calculate_propensities"><a class="viewcode-back" href="../index.html#PropensityFunctions.calculate_propensities">[docs]</a><span class="k">def</span> <span class="nf">calculate_propensities</span><span class="p">(</span><span class="n">CRS</span><span class="p">,</span> <span class="n">concentrations</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39; Calculate the propensity of a reaction according to the concentrations and propensity function</span>
+
+<span class="sd">	Arguements: </span>
+<span class="sd">		- CRS: CRS object</span>
+<span class="sd">		- concentrations: array of molecule concentrations indexed by (position,ID) </span>
+<span class="sd">		- propensity_function: function option used to calculate reaction propensities</span>
+
+<span class="sd">	Return:</span>
+<span class="sd">		propensity_arr: an array of floats giving the total reaction propensity at each point in the system &#39;&#39;&#39;</span>
+	<span class="c1"># Initialize an Empty Array to store propensities for each lattice site</span>
+	<span class="n">lattice_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">concentrations</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+	<span class="n">lattice_shape</span> <span class="o">=</span> <span class="n">concentrations</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+	<span class="n">propensity_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">lattice_size</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">lattice_shape</span><span class="p">)</span>
+	
+	<span class="c1"># Iterate over each lattice site. Site is the propensity and index gives its location</span>
+	<span class="k">for</span> <span class="n">site_index</span><span class="p">,</span> <span class="n">site_Ap</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndenumerate</span><span class="p">(</span><span class="n">propensity_arr</span><span class="p">):</span>
+		<span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="n">site_index</span>
+		<span class="c1"># Iterate over each reactation</span>
+		<span class="k">for</span> <span class="n">rxn</span> <span class="ow">in</span> <span class="n">CRS</span><span class="o">.</span><span class="n">reactions</span><span class="p">:</span>
+
+			<span class="k">if</span> <span class="n">rxn</span><span class="o">.</span><span class="n">prop</span> <span class="o">==</span> <span class="s1">&#39;STD&#39;</span><span class="p">:</span>
+				<span class="n">Ap</span> <span class="o">=</span> <span class="n">standard_propensity</span><span class="p">(</span><span class="n">rxn</span><span class="p">,</span> <span class="n">CRS</span><span class="p">,</span> <span class="n">concentrations</span><span class="p">[</span><span class="n">site_index</span><span class="p">])</span>
+				
+			<span class="k">elif</span> <span class="n">rxn</span><span class="o">.</span><span class="n">prop</span> <span class="o">==</span> <span class="s1">&#39;RCM&#39;</span><span class="p">:</span>
+				<span class="n">mu</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]</span>
+				<span class="n">Ap</span> <span class="o">=</span> <span class="n">replicator_composition_propensity_envMutation</span><span class="p">(</span><span class="n">rxn</span><span class="p">,</span> <span class="n">CRS</span><span class="p">,</span> <span class="n">concentrations</span><span class="p">[</span><span class="n">site_index</span><span class="p">],</span> <span class="n">mu</span> <span class="o">=</span> <span class="n">mu</span><span class="p">)</span>
+				
+			<span class="n">site_Ap</span> <span class="o">+=</span> <span class="n">Ap</span>
+
+		<span class="n">propensity_arr</span><span class="p">[</span><span class="n">site_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">site_Ap</span>
+		<span class="c1">#print site_Ap</span>
+	
+	<span class="k">return</span> <span class="n">propensity_arr</span></div>
+
+
+<div class="viewcode-block" id="replicator_composition_propensity_envMutation"><a class="viewcode-back" href="../index.html#PropensityFunctions.replicator_composition_propensity_envMutation">[docs]</a><span class="k">def</span> <span class="nf">replicator_composition_propensity_envMutation</span><span class="p">(</span><span class="n">rxn</span><span class="p">,</span> <span class="n">CRS</span><span class="p">,</span> <span class="n">concentrations</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39; Replication Propensity function calculates propensity as the concentrations of the replicator and the composition of the enivornment </span>
+<span class="sd">		This propensity function calcuates the mutation propensity as a function of the resources availible</span>
+<span class="sd">	Arguements:</span>
+<span class="sd">		- rxn: Reaction object</span>
+<span class="sd">		- CRS: CRS object for system</span>
+<span class="sd">		- concentrations: list of molecule concentrations indexed by ID</span>
+
+<span class="sd">	Return:</span>
+<span class="sd">		- Ap: float, propensity of rxn given the current concentrations</span>
+
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="c1">#from ReplicatorFunctions import get_composition</span>
+
+	<span class="c1"># Get data out of rxn and concentration objects</span>
+	<span class="n">reactant_concentrations</span> <span class="o">=</span> <span class="n">concentrations</span><span class="p">[</span><span class="n">rxn</span><span class="o">.</span><span class="n">reactants</span><span class="p">]</span>
+	<span class="n">replicator_concentration</span> <span class="o">=</span> <span class="n">concentrations</span><span class="p">[</span><span class="n">rxn</span><span class="o">.</span><span class="n">products</span><span class="p">]</span>
+	<span class="n">reactant_coeff</span> <span class="o">=</span> <span class="n">rxn</span><span class="o">.</span><span class="n">reactant_coeff</span>
+
+	<span class="c1">#catalyzed_constants = rxn.catalyzed_constants</span>
+
+	<span class="c1">#Calculate Propensity</span>
+	<span class="n">Ap</span> <span class="o">=</span> <span class="n">rxn</span><span class="o">.</span><span class="n">constant</span> 
+
+	<span class="n">nA</span> <span class="o">=</span> <span class="n">reactant_coeff</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># If you&#39;re reading this you should confirm that &#39;A&#39; is stored at index 0</span>
+	<span class="n">nB</span> <span class="o">=</span> <span class="n">reactant_coeff</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># If you&#39;re reading this you should confirm that &#39;B&#39; is stored at index 1</span>
+	<span class="n">R_L</span> <span class="o">=</span> <span class="n">nA</span> <span class="o">+</span> <span class="n">nB</span>
+	<span class="k">if</span> <span class="n">mu</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+
+	    <span class="n">binomialA</span> <span class="o">=</span> <span class="mi">0</span>    <span class="c1">#Used for calculating the contribution from copying A-residues</span>
+	    <span class="n">binomialB</span> <span class="o">=</span> <span class="mi">0</span>   <span class="c1">#Used for calculating the intermediate of contribution from copying A-residues and B-residues</span>
+	    <span class="n">q_error</span> <span class="o">=</span> <span class="mf">0.0</span>
+	    
+	    <span class="k">for</span> <span class="n">eA</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nA</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+	        <span class="c1">#Here eA is the number of errors in copying A-residues</span>
+	        <span class="n">binomialA</span> <span class="o">=</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">nA</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">nA</span> <span class="o">-</span> <span class="n">eA</span><span class="p">)</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">eA</span><span class="p">)))</span><span class="o">*</span><span class="nb">pow</span><span class="p">(</span><span class="n">rxn</span><span class="o">.</span><span class="n">constant</span><span class="o">*</span><span class="n">reactant_concentrations</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">nA</span> <span class="o">-</span> <span class="n">eA</span><span class="p">)</span><span class="o">*</span><span class="nb">pow</span><span class="p">(</span><span class="n">rxn</span><span class="o">.</span><span class="n">constant</span><span class="o">*</span><span class="n">reactant_concentrations</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">eA</span><span class="p">)</span>  <span class="c1">#calculates number of sequences with eA errors in copying A and the resource contribution to these sequences</span>
+
+	        <span class="k">for</span> <span class="n">eB</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nB</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+	            <span class="c1"># Here eB is the number of errors in copying B-residues</span>
+	            <span class="k">if</span> <span class="n">eA</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">eB</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+	                <span class="c1"># Keeps perfect copying probability seperate from copies made with errors</span>
+	                <span class="n">q_p</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">mu</span><span class="p">,</span> <span class="n">R_L</span><span class="p">)</span><span class="o">*</span><span class="nb">pow</span><span class="p">(</span><span class="n">rxn</span><span class="o">.</span><span class="n">constant</span><span class="o">*</span><span class="n">reactant_concentrations</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">nA</span><span class="p">)</span><span class="o">*</span><span class="nb">pow</span><span class="p">(</span><span class="n">rxn</span><span class="o">.</span><span class="n">constant</span><span class="o">*</span><span class="n">reactant_concentrations</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">nB</span><span class="p">)</span>
+	                
+	            <span class="k">else</span><span class="p">:</span>
+	                <span class="n">binomialB</span> <span class="o">=</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">nB</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">nB</span> <span class="o">-</span> <span class="n">eB</span><span class="p">)</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">eB</span><span class="p">)))</span><span class="o">*</span><span class="nb">pow</span><span class="p">(</span><span class="n">rxn</span><span class="o">.</span><span class="n">constant</span><span class="o">*</span><span class="n">reactant_concentrations</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">nB</span> <span class="o">-</span> <span class="n">eB</span><span class="p">)</span><span class="o">*</span><span class="nb">pow</span><span class="p">(</span><span class="n">rxn</span><span class="o">.</span><span class="n">constant</span><span class="o">*</span><span class="n">reactant_concentrations</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">eB</span><span class="p">)</span> <span class="c1">#adds number of mutants with eB B-errors</span>
+	                
+	                <span class="n">q_error</span> <span class="o">+=</span> <span class="nb">pow</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">eA</span> <span class="o">+</span> <span class="n">eB</span><span class="p">)</span><span class="o">*</span><span class="nb">pow</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">mu</span><span class="p">,</span> <span class="n">R_L</span> <span class="o">-</span> <span class="n">eA</span> <span class="o">-</span> <span class="n">eB</span><span class="p">)</span><span class="o">*</span><span class="n">binomialA</span><span class="o">*</span><span class="n">binomialB</span>
+
+	<span class="k">elif</span> <span class="n">mu</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+	    <span class="n">q_p</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="n">sequences</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span><span class="o">.</span><span class="n">kr</span><span class="o">*</span><span class="n">monomers</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tot_count</span><span class="p">,</span> <span class="n">nA</span><span class="p">)</span><span class="o">*</span><span class="nb">pow</span><span class="p">(</span><span class="n">sequences</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span><span class="o">.</span><span class="n">kr</span><span class="o">*</span><span class="n">monomers</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tot_count</span><span class="p">,</span> <span class="n">nB</span><span class="p">)</span>
+	    <span class="n">q_error</span> <span class="o">=</span> <span class="mi">0</span>
+
+	<span class="n">Ap</span> <span class="o">=</span> <span class="p">(</span><span class="n">q_p</span> <span class="o">+</span> <span class="n">q_error</span><span class="p">)</span><span class="o">*</span><span class="n">replicator_concentration</span> 
+
+	
+	<span class="k">return</span> <span class="n">Ap</span></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Cole Mathis.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.01.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

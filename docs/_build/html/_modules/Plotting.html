@@ -1,0 +1,327 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Plotting &mdash; ChemEvolve 0.01.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="ChemEvolve 0.01.1 documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../index.html" class="fa fa-home"> ChemEvolve</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">ChemEvolve</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      
+    <li>Plotting</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for Plotting</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<div class="viewcode-block" id="plot_length_distribution"><a class="viewcode-back" href="../index.html#Plotting.plot_length_distribution">[docs]</a><span class="k">def</span> <span class="nf">plot_length_distribution</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">savename</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39;Plots the time averaged length distribution of molecules in the entire system. Shows plot unless a savename is specified &#39;&#39;&#39;</span>
+	<span class="n">ts_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+	<span class="n">static_df</span> <span class="o">=</span> <span class="n">ts_df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">,</span> <span class="s1">&#39;abundance&#39;</span><span class="p">])</span>
+
+	<span class="n">lengths_lists</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">)]</span>
+	
+	<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">static_df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+		<span class="n">lengths_lists</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">])]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;abundance&#39;</span><span class="p">]))</span>
+
+	<span class="n">length_averages</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">)]</span>
+	<span class="n">length_var</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">)]</span>
+	<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">7</span><span class="p">):</span>
+		<span class="n">length_averages</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">lengths_lists</span><span class="p">[</span><span class="n">l</span><span class="p">])</span>
+		<span class="n">length_var</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">lengths_lists</span><span class="p">[</span><span class="n">l</span><span class="p">])</span>
+
+
+	<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">7</span><span class="p">)]</span>   <span class="p">,</span><span class="n">length_averages</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">yerr</span> <span class="o">=</span> <span class="n">length_var</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+	<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Molecule Count&#39;</span><span class="p">)</span>
+	<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Molecule Size/Length&#39;</span><span class="p">)</span>
+	<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Time averaged length abundances&#39;</span><span class="p">)</span>
+	<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">savename</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">savename</span><span class="p">)</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+	<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="plot_molecule_distribution"><a class="viewcode-back" href="../index.html#Plotting.plot_molecule_distribution">[docs]</a><span class="k">def</span> <span class="nf">plot_molecule_distribution</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">savename</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39;Plots the time averaged molecule distribution of molecules in the entire system. Shows plot unless a savename is specified &#39;&#39;&#39;</span>
+	<span class="n">ts_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+	<span class="n">max_length</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="n">static_df</span> <span class="o">=</span> <span class="n">ts_df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">,</span> <span class="s1">&#39;abundance&#39;</span><span class="p">])</span>
+
+	<span class="n">molecules</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">static_df</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="p">)</span>
+	<span class="n">reduced_molecules</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">molecules</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">]</span>
+	<span class="n">molecules</span> <span class="o">=</span> <span class="n">reduced_molecules</span>
+	
+	<span class="n">molecule_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+	<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">molecules</span><span class="p">:</span>
+		<span class="n">molecule_dict</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_length</span><span class="p">:</span>
+			<span class="n">max_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+	<span class="n">nM</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">molecules</span><span class="p">)</span>
+	
+	<span class="n">color_palette</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;husl&quot;</span><span class="p">,</span> <span class="n">max_length</span><span class="p">)</span>
+	<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">static_df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+		<span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">molecules</span><span class="p">:</span>
+			<span class="n">lm</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">])</span>
+			<span class="n">molecule_dict</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">lm</span><span class="o">*</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;abundance&#39;</span><span class="p">]))</span>
+
+	<span class="n">molecule_abundances</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">nM</span><span class="p">)]</span>
+	<span class="n">molecule_std</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nM</span><span class="p">)]</span>
+	<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nM</span><span class="p">)]</span>
+	<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nM</span><span class="p">)]</span>
+	<span class="n">lengths</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nM</span><span class="p">)]</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nM</span><span class="p">):</span>
+		<span class="n">m</span> <span class="o">=</span> <span class="n">molecules</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+		<span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">color_palette</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">molecule_abundances</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">molecule_dict</span><span class="p">[</span><span class="n">m</span><span class="p">])</span>
+		<span class="n">molecule_std</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">molecule_dict</span><span class="p">[</span><span class="n">m</span><span class="p">])</span>
+		<span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;length </span><span class="si">%i</span><span class="s2">&quot;</span>  <span class="o">%</span><span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+		<span class="n">lengths</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+	<span class="n">current_x</span> <span class="o">=</span> <span class="mi">0</span>
+	
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">max_length</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+		<span class="n">indices_used</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nM</span><span class="p">):</span>
+			<span class="k">if</span> <span class="n">lengths</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span><span class="p">:</span>
+				<span class="n">indices_used</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+		<span class="n">current_molecules</span> <span class="o">=</span> <span class="p">[</span><span class="n">molecule_abundances</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">indices_used</span><span class="p">]</span>
+		<span class="n">current_std</span>  <span class="o">=</span> <span class="p">[</span><span class="n">molecule_std</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">indices_used</span><span class="p">]</span>
+		<span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;length </span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">i</span>
+		<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">current_x</span><span class="p">,</span> <span class="n">current_x</span> <span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">indices_used</span><span class="p">))]</span>   <span class="p">,</span><span class="n">current_molecules</span><span class="p">,</span> <span class="n">yerr</span> <span class="o">=</span> <span class="n">current_std</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">color_palette</span><span class="p">[(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)],</span> <span class="n">ecolor</span><span class="o">=</span> <span class="n">color_palette</span><span class="p">[(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)],</span> <span class="n">label</span><span class="o">=</span> <span class="n">label</span><span class="p">)</span>
+		<span class="n">current_x</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">indices_used</span><span class="p">)</span>
+	
+	<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">40</span><span class="p">)</span>
+
+	<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+	<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+	<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Molecule Count&#39;</span><span class="p">,</span> <span class="n">fontsize</span>  <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">position</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+	<span class="c1">#ax.tick_params(axis=&#39;both&#39;, which=&#39;major&#39;, pad=)</span>
+	<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">current_x</span><span class="p">)],</span> <span class="n">molecules</span><span class="p">,</span> <span class="n">rotation</span> <span class="o">=</span> <span class="s1">&#39;vertical&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">30</span><span class="p">)</span>
+	<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+	<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">([</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.35</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nM</span><span class="p">)])</span>
+	
+	<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
+	<span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
+	<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Molecule Distribution&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">50</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">savename</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">savename</span><span class="p">)</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+	<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="plot_time_series"><a class="viewcode-back" href="../index.html#Plotting.plot_time_series">[docs]</a><span class="k">def</span> <span class="nf">plot_time_series</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">print_molcules</span><span class="p">,</span> <span class="n">savename</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39;Plot the time series of molecule names in print_molcules, if savename provide figure will be saved &#39;&#39;&#39;</span>
+	
+	<span class="kn">import</span> <span class="nn">random</span>
+	<span class="n">color_palette</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;husl&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">print_molcules</span><span class="p">))</span>
+	<span class="n">colorindex</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">print_molcules</span><span class="p">))]</span>
+	<span class="n">generate_ts_df</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;temp_TS.csv&#39;</span><span class="p">)</span>
+	<span class="n">ts_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;temp_TS.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+	<span class="n">ts_df</span> <span class="o">=</span> <span class="n">ts_df</span><span class="o">.</span><span class="n">T</span>
+	
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">print_molcules</span><span class="p">)):</span>
+		<span class="n">m</span> <span class="o">=</span> <span class="n">print_molcules</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+		<span class="n">abundances</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ts_df</span><span class="p">[</span><span class="n">m</span><span class="p">])</span>
+		
+		<span class="n">mass_fraction</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="mi">10000</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">abundances</span><span class="p">]</span>
+		<span class="n">time</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ts_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">float</span><span class="p">))</span>
+		<span class="n">z</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">mass_fraction</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
+		<span class="n">z</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+		<span class="n">mass_fraction</span><span class="p">,</span> <span class="n">time</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">z</span><span class="p">)</span>
+		<span class="p">[</span><span class="n">ci1</span><span class="p">]</span>  <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">colorindex</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+		<span class="n">colorindex</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">ci1</span><span class="p">)</span>
+		<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">mass_fraction</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">color_palette</span><span class="p">[</span><span class="n">ci1</span><span class="p">])</span>
+	<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">30</span><span class="p">)</span>
+	<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">30</span><span class="p">)</span>
+	<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Mass Fraction&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">30</span><span class="p">)</span>
+	<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">30</span><span class="p">)</span>
+	<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
+	<span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
+	<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+	<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+	<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Mass Fraction&#39;</span><span class="p">)</span>
+	<span class="c1">#[ymin, ymax] = plt.ylim()</span>
+	<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">ymin</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">savename</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">savename</span><span class="p">)</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+	<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+	
+<span class="c1">########################################################################################</span>
+<span class="k">def</span> <span class="nf">generate_ts_df</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="n">outname</span><span class="p">):</span>
+
+	<span class="c1"># Load Tidy Data File</span>
+	<span class="n">tidy_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">infile</span><span class="p">)</span>
+
+	<span class="c1"># Get the times</span>
+	<span class="n">times</span> <span class="o">=</span> <span class="n">tidy_df</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+	<span class="c1"># Get Molecules</span>
+	<span class="n">molecules</span>  <span class="o">=</span> <span class="n">tidy_df</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+
+	<span class="n">timeseries_df</span>  <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="n">molecules</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">times</span><span class="p">)</span>
+	<span class="c1">#print timeseries_df</span>
+		
+	<span class="c1">#For each time, construct a new entry in the time series df</span>
+	<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">times</span><span class="p">:</span>
+		<span class="n">t_df</span> <span class="o">=</span> <span class="n">tidy_df</span><span class="p">[</span><span class="n">tidy_df</span><span class="o">.</span><span class="n">time</span> <span class="o">==</span> <span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;abundance&#39;</span><span class="p">])</span>
+		<span class="n">t_df</span> <span class="o">=</span> <span class="n">t_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">molecules</span><span class="p">)</span>
+		<span class="c1">#print t_df</span>
+		<span class="n">timeseries_df</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">t_df</span>
+	<span class="c1"># print timeseries_df</span>
+	<span class="c1"># raw_input(&quot;Enter&quot;)</span>
+	<span class="n">timeseries_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">outname</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Cole Mathis.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.01.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
