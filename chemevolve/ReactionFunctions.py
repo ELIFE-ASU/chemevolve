@@ -19,7 +19,8 @@ def get_libpath():
     from os.path import dirname, abspath, realpath, join
     from platform import system
 
-    dirname = os.getcwd()
+    root = dirname(abspath(realpath(__file__)))
+   
     if system() == 'Linux':
         library = 'Linux-SSA.so'
     elif system() == 'Darwin':
@@ -29,7 +30,7 @@ def get_libpath():
     else:
         raise RuntimeError("unsupported platform - \"{}\"".format(system()))
 
-    return os.path.join(dirname, 'chemevolve', 'clibs', library)
+    return os.path.join(root, 'clibs', library)
 
 _SSA_LIB = cdll.LoadLibrary(get_libpath())
 #                               current_t, next_t,  r_seed, max_x, max_y, num_m, num_r, concentrations,     constants         propensity_ints, reaction_arr,  catalyst_arr
