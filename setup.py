@@ -20,5 +20,6 @@ setup(
     license=license,
     install_requires=['numpy', 'matplotlib', 'seaborn'],
     packages=find_packages(),
-    include_package_data = True
+    include_package_data = True,
+    test_suite = 'test'
 )
