@@ -2,7 +2,7 @@
 # Use of this source code is governed by a MIT
 # license that can be found in the LICENSE file.
 import unittest
-from chemevolve.Lexer import TokenType, Token
+from chemevolve.Lexer import TokenType, Token, LexerError
 
 class TestTokenType(unittest.TestCase):
     '''
@@ -286,3 +286,20 @@ class TestToken(unittest.TestCase):
         check_repr(Token(TokenType.STRING, ''))
         check_repr(Token(TokenType.STRING, '+'))
         check_repr(Token(TokenType.STRING, 'apple'))
+
+class TestLexerError(unittest.TestCase):
+    '''
+    Ensure that all is well with the `LexerError` class.
+    '''
+    def test_init(self):
+        err = LexerError('message', 'file.txt', 5, 3)
+        self.assertEqual('message (file.txt:5:3)', err.args[0])
+        self.assertEqual('file.txt', err.filename)
+        self.assertEqual(5, err.linenum)
+        self.assertEqual(3, err.charnum)
+
+        err = LexerError('message', None, 5, 3)
+        self.assertEqual('message (:5:3)', err.args[0])
+        self.assertFalse(err.filename)
+        self.assertEqual(5, err.linenum)
+        self.assertEqual(3, err.charnum)

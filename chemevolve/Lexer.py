@@ -132,3 +132,32 @@ class Token(object):
         '''
         return 'Token({},{})'.format(repr(self.type), repr(self.data))
 
+class LexerError(Exception):
+    '''
+    The `LexerError` class provides a basic error type to be raised when an
+    error is encountered during the lexing phase of parsing a Chemevolve
+    configuration.
+    '''
+    def __init__(self, msg, filename, linenum, charnum):
+        '''
+        Initialize a `LexerError` providing a message to describe the error the
+        filename, line and character at which the error occurred.
+        '''
+        message = LexerError.format(msg, filename, linenum, charnum)
+
+        super(LexerError, self).__init__(message)
+
+        self.filename = filename
+        self.linenum = linenum
+        self.charnum = charnum
+
+    @staticmethod
+    def format(msg, filename, linenum, charnum):
+        '''
+        Format an error message include a base message (msg) and the filename,
+        line and character at which the error occurred.
+        '''
+        if filename is not None:
+            return '{} ({}:{}:{})'.format(msg, filename, linenum, charnum)
+        else:
+            return '{} (:{}:{})'.format(msg, linenum, charnum)
