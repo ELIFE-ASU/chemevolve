@@ -151,6 +151,12 @@ class Token(object):
         '''
         return 'Token({},{})'.format(repr(self.type), repr(self.data))
 
+    def __eq__(self, other):
+        '''
+        Compare two `Token`s for equality.
+        '''
+        return self.type.__eq__(other.type) and self.data.__eq__(other.data)
+
 class LexerError(Exception):
     '''
     The `LexerError` class provides a basic error type to be raised when an

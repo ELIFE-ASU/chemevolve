@@ -316,13 +316,9 @@ class TestLexer(unittest.TestCase):
         lexer = Lexer()
         got = lexer.lex(s)
         if isinstance(tokens, list):
-            self.assertEqual(len(tokens), len(got))
-            for e, g in zip(tokens, got):
-                self.assertEqual(e.type, g.type)
-                self.assertEqual(e.data, g.data)
+            self.assertEqual(tokens, got)
         else:
-            self.assertEqual(tokens.type, got[0].type)
-            self.assertEqual(tokens.data, got[0].data)
+            self.assertEqual(tokens, got[0])
 
     def test_init(self):
         '''
@@ -545,24 +541,17 @@ class TestLexer(unittest.TestCase):
             path = os.path.join(valid, filename)
             lexer = Lexer()
             with open(path) as f:
-                expect = lexer.lex(f.read(), reset=True)
+                expected = lexer.lex(f.read(), reset=True)
 
             # Lex the file from a file handle
             with open(path) as f:
                 got = lexer.lex_file(f, reset=True)
-
-            self.assertEqual(len(expect), len(got))
-            for e, g in zip(expect, got):
-                self.assertEqual(e.type, g.type)
-                self.assertEqual(e.data, g.data)
+            self.assertEqual(expected, got)
 
             # Lex the file from a filename
             got = lexer.lex_file(path, reset=True)
+            self.assertEqual(expected, got)
 
-            self.assertEqual(len(expect), len(got))
-            for e, g in zip(expect, got):
-                self.assertEqual(e.type, g.type)
-                self.assertEqual(e.data, g.data)
 
         invalid = 'test/configs/lexer/invalid'
         for filename in os.listdir(invalid):
