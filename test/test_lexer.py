@@ -532,3 +532,44 @@ class TestLexer(unittest.TestCase):
             with open(os.path.join(invalid, filename)) as f:
                 with self.assertRaises(LexerError):
                     Lexer().lex(f.read())
+
+    def test_lex_file(self):
+        '''
+        Ensure that the configuration files in configs/lexer/valid all lex
+        without error and produce the same sequence of tokens when using
+        `lex_file` as when using `lex`. Ensure that files in
+        configs/lexer/invalid raise errors.
+        '''
+        valid = 'test/configs/lexer/valid'
+        for filename in os.listdir(valid):
+            path = os.path.join(valid, filename)
+            lexer = Lexer()
+            with open(path) as f:
+                expect = lexer.lex(f.read(), reset=True)
+
+            # Lex the file from a file handle
+            with open(path) as f:
+                got = lexer.lex_file(f, reset=True)
+
+            self.assertEqual(len(expect), len(got))
+            for e, g in zip(expect, got):
+                self.assertEqual(e.type, g.type)
+                self.assertEqual(e.data, g.data)
+
+            # Lex the file from a filename
+            got = lexer.lex_file(path, reset=True)
+
+            self.assertEqual(len(expect), len(got))
+            for e, g in zip(expect, got):
+                self.assertEqual(e.type, g.type)
+                self.assertEqual(e.data, g.data)
+
+        invalid = 'test/configs/lexer/invalid'
+        for filename in os.listdir(invalid):
+            path = os.path.join(invalid, filename)
+            with open(path) as f:
+                with self.assertRaises(LexerError):
+                    Lexer().lex_file(f)
+            with self.assertRaises(LexerError):
+                Lexer().lex_file(path)
+

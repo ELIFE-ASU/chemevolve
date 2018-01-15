@@ -239,6 +239,47 @@ class Lexer(object):
 
         return self.tokens
 
+    def lex_file(self, f, name=None, reset=True):
+        '''
+        Lex a the contents of a file `f` using the optional `name` argument for
+        error reporting. If `reset` is `True`, then any previously lexed tokens
+        are discarded; otherwise, they are retained.
+
+        If `f` is a file, then we attempt to read from it and lex the contents.
+        If the `f` argument is a filename then we attempt to open it
+        (read-only) and it is closed upon exit.
+
+        If `name is not None`, then that value is used as the filename for
+        error reporting purposes. If `name is None` and `f` is a filename, then
+        `name` is overridden and `f` is used for error reporting.
+
+        :param f: an open `file` handle or a filename
+        :type f: `file`, `str` or `unicode`
+        :param name: an optional name used for reporting errors
+        :type name: `str` or `unicode`
+        :param reset: whether or not to discard previously lexed tokens
+        :type reset: `bool`
+        '''
+        if isinstance(f, str) or isinstance(f, unicode):
+            with open(f, 'rb') as filehandle:
+                if name is None:
+                    return self.lex_file(filehandle, name=f, reset=reset)
+                else:
+                    return self.lex_file(filehandle, name=name, reset=reset)
+        elif isinstance(f, file):
+            if reset:
+                self.reset(name)
+            else:
+                self.restart(name)
+
+            for char in self.characters(f):
+                self.handle_character(char)
+            self.append_token()
+
+            return self.tokens
+        else:
+            raise TypeError('argument must be a filename or a file')
+
     def handle_character(self, char):
         '''
         Lex a single character. This will update the internal state of the
@@ -549,3 +590,19 @@ class Lexer(object):
         # Any other case is an error
         else:
             self.error('unexpected character "' + char + '"')
+
+    def characters(self, filehandle):
+        '''
+        Generator over the characters is a `file` with UTF-8 support
+        '''
+        c = filehandle.read(1)
+        while c:
+            while True:
+                try:
+                    yield c.decode('utf-8')
+                except UnicodeDecodeError:
+                    c += filehandle.read(1)
+                else:
+                    c = filehandle.read(1)
+                    break
+
