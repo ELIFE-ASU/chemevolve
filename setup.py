@@ -1,8 +1,7 @@
-# Copyright 2016 ELIFE. All rights reserved.
+# Copyright 2017 ELIFE. All rights reserved.
 # Use of this source code is governed by a MIT
 # license that can be found in the LICENSE file.
-from setuptools import setup,find_packages
-
+from setuptools import setup, find_packages
 
 with open('docs/README.rst') as f:
     readme = f.read()
@@ -21,10 +20,6 @@ setup(
     license=license,
     install_requires=['numpy', 'matplotlib', 'seaborn'],
     packages=find_packages(),
-    include_package_data = True
-   
+    include_package_data = True,
+    test_suite = 'test'
 )
-
-
-
-
