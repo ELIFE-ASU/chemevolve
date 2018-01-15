@@ -161,3 +161,360 @@ class LexerError(Exception):
             return '{} ({}:{}:{})'.format(msg, filename, linenum, charnum)
         else:
             return '{} (:{}:{})'.format(msg, linenum, charnum)
+
+class Lexer(object):
+    '''
+    The `Lexer` class breaks a file (or string) input in a list of `Token`s
+    which can subsequently be parsed into a full `CoreClasses.CRS` object.
+    '''
+    def __init__(self, filename=None):
+        '''
+        Initialize the `Lexer` with an optional filename.
+        '''
+        self.reset(filename)
+
+    def reset(self, filename=None):
+        '''
+        Reset the `Lexer` to a "freshly initialized" state.
+        '''
+        self.tokens = []
+        self.restart(filename)
+
+    def restart(self, filename=None):
+        '''
+        Restart the lexing without discarding previously lexed tokens. This
+        allows multiple inputs to be concatentated into a single lexed output.
+        '''
+        self.filename = filename
+        self.linenum = 1
+        self.charnum = 0
+        self.data = ''
+        self.token_type = None
+
+    def lex(self, s, filename=None, reset=True):
+        '''
+        Lex an input string `s` optionally setting the filename for the input
+        to `filename`. If `reset` is `True`, then any previously lexed tokens
+        are discarded; otherwise, they are retained.
+        '''
+        if reset:
+            self.reset(filename)
+        else:
+            self.restart(filename)
+
+        for char in s:
+            self.handle_character(char)
+        self.append_token()
+
+        return self.tokens
+
+    def handle_character(self, char):
+        '''
+        Lex a single character. This will update the internal state of the
+        `Lexer`, but may not result in the pushing of a new `Token` onto the
+        tokens list; this depends on the internal state of the `Lexer` and the
+        character being handled.
+        '''
+        self.charnum += 1
+        if char == '\n':
+            self.newline(char)
+        elif char == '<':
+            self.lessthan(char)
+        elif char == '=':
+            self.equalto(char)
+        elif char == '[':
+            self.open_bracket(char)
+        elif char == ']':
+            self.close_bracket(char)
+        elif char == '(':
+            self.open_paren(char)
+        elif char == ')':
+            self.close_paren(char)
+        elif char == ',':
+            self.comma(char)
+        elif char.isspace():
+            self.whitespace(char)
+        elif char == '.':
+            self.decimal(char)
+        elif char == '+':
+            self.plus(char)
+        elif char == '-':
+            self.minus(char)
+        elif char == '>':
+            self.greaterthan(char)
+        elif char.isdigit():
+            self.digit(char)
+        elif char.isalpha():
+            self.char(char)
+        else:
+            self.error('unexpected character type "' + char + '"')
+
+    def error(self, msg):
+        '''
+        Raise a `LexerError` using the provided message and the `Lexer`'s
+        internal `filename`, `linenum` and `charnum` state.
+        '''
+        raise LexerError(msg, self.filename, self.linenum, self.charnum)
+
+    def append_token(self):
+        '''
+        Append the current `Lexer`'s state to the tokens list if there is
+        anything to append.
+
+        If the `Lexer`'s state is invalid, a `LexerError` is raised.
+        '''
+        if self.token_type is not None and self.data != '':
+            token = Token(self.token_type, self.data)
+            try:
+                token.validate()
+            except ValueError as e:
+                self.error(e.args[0])
+            else:
+                self.tokens.append(token)
+                self.data, self.token_type = '', None
+        elif self.token_type is None and self.data == '':
+            pass
+        else:
+            self.error('unexpected lexer state')
+
+    def singleton(self, token_type, char):
+        '''
+        Lex a singleton onto the tokens list.
+
+        This appends the current state of the `Lexer`, and then subsequently
+        appends a singleton type token, e.g. a newline, less-than, etc...
+        '''
+        self.append_token()
+
+        self.token_type = token_type
+        self.data = char
+        self.append_token()
+
+    def newline(self, char):
+        '''
+        Lex a newline character. This not only lexes the singleton token, but
+        also modifes the `linenum` and `charnum` state.
+        '''
+        self.linenum += 1
+        self.charnum = 0
+        self.singleton(TokenType.NL, char)
+
+    def lessthan(self, char):
+        '''
+        Lex a less-than \'<\' character.
+        '''
+        self.singleton(TokenType.LT, char)
+
+    def equalto(self, char):
+        '''
+        Lex an equal-to \'=\' character.
+        '''
+        self.singleton(TokenType.EQ, char)
+
+    def open_bracket(self, char):
+        '''
+        Lex an open bracket \'[\' character.
+        '''
+        self.singleton(TokenType.OBRACKET, char)
+
+    def close_bracket(self, char):
+        '''
+        Lex a close bracket \']\' character.
+        '''
+        self.singleton(TokenType.CBRACKET, char)
+
+    def open_paren(self, char):
+        '''
+        Lex an open parentheses \'(\' character.
+        '''
+        self.singleton(TokenType.OPAREN, char)
+
+    def close_paren(self, char):
+        '''
+        Lex a close parentheses \')\' character.
+        '''
+        self.singleton(TokenType.CPAREN, char)
+
+    def comma(self, char):
+        '''
+        Lex a comma \',\' character.
+        '''
+        self.singleton(TokenType.COMMA, char)
+
+    def whitespace(self, char):
+        '''
+        Lex a whitespace character, i.e. append the `Lexer`'s current state and
+        move on.
+
+        Whitespace in Chemevolve configurations only end the current token,
+        they carry no more syntactic meaning. The only whitespace of greater
+        significance is the newline character (\\n). Carriage returns (\\r) are
+        treated as any other whitespace.
+        '''
+        self.append_token()
+
+    def decimal(self, char):
+        '''
+        Lex a decimal point (.).
+        '''
+        # If the first character in the token, then the token will be a FLOAT
+        if self.data == '':
+            self.token_type = TokenType.FLOAT
+            #  self.data = '0' + char
+            self.data = char
+        # If the token is already an INTEGER, then the token becomes a FLOAT
+        elif self.token_type == TokenType.INTEGER:
+            self.token_type = TokenType.FLOAT
+            #  if self.data[-1] in '+-':
+            #      self.data += '0'
+            self.data += char
+        # Decimal points are allowed after the first character of a STRING
+        elif self.token_type == TokenType.STRING:
+            self.data += char
+        # If the token is a PLUS, then it becomes a (positive) FLOAT
+        elif self.token_type == TokenType.PLUS:
+            self.token_type = TokenType.FLOAT
+            #  self.data += '0' + char
+            self.data += char
+        # If the token is a MINUS, then it becomes a (negative) FLOAT
+        elif self.token_type == TokenType.MINUS:
+            self.token_type = TokenType.FLOAT
+            #  self.data += '0' + char
+            self.data += char
+        # If the token is alread a FLOAT, then it has too many decimals!
+        elif self.token_type == TokenType.FLOAT:
+            self.error('unexpected decimal in float')
+        # Any other case is an "unexpected decimal"
+        else:
+            self.error('unexpected decimal "."')
+
+    def plus(self, char):
+        '''
+        Lex a plus sign (+).
+        '''
+        # If it is the first character, then the token it a PLUS
+        if self.data == '':
+            self.token_type = TokenType.PLUS
+            self.data = char
+        # If the token is a FLOAT
+        elif self.token_type == TokenType.FLOAT:
+            # and the previous character is an 'e' or 'E', then all is well
+            if self.data[-1] in 'eE':
+                self.data += char
+            # otherwise we push the previous FLOAT, and start a PLUS
+            else:
+                self.append_token()
+                self.token_type = TokenType.PLUS
+                self.data = char
+        # If the token is an INTEGER, then we push the previous INTEGER and
+        # start a PLUS
+        elif self.token_type == TokenType.INTEGER:
+            self.append_token()
+            self.token_type = TokenType.PLUS
+            self.data = char
+        # Any other case is an error
+        else:
+            self.error('unexpected plus sign "+"')
+
+    def minus(self, char):
+        '''
+        Lex a minus sign (-).
+        '''
+        # If this is the first character of the token, then it is a MINUS
+        if self.data == '':
+            self.token_type = TokenType.MINUS
+            self.data = char
+        # If the token is a STRING, then everything is okay
+        elif self.token_type == TokenType.STRING:
+            self.data += char
+        # If the token is already a MINUS, then the token type becomes DASH
+        elif self.token_type == TokenType.MINUS:
+            self.token_type = TokenType.DASH
+            self.data += char
+        # If the token is a FLOAT, then check
+        elif self.token_type == TokenType.FLOAT:
+            # if the previous character is one of 'eE', then all is well
+            if self.data[-1] in 'eE':
+                self.data += char
+            # otherwise push the FLOAT and start a MINUS
+            else:
+                self.append_token()
+                self.token_type = TokenType.MINUS
+                self.data = char
+        # If the token is an INTEGER, push it and start a MINUS
+        elif self.token_type == TokenType.INTEGER:
+            self.append_token()
+            self.token_type = TokenType.MINUS
+            self.data = char
+        # Any other case is an error
+        else:
+            self.error('unexpected minus sign "+"')
+
+    def greaterthan(self, char):
+        '''
+        Lex a greater-than (>).
+        '''
+        # If this the first character, then it is a singleton
+        if self.data == '':
+            self.singleton(TokenType.GT, char)
+        # If the token is a MINUS, then it is now an ARROW and we push it.
+        elif self.token_type == TokenType.MINUS:
+            self.token_type = TokenType.ARROW
+            self.data += char
+            self.append_token()
+        # Any other case should result in a singleton
+        else:
+            self.singleton(TokenType.GT, char)
+
+    def digit(self, char):
+        '''
+        Lex a digit ([0-9]).
+        '''
+        # If this is the first character, then the token is an INTEGER
+        if self.data == '':
+            self.token_type = TokenType.INTEGER
+            self.data += char
+        # If the token is already an INTEGER, then keep going
+        elif self.token_type == TokenType.INTEGER:
+            self.data += char
+        # If the token is already a FLOAT, then keep going
+        elif self.token_type == TokenType.FLOAT:
+            self.data += char
+        # Any other case starts a new token
+        else:
+            self.append_token()
+            self.token_type = TokenType.INTEGER
+            self.data = char
+
+    def char(self, char):
+        '''
+        Lex a generic character.
+        '''
+        # If this is the first character, then the token is a STRING
+        if self.data == '':
+            self.token_type = TokenType.STRING
+            self.data += char
+        # If the token is already a STRING, keep going.
+        elif self.token_type == TokenType.STRING:
+            self.token_type = TokenType.STRING
+            self.data += char
+        # If the token is already an INTEGER, then we check
+        elif self.token_type == TokenType.INTEGER:
+            # if the character is in 'eE', then the token becomes a FLOAT
+            if char in 'eE':
+                self.token_type = TokenType.FLOAT
+                self.data += char
+            # otherwise we have an error
+            else:
+                self.error('characters not supported in integers "' + char + '"')
+        # If the token is already an FLOAT, then we check
+        elif self.token_type == TokenType.FLOAT:
+            # if the character is in 'eE', then everything is okay
+            if char in 'eE':
+                self.data += char
+            # otherwise we have an error
+            else:
+                self.error('characters not supported in floats "' + char + '"')
+        # Any other case is an error
+        else:
+            self.error('unexpected character "' + char + '"')

@@ -1,0 +1,1165 @@
+<meta-data>
+nrMolecules = 126
+nrReactions = 1032
+
+<molecules>
+[0] A
+[1] B
+[2] AA
+[3] AB
+[4] BA
+[5] BB
+[6] AAA
+[7] AAB
+[8] ABA
+[9] ABB
+[10] BAA
+[11] BAB
+[12] BBA
+[13] BBB
+[14] AAAA
+[15] AAAB
+[16] AABA
+[17] AABB
+[18] ABAA
+[19] ABAB
+[20] ABBA
+[21] ABBB
+[22] BAAA
+[23] BAAB
+[24] BABA
+[25] BABB
+[26] BBAA
+[27] BBAB
+[28] BBBA
+[29] BBBB
+[30] AAAAA
+[31] AAAAB
+[32] AAABA
+[33] AAABB
+[34] AABAA
+[35] AABAB
+[36] AABBA
+[37] AABBB
+[38] ABAAA
+[39] ABAAB
+[40] ABABA
+[41] ABABB
+[42] ABBAA
+[43] ABBAB
+[44] ABBBA
+[45] ABBBB
+[46] BAAAA
+[47] BAAAB
+[48] BAABA
+[49] BAABB
+[50] BABAA
+[51] BABAB
+[52] BABBA
+[53] BABBB
+[54] BBAAA
+[55] BBAAB
+[56] BBABA
+[57] BBABB
+[58] BBBAA
+[59] BBBAB
+[60] BBBBA
+[61] BBBBB
+[62] AAAAAA
+[63] AAAAAB
+[64] AAAABA
+[65] AAAABB
+[66] AAABAA
+[67] AAABAB
+[68] AAABBA
+[69] AAABBB
+[70] AABAAA
+[71] AABAAB
+[72] AABABA
+[73] AABABB
+[74] AABBAA
+[75] AABBAB
+[76] AABBBA
+[77] AABBBB
+[78] ABAAAA
+[79] ABAAAB
+[80] ABAABA
+[81] ABAABB
+[82] ABABAA
+[83] ABABAB
+[84] ABABBA
+[85] ABABBB
+[86] ABBAAA
+[87] ABBAAB
+[88] ABBABA
+[89] ABBABB
+[90] ABBBAA
+[91] ABBBAB
+[92] ABBBBA
+[93] ABBBBB
+[94] BAAAAA
+[95] BAAAAB
+[96] BAAABA
+[97] BAAABB
+[98] BAABAA
+[99] BAABAB
+[100] BAABBA
+[101] BAABBB
+[102] BABAAA
+[103] BABAAB
+[104] BABABA
+[105] BABABB
+[106] BABBAA
+[107] BABBAB
+[108] BABBBA
+[109] BABBBB
+[110] BBAAAA
+[111] BBAAAB
+[112] BBAABA
+[113] BBAABB
+[114] BBABAA
+[115] BBABAB
+[116] BBABBA
+[117] BBABBB
+[118] BBBAAA
+[119] BBBAAB
+[120] BBBABA
+[121] BBBABB
+[122] BBBBAA
+[123] BBBBAB
+[124] BBBBBA
+[125] BBBBBB
+
+<reactions>
+[0] 2[A] -- 0.01 -> 1[AA]  STD  (0.03[AAA], .03[AAA])
+[1] 1[AA] -- 1.0 -> 2[A]  STD  (3e-2[AAA],3.e-2[AAA],3.0e-2[AAA])
+[2] 1[A] + 1[B] -- 0.01 -> 1[AB]  STD  (3E-2[AAA],3.E-2[AAA],3.0E-2[AAA])
+[3] 1[AB] -- 1.0 -> 1[A] + 1[B]  STD  (3e+2[AAA],3.e+2[AAA],3.0e+2[AAA])
+[4] 1[A] + 1[B] -- 0.01 -> 1[BA]  STD (3E+2[AAA],3.E+2[AAA],3.0E+2[AAA])
+[5] 1[BA] -- 1.0 -> 1[A] + 1[B]  STD  (3e2[AAA], 3.e2[AAA], 3.0e2[AAA])
+[6] 2[B] -- 0.01 -> 1[BB]  STD (3e2[AAA], 3.e2[AAA], 3.0e2[AAA])
+[7] 1[BB] -- 1.0 -> 2[B]  STD
+[8] 1[A] + 1[AA] -- 0.01 -> 1[AAA]  STD 
+[9] 1[AAA] -- 1.0 -> 1[A] + 1[AA]  STD 
+[10] 1[A] + 1[AA] -- 0.01 -> 1[AAA]  STD  (0.03[AAA])
+[11] 1[AAA] -- 1.0 -> 1[A] + 1[AA]  STD 
+[12] 1[A] + 1[AB] -- 0.01 -> 1[AAB]  STD 
+[13] 1[AAB] -- 1.0 -> 1[A] + 1[AB]  STD 
+[14] 1[B] + 1[AA] -- 0.01 -> 1[AAB]  STD 
+[15] 1[AAB] -- 1.0 -> 1[B] + 1[AA]  STD 
+[16] 1[A] + 1[BA] -- 0.01 -> 1[ABA]  STD 
+[17] 1[ABA] -- 1.0 -> 1[A] + 1[BA]  STD 
+[18] 1[A] + 1[AB] -- 0.01 -> 1[ABA]  STD 
+[19] 1[ABA] -- 1.0 -> 1[A] + 1[AB]  STD 
+[20] 1[A] + 1[BB] -- 0.01 -> 1[ABB]  STD 
+[21] 1[ABB] -- 1.0 -> 1[A] + 1[BB]  STD 
+[22] 1[B] + 1[AB] -- 0.01 -> 1[ABB]  STD  (0.03[BBB])
+[23] 1[ABB] -- 1.0 -> 1[B] + 1[AB]  STD 
+[24] 1[B] + 1[AA] -- 0.01 -> 1[BAA]  STD 
+[25] 1[BAA] -- 1.0 -> 1[B] + 1[AA]  STD 
+[26] 1[A] + 1[BA] -- 0.01 -> 1[BAA]  STD  (0.03[AAA])
+[27] 1[BAA] -- 1.0 -> 1[A] + 1[BA]  STD 
+[28] 1[B] + 1[AB] -- 0.01 -> 1[BAB]  STD 
+[29] 1[BAB] -- 1.0 -> 1[B] + 1[AB]  STD 
+[30] 1[B] + 1[BA] -- 0.01 -> 1[BAB]  STD 
+[31] 1[BAB] -- 1.0 -> 1[B] + 1[BA]  STD 
+[32] 1[B] + 1[BA] -- 0.01 -> 1[BBA]  STD 
+[33] 1[BBA] -- 1.0 -> 1[B] + 1[BA]  STD 
+[34] 1[A] + 1[BB] -- 0.01 -> 1[BBA]  STD 
+[35] 1[BBA] -- 1.0 -> 1[A] + 1[BB]  STD 
+[36] 1[B] + 1[BB] -- 0.01 -> 1[BBB]  STD  (0.03[BBB])
+[37] 1[BBB] -- 1.0 -> 1[B] + 1[BB]  STD 
+[38] 1[B] + 1[BB] -- 0.01 -> 1[BBB]  STD 
+[39] 1[BBB] -- 1.0 -> 1[B] + 1[BB]  STD 
+[40] 1[A] + 1[AAA] -- 0.01 -> 1[AAAA]  STD 
+[41] 1[AAAA] -- 1.0 -> 1[A] + 1[AAA]  STD 
+[42] 2[AA] -- 0.01 -> 1[AAAA]  STD 
+[43] 1[AAAA] -- 1.0 -> 2[AA]  STD 
+[44] 1[A] + 1[AAA] -- 0.01 -> 1[AAAA]  STD 
+[45] 1[AAAA] -- 1.0 -> 1[A] + 1[AAA]  STD 
+[46] 1[A] + 1[AAB] -- 0.01 -> 1[AAAB]  STD 
+[47] 1[AAAB] -- 1.0 -> 1[A] + 1[AAB]  STD 
+[48] 1[AA] + 1[AB] -- 0.01 -> 1[AAAB]  STD 
+[49] 1[AAAB] -- 1.0 -> 1[AA] + 1[AB]  STD 
+[50] 1[B] + 1[AAA] -- 0.01 -> 1[AAAB]  STD 
+[51] 1[AAAB] -- 1.0 -> 1[B] + 1[AAA]  STD 
+[52] 1[A] + 1[ABA] -- 0.01 -> 1[AABA]  STD 
+[53] 1[AABA] -- 1.0 -> 1[A] + 1[ABA]  STD 
+[54] 1[AA] + 1[BA] -- 0.01 -> 1[AABA]  STD 
+[55] 1[AABA] -- 1.0 -> 1[AA] + 1[BA]  STD 
+[56] 1[A] + 1[AAB] -- 0.01 -> 1[AABA]  STD 
+[57] 1[AABA] -- 1.0 -> 1[A] + 1[AAB]  STD 
+[58] 1[A] + 1[ABB] -- 0.01 -> 1[AABB]  STD 
+[59] 1[AABB] -- 1.0 -> 1[A] + 1[ABB]  STD 
+[60] 1[AA] + 1[BB] -- 0.01 -> 1[AABB]  STD 
+[61] 1[AABB] -- 1.0 -> 1[AA] + 1[BB]  STD 
+[62] 1[B] + 1[AAB] -- 0.01 -> 1[AABB]  STD 
+[63] 1[AABB] -- 1.0 -> 1[B] + 1[AAB]  STD 
+[64] 1[A] + 1[BAA] -- 0.01 -> 1[ABAA]  STD 
+[65] 1[ABAA] -- 1.0 -> 1[A] + 1[BAA]  STD 
+[66] 1[AA] + 1[AB] -- 0.01 -> 1[ABAA]  STD 
+[67] 1[ABAA] -- 1.0 -> 1[AA] + 1[AB]  STD 
+[68] 1[A] + 1[ABA] -- 0.01 -> 1[ABAA]  STD 
+[69] 1[ABAA] -- 1.0 -> 1[A] + 1[ABA]  STD 
+[70] 1[A] + 1[BAB] -- 0.01 -> 1[ABAB]  STD 
+[71] 1[ABAB] -- 1.0 -> 1[A] + 1[BAB]  STD 
+[72] 2[AB] -- 0.01 -> 1[ABAB]  STD 
+[73] 1[ABAB] -- 1.0 -> 2[AB]  STD 
+[74] 1[B] + 1[ABA] -- 0.01 -> 1[ABAB]  STD 
+[75] 1[ABAB] -- 1.0 -> 1[B] + 1[ABA]  STD 
+[76] 1[A] + 1[BBA] -- 0.01 -> 1[ABBA]  STD 
+[77] 1[ABBA] -- 1.0 -> 1[A] + 1[BBA]  STD 
+[78] 1[AB] + 1[BA] -- 0.01 -> 1[ABBA]  STD 
+[79] 1[ABBA] -- 1.0 -> 1[AB] + 1[BA]  STD 
+[80] 1[A] + 1[ABB] -- 0.01 -> 1[ABBA]  STD 
+[81] 1[ABBA] -- 1.0 -> 1[A] + 1[ABB]  STD 
+[82] 1[A] + 1[BBB] -- 0.01 -> 1[ABBB]  STD 
+[83] 1[ABBB] -- 1.0 -> 1[A] + 1[BBB]  STD 
+[84] 1[AB] + 1[BB] -- 0.01 -> 1[ABBB]  STD 
+[85] 1[ABBB] -- 1.0 -> 1[AB] + 1[BB]  STD 
+[86] 1[B] + 1[ABB] -- 0.01 -> 1[ABBB]  STD 
+[87] 1[ABBB] -- 1.0 -> 1[B] + 1[ABB]  STD 
+[88] 1[B] + 1[AAA] -- 0.01 -> 1[BAAA]  STD 
+[89] 1[BAAA] -- 1.0 -> 1[B] + 1[AAA]  STD 
+[90] 1[AA] + 1[BA] -- 0.01 -> 1[BAAA]  STD 
+[91] 1[BAAA] -- 1.0 -> 1[AA] + 1[BA]  STD 
+[92] 1[A] + 1[BAA] -- 0.01 -> 1[BAAA]  STD 
+[93] 1[BAAA] -- 1.0 -> 1[A] + 1[BAA]  STD 
+[94] 1[B] + 1[AAB] -- 0.01 -> 1[BAAB]  STD 
+[95] 1[BAAB] -- 1.0 -> 1[B] + 1[AAB]  STD 
+[96] 1[AB] + 1[BA] -- 0.01 -> 1[BAAB]  STD 
+[97] 1[BAAB] -- 1.0 -> 1[AB] + 1[BA]  STD 
+[98] 1[B] + 1[BAA] -- 0.01 -> 1[BAAB]  STD 
+[99] 1[BAAB] -- 1.0 -> 1[B] + 1[BAA]  STD 
+[100] 1[B] + 1[ABA] -- 0.01 -> 1[BABA]  STD 
+[101] 1[BABA] -- 1.0 -> 1[B] + 1[ABA]  STD 
+[102] 2[BA] -- 0.01 -> 1[BABA]  STD 
+[103] 1[BABA] -- 1.0 -> 2[BA]  STD 
+[104] 1[A] + 1[BAB] -- 0.01 -> 1[BABA]  STD 
+[105] 1[BABA] -- 1.0 -> 1[A] + 1[BAB]  STD 
+[106] 1[B] + 1[ABB] -- 0.01 -> 1[BABB]  STD 
+[107] 1[BABB] -- 1.0 -> 1[B] + 1[ABB]  STD 
+[108] 1[BA] + 1[BB] -- 0.01 -> 1[BABB]  STD 
+[109] 1[BABB] -- 1.0 -> 1[BA] + 1[BB]  STD 
+[110] 1[B] + 1[BAB] -- 0.01 -> 1[BABB]  STD 
+[111] 1[BABB] -- 1.0 -> 1[B] + 1[BAB]  STD 
+[112] 1[B] + 1[BAA] -- 0.01 -> 1[BBAA]  STD 
+[113] 1[BBAA] -- 1.0 -> 1[B] + 1[BAA]  STD 
+[114] 1[AA] + 1[BB] -- 0.01 -> 1[BBAA]  STD 
+[115] 1[BBAA] -- 1.0 -> 1[AA] + 1[BB]  STD 
+[116] 1[A] + 1[BBA] -- 0.01 -> 1[BBAA]  STD 
+[117] 1[BBAA] -- 1.0 -> 1[A] + 1[BBA]  STD 
+[118] 1[B] + 1[BAB] -- 0.01 -> 1[BBAB]  STD 
+[119] 1[BBAB] -- 1.0 -> 1[B] + 1[BAB]  STD 
+[120] 1[AB] + 1[BB] -- 0.01 -> 1[BBAB]  STD 
+[121] 1[BBAB] -- 1.0 -> 1[AB] + 1[BB]  STD 
+[122] 1[B] + 1[BBA] -- 0.01 -> 1[BBAB]  STD 
+[123] 1[BBAB] -- 1.0 -> 1[B] + 1[BBA]  STD 
+[124] 1[B] + 1[BBA] -- 0.01 -> 1[BBBA]  STD 
+[125] 1[BBBA] -- 1.0 -> 1[B] + 1[BBA]  STD 
+[126] 1[BA] + 1[BB] -- 0.01 -> 1[BBBA]  STD 
+[127] 1[BBBA] -- 1.0 -> 1[BA] + 1[BB]  STD 
+[128] 1[A] + 1[BBB] -- 0.01 -> 1[BBBA]  STD 
+[129] 1[BBBA] -- 1.0 -> 1[A] + 1[BBB]  STD 
+[130] 1[B] + 1[BBB] -- 0.01 -> 1[BBBB]  STD 
+[131] 1[BBBB] -- 1.0 -> 1[B] + 1[BBB]  STD 
+[132] 2[BB] -- 0.01 -> 1[BBBB]  STD 
+[133] 1[BBBB] -- 1.0 -> 2[BB]  STD 
+[134] 1[B] + 1[BBB] -- 0.01 -> 1[BBBB]  STD 
+[135] 1[BBBB] -- 1.0 -> 1[B] + 1[BBB]  STD 
+[136] 1[A] + 1[AAAA] -- 0.01 -> 1[AAAAA]  STD 
+[137] 1[AAAAA] -- 1.0 -> 1[A] + 1[AAAA]  STD 
+[138] 1[AA] + 1[AAA] -- 0.01 -> 1[AAAAA]  STD 
+[139] 1[AAAAA] -- 1.0 -> 1[AA] + 1[AAA]  STD 
+[140] 1[AA] + 1[AAA] -- 0.01 -> 1[AAAAA]  STD 
+[141] 1[AAAAA] -- 1.0 -> 1[AA] + 1[AAA]  STD 
+[142] 1[A] + 1[AAAA] -- 0.01 -> 1[AAAAA]  STD 
+[143] 1[AAAAA] -- 1.0 -> 1[A] + 1[AAAA]  STD 
+[144] 1[A] + 1[AAAB] -- 0.01 -> 1[AAAAB]  STD 
+[145] 1[AAAAB] -- 1.0 -> 1[A] + 1[AAAB]  STD 
+[146] 1[AA] + 1[AAB] -- 0.01 -> 1[AAAAB]  STD 
+[147] 1[AAAAB] -- 1.0 -> 1[AA] + 1[AAB]  STD 
+[148] 1[AB] + 1[AAA] -- 0.01 -> 1[AAAAB]  STD 
+[149] 1[AAAAB] -- 1.0 -> 1[AB] + 1[AAA]  STD 
+[150] 1[B] + 1[AAAA] -- 0.01 -> 1[AAAAB]  STD 
+[151] 1[AAAAB] -- 1.0 -> 1[B] + 1[AAAA]  STD 
+[152] 1[A] + 1[AABA] -- 0.01 -> 1[AAABA]  STD 
+[153] 1[AAABA] -- 1.0 -> 1[A] + 1[AABA]  STD 
+[154] 1[AA] + 1[ABA] -- 0.01 -> 1[AAABA]  STD 
+[155] 1[AAABA] -- 1.0 -> 1[AA] + 1[ABA]  STD 
+[156] 1[BA] + 1[AAA] -- 0.01 -> 1[AAABA]  STD 
+[157] 1[AAABA] -- 1.0 -> 1[BA] + 1[AAA]  STD 
+[158] 1[A] + 1[AAAB] -- 0.01 -> 1[AAABA]  STD 
+[159] 1[AAABA] -- 1.0 -> 1[A] + 1[AAAB]  STD 
+[160] 1[A] + 1[AABB] -- 0.01 -> 1[AAABB]  STD 
+[161] 1[AAABB] -- 1.0 -> 1[A] + 1[AABB]  STD 
+[162] 1[AA] + 1[ABB] -- 0.01 -> 1[AAABB]  STD 
+[163] 1[AAABB] -- 1.0 -> 1[AA] + 1[ABB]  STD 
+[164] 1[BB] + 1[AAA] -- 0.01 -> 1[AAABB]  STD 
+[165] 1[AAABB] -- 1.0 -> 1[BB] + 1[AAA]  STD 
+[166] 1[B] + 1[AAAB] -- 0.01 -> 1[AAABB]  STD 
+[167] 1[AAABB] -- 1.0 -> 1[B] + 1[AAAB]  STD 
+[168] 1[A] + 1[ABAA] -- 0.01 -> 1[AABAA]  STD 
+[169] 1[AABAA] -- 1.0 -> 1[A] + 1[ABAA]  STD 
+[170] 1[AA] + 1[BAA] -- 0.01 -> 1[AABAA]  STD 
+[171] 1[AABAA] -- 1.0 -> 1[AA] + 1[BAA]  STD 
+[172] 1[AA] + 1[AAB] -- 0.01 -> 1[AABAA]  STD 
+[173] 1[AABAA] -- 1.0 -> 1[AA] + 1[AAB]  STD 
+[174] 1[A] + 1[AABA] -- 0.01 -> 1[AABAA]  STD 
+[175] 1[AABAA] -- 1.0 -> 1[A] + 1[AABA]  STD 
+[176] 1[A] + 1[ABAB] -- 0.01 -> 1[AABAB]  STD 
+[177] 1[AABAB] -- 1.0 -> 1[A] + 1[ABAB]  STD 
+[178] 1[AA] + 1[BAB] -- 0.01 -> 1[AABAB]  STD 
+[179] 1[AABAB] -- 1.0 -> 1[AA] + 1[BAB]  STD 
+[180] 1[AB] + 1[AAB] -- 0.01 -> 1[AABAB]  STD 
+[181] 1[AABAB] -- 1.0 -> 1[AB] + 1[AAB]  STD 
+[182] 1[B] + 1[AABA] -- 0.01 -> 1[AABAB]  STD 
+[183] 1[AABAB] -- 1.0 -> 1[B] + 1[AABA]  STD 
+[184] 1[A] + 1[ABBA] -- 0.01 -> 1[AABBA]  STD 
+[185] 1[AABBA] -- 1.0 -> 1[A] + 1[ABBA]  STD 
+[186] 1[AA] + 1[BBA] -- 0.01 -> 1[AABBA]  STD 
+[187] 1[AABBA] -- 1.0 -> 1[AA] + 1[BBA]  STD 
+[188] 1[BA] + 1[AAB] -- 0.01 -> 1[AABBA]  STD 
+[189] 1[AABBA] -- 1.0 -> 1[BA] + 1[AAB]  STD 
+[190] 1[A] + 1[AABB] -- 0.01 -> 1[AABBA]  STD 
+[191] 1[AABBA] -- 1.0 -> 1[A] + 1[AABB]  STD 
+[192] 1[A] + 1[ABBB] -- 0.01 -> 1[AABBB]  STD 
+[193] 1[AABBB] -- 1.0 -> 1[A] + 1[ABBB]  STD 
+[194] 1[AA] + 1[BBB] -- 0.01 -> 1[AABBB]  STD 
+[195] 1[AABBB] -- 1.0 -> 1[AA] + 1[BBB]  STD 
+[196] 1[BB] + 1[AAB] -- 0.01 -> 1[AABBB]  STD 
+[197] 1[AABBB] -- 1.0 -> 1[BB] + 1[AAB]  STD 
+[198] 1[B] + 1[AABB] -- 0.01 -> 1[AABBB]  STD 
+[199] 1[AABBB] -- 1.0 -> 1[B] + 1[AABB]  STD 
+[200] 1[A] + 1[BAAA] -- 0.01 -> 1[ABAAA]  STD 
+[201] 1[ABAAA] -- 1.0 -> 1[A] + 1[BAAA]  STD 
+[202] 1[AB] + 1[AAA] -- 0.01 -> 1[ABAAA]  STD 
+[203] 1[ABAAA] -- 1.0 -> 1[AB] + 1[AAA]  STD 
+[204] 1[AA] + 1[ABA] -- 0.01 -> 1[ABAAA]  STD 
+[205] 1[ABAAA] -- 1.0 -> 1[AA] + 1[ABA]  STD 
+[206] 1[A] + 1[ABAA] -- 0.01 -> 1[ABAAA]  STD 
+[207] 1[ABAAA] -- 1.0 -> 1[A] + 1[ABAA]  STD 
+[208] 1[A] + 1[BAAB] -- 0.01 -> 1[ABAAB]  STD 
+[209] 1[ABAAB] -- 1.0 -> 1[A] + 1[BAAB]  STD 
+[210] 1[AB] + 1[AAB] -- 0.01 -> 1[ABAAB]  STD 
+[211] 1[ABAAB] -- 1.0 -> 1[AB] + 1[AAB]  STD 
+[212] 1[AB] + 1[ABA] -- 0.01 -> 1[ABAAB]  STD 
+[213] 1[ABAAB] -- 1.0 -> 1[AB] + 1[ABA]  STD 
+[214] 1[B] + 1[ABAA] -- 0.01 -> 1[ABAAB]  STD 
+[215] 1[ABAAB] -- 1.0 -> 1[B] + 1[ABAA]  STD 
+[216] 1[A] + 1[BABA] -- 0.01 -> 1[ABABA]  STD 
+[217] 1[ABABA] -- 1.0 -> 1[A] + 1[BABA]  STD 
+[218] 1[AB] + 1[ABA] -- 0.01 -> 1[ABABA]  STD 
+[219] 1[ABABA] -- 1.0 -> 1[AB] + 1[ABA]  STD 
+[220] 1[BA] + 1[ABA] -- 0.01 -> 1[ABABA]  STD 
+[221] 1[ABABA] -- 1.0 -> 1[BA] + 1[ABA]  STD 
+[222] 1[A] + 1[ABAB] -- 0.01 -> 1[ABABA]  STD 
+[223] 1[ABABA] -- 1.0 -> 1[A] + 1[ABAB]  STD 
+[224] 1[A] + 1[BABB] -- 0.01 -> 1[ABABB]  STD 
+[225] 1[ABABB] -- 1.0 -> 1[A] + 1[BABB]  STD 
+[226] 1[AB] + 1[ABB] -- 0.01 -> 1[ABABB]  STD 
+[227] 1[ABABB] -- 1.0 -> 1[AB] + 1[ABB]  STD 
+[228] 1[BB] + 1[ABA] -- 0.01 -> 1[ABABB]  STD 
+[229] 1[ABABB] -- 1.0 -> 1[BB] + 1[ABA]  STD 
+[230] 1[B] + 1[ABAB] -- 0.01 -> 1[ABABB]  STD 
+[231] 1[ABABB] -- 1.0 -> 1[B] + 1[ABAB]  STD 
+[232] 1[A] + 1[BBAA] -- 0.01 -> 1[ABBAA]  STD 
+[233] 1[ABBAA] -- 1.0 -> 1[A] + 1[BBAA]  STD 
+[234] 1[AB] + 1[BAA] -- 0.01 -> 1[ABBAA]  STD 
+[235] 1[ABBAA] -- 1.0 -> 1[AB] + 1[BAA]  STD 
+[236] 1[AA] + 1[ABB] -- 0.01 -> 1[ABBAA]  STD 
+[237] 1[ABBAA] -- 1.0 -> 1[AA] + 1[ABB]  STD 
+[238] 1[A] + 1[ABBA] -- 0.01 -> 1[ABBAA]  STD 
+[239] 1[ABBAA] -- 1.0 -> 1[A] + 1[ABBA]  STD 
+[240] 1[A] + 1[BBAB] -- 0.01 -> 1[ABBAB]  STD 
+[241] 1[ABBAB] -- 1.0 -> 1[A] + 1[BBAB]  STD 
+[242] 1[AB] + 1[BAB] -- 0.01 -> 1[ABBAB]  STD 
+[243] 1[ABBAB] -- 1.0 -> 1[AB] + 1[BAB]  STD 
+[244] 1[AB] + 1[ABB] -- 0.01 -> 1[ABBAB]  STD 
+[245] 1[ABBAB] -- 1.0 -> 1[AB] + 1[ABB]  STD 
+[246] 1[B] + 1[ABBA] -- 0.01 -> 1[ABBAB]  STD 
+[247] 1[ABBAB] -- 1.0 -> 1[B] + 1[ABBA]  STD 
+[248] 1[A] + 1[BBBA] -- 0.01 -> 1[ABBBA]  STD 
+[249] 1[ABBBA] -- 1.0 -> 1[A] + 1[BBBA]  STD 
+[250] 1[AB] + 1[BBA] -- 0.01 -> 1[ABBBA]  STD 
+[251] 1[ABBBA] -- 1.0 -> 1[AB] + 1[BBA]  STD 
+[252] 1[BA] + 1[ABB] -- 0.01 -> 1[ABBBA]  STD 
+[253] 1[ABBBA] -- 1.0 -> 1[BA] + 1[ABB]  STD 
+[254] 1[A] + 1[ABBB] -- 0.01 -> 1[ABBBA]  STD 
+[255] 1[ABBBA] -- 1.0 -> 1[A] + 1[ABBB]  STD 
+[256] 1[A] + 1[BBBB] -- 0.01 -> 1[ABBBB]  STD 
+[257] 1[ABBBB] -- 1.0 -> 1[A] + 1[BBBB]  STD 
+[258] 1[AB] + 1[BBB] -- 0.01 -> 1[ABBBB]  STD 
+[259] 1[ABBBB] -- 1.0 -> 1[AB] + 1[BBB]  STD 
+[260] 1[BB] + 1[ABB] -- 0.01 -> 1[ABBBB]  STD 
+[261] 1[ABBBB] -- 1.0 -> 1[BB] + 1[ABB]  STD 
+[262] 1[B] + 1[ABBB] -- 0.01 -> 1[ABBBB]  STD 
+[263] 1[ABBBB] -- 1.0 -> 1[B] + 1[ABBB]  STD 
+[264] 1[B] + 1[AAAA] -- 0.01 -> 1[BAAAA]  STD 
+[265] 1[BAAAA] -- 1.0 -> 1[B] + 1[AAAA]  STD 
+[266] 1[BA] + 1[AAA] -- 0.01 -> 1[BAAAA]  STD 
+[267] 1[BAAAA] -- 1.0 -> 1[BA] + 1[AAA]  STD 
+[268] 1[AA] + 1[BAA] -- 0.01 -> 1[BAAAA]  STD 
+[269] 1[BAAAA] -- 1.0 -> 1[AA] + 1[BAA]  STD 
+[270] 1[A] + 1[BAAA] -- 0.01 -> 1[BAAAA]  STD 
+[271] 1[BAAAA] -- 1.0 -> 1[A] + 1[BAAA]  STD 
+[272] 1[B] + 1[AAAB] -- 0.01 -> 1[BAAAB]  STD 
+[273] 1[BAAAB] -- 1.0 -> 1[B] + 1[AAAB]  STD 
+[274] 1[BA] + 1[AAB] -- 0.01 -> 1[BAAAB]  STD 
+[275] 1[BAAAB] -- 1.0 -> 1[BA] + 1[AAB]  STD 
+[276] 1[AB] + 1[BAA] -- 0.01 -> 1[BAAAB]  STD 
+[277] 1[BAAAB] -- 1.0 -> 1[AB] + 1[BAA]  STD 
+[278] 1[B] + 1[BAAA] -- 0.01 -> 1[BAAAB]  STD 
+[279] 1[BAAAB] -- 1.0 -> 1[B] + 1[BAAA]  STD 
+[280] 1[B] + 1[AABA] -- 0.01 -> 1[BAABA]  STD 
+[281] 1[BAABA] -- 1.0 -> 1[B] + 1[AABA]  STD 
+[282] 1[BA] + 1[ABA] -- 0.01 -> 1[BAABA]  STD 
+[283] 1[BAABA] -- 1.0 -> 1[BA] + 1[ABA]  STD 
+[284] 1[BA] + 1[BAA] -- 0.01 -> 1[BAABA]  STD 
+[285] 1[BAABA] -- 1.0 -> 1[BA] + 1[BAA]  STD 
+[286] 1[A] + 1[BAAB] -- 0.01 -> 1[BAABA]  STD 
+[287] 1[BAABA] -- 1.0 -> 1[A] + 1[BAAB]  STD 
+[288] 1[B] + 1[AABB] -- 0.01 -> 1[BAABB]  STD 
+[289] 1[BAABB] -- 1.0 -> 1[B] + 1[AABB]  STD 
+[290] 1[BA] + 1[ABB] -- 0.01 -> 1[BAABB]  STD 
+[291] 1[BAABB] -- 1.0 -> 1[BA] + 1[ABB]  STD 
+[292] 1[BB] + 1[BAA] -- 0.01 -> 1[BAABB]  STD 
+[293] 1[BAABB] -- 1.0 -> 1[BB] + 1[BAA]  STD 
+[294] 1[B] + 1[BAAB] -- 0.01 -> 1[BAABB]  STD 
+[295] 1[BAABB] -- 1.0 -> 1[B] + 1[BAAB]  STD 
+[296] 1[B] + 1[ABAA] -- 0.01 -> 1[BABAA]  STD 
+[297] 1[BABAA] -- 1.0 -> 1[B] + 1[ABAA]  STD 
+[298] 1[BA] + 1[BAA] -- 0.01 -> 1[BABAA]  STD 
+[299] 1[BABAA] -- 1.0 -> 1[BA] + 1[BAA]  STD 
+[300] 1[AA] + 1[BAB] -- 0.01 -> 1[BABAA]  STD 
+[301] 1[BABAA] -- 1.0 -> 1[AA] + 1[BAB]  STD 
+[302] 1[A] + 1[BABA] -- 0.01 -> 1[BABAA]  STD 
+[303] 1[BABAA] -- 1.0 -> 1[A] + 1[BABA]  STD 
+[304] 1[B] + 1[ABAB] -- 0.01 -> 1[BABAB]  STD 
+[305] 1[BABAB] -- 1.0 -> 1[B] + 1[ABAB]  STD 
+[306] 1[BA] + 1[BAB] -- 0.01 -> 1[BABAB]  STD 
+[307] 1[BABAB] -- 1.0 -> 1[BA] + 1[BAB]  STD 
+[308] 1[AB] + 1[BAB] -- 0.01 -> 1[BABAB]  STD 
+[309] 1[BABAB] -- 1.0 -> 1[AB] + 1[BAB]  STD 
+[310] 1[B] + 1[BABA] -- 0.01 -> 1[BABAB]  STD 
+[311] 1[BABAB] -- 1.0 -> 1[B] + 1[BABA]  STD 
+[312] 1[B] + 1[ABBA] -- 0.01 -> 1[BABBA]  STD 
+[313] 1[BABBA] -- 1.0 -> 1[B] + 1[ABBA]  STD 
+[314] 1[BA] + 1[BBA] -- 0.01 -> 1[BABBA]  STD 
+[315] 1[BABBA] -- 1.0 -> 1[BA] + 1[BBA]  STD 
+[316] 1[BA] + 1[BAB] -- 0.01 -> 1[BABBA]  STD 
+[317] 1[BABBA] -- 1.0 -> 1[BA] + 1[BAB]  STD 
+[318] 1[A] + 1[BABB] -- 0.01 -> 1[BABBA]  STD 
+[319] 1[BABBA] -- 1.0 -> 1[A] + 1[BABB]  STD 
+[320] 1[B] + 1[ABBB] -- 0.01 -> 1[BABBB]  STD 
+[321] 1[BABBB] -- 1.0 -> 1[B] + 1[ABBB]  STD 
+[322] 1[BA] + 1[BBB] -- 0.01 -> 1[BABBB]  STD 
+[323] 1[BABBB] -- 1.0 -> 1[BA] + 1[BBB]  STD 
+[324] 1[BB] + 1[BAB] -- 0.01 -> 1[BABBB]  STD 
+[325] 1[BABBB] -- 1.0 -> 1[BB] + 1[BAB]  STD 
+[326] 1[B] + 1[BABB] -- 0.01 -> 1[BABBB]  STD 
+[327] 1[BABBB] -- 1.0 -> 1[B] + 1[BABB]  STD 
+[328] 1[B] + 1[BAAA] -- 0.01 -> 1[BBAAA]  STD 
+[329] 1[BBAAA] -- 1.0 -> 1[B] + 1[BAAA]  STD 
+[330] 1[BB] + 1[AAA] -- 0.01 -> 1[BBAAA]  STD 
+[331] 1[BBAAA] -- 1.0 -> 1[BB] + 1[AAA]  STD 
+[332] 1[AA] + 1[BBA] -- 0.01 -> 1[BBAAA]  STD 
+[333] 1[BBAAA] -- 1.0 -> 1[AA] + 1[BBA]  STD 
+[334] 1[A] + 1[BBAA] -- 0.01 -> 1[BBAAA]  STD 
+[335] 1[BBAAA] -- 1.0 -> 1[A] + 1[BBAA]  STD 
+[336] 1[B] + 1[BAAB] -- 0.01 -> 1[BBAAB]  STD 
+[337] 1[BBAAB] -- 1.0 -> 1[B] + 1[BAAB]  STD 
+[338] 1[BB] + 1[AAB] -- 0.01 -> 1[BBAAB]  STD 
+[339] 1[BBAAB] -- 1.0 -> 1[BB] + 1[AAB]  STD 
+[340] 1[AB] + 1[BBA] -- 0.01 -> 1[BBAAB]  STD 
+[341] 1[BBAAB] -- 1.0 -> 1[AB] + 1[BBA]  STD 
+[342] 1[B] + 1[BBAA] -- 0.01 -> 1[BBAAB]  STD 
+[343] 1[BBAAB] -- 1.0 -> 1[B] + 1[BBAA]  STD 
+[344] 1[B] + 1[BABA] -- 0.01 -> 1[BBABA]  STD 
+[345] 1[BBABA] -- 1.0 -> 1[B] + 1[BABA]  STD 
+[346] 1[BB] + 1[ABA] -- 0.01 -> 1[BBABA]  STD 
+[347] 1[BBABA] -- 1.0 -> 1[BB] + 1[ABA]  STD 
+[348] 1[BA] + 1[BBA] -- 0.01 -> 1[BBABA]  STD 
+[349] 1[BBABA] -- 1.0 -> 1[BA] + 1[BBA]  STD 
+[350] 1[A] + 1[BBAB] -- 0.01 -> 1[BBABA]  STD 
+[351] 1[BBABA] -- 1.0 -> 1[A] + 1[BBAB]  STD 
+[352] 1[B] + 1[BABB] -- 0.01 -> 1[BBABB]  STD 
+[353] 1[BBABB] -- 1.0 -> 1[B] + 1[BABB]  STD 
+[354] 1[BB] + 1[ABB] -- 0.01 -> 1[BBABB]  STD 
+[355] 1[BBABB] -- 1.0 -> 1[BB] + 1[ABB]  STD 
+[356] 1[BB] + 1[BBA] -- 0.01 -> 1[BBABB]  STD 
+[357] 1[BBABB] -- 1.0 -> 1[BB] + 1[BBA]  STD 
+[358] 1[B] + 1[BBAB] -- 0.01 -> 1[BBABB]  STD 
+[359] 1[BBABB] -- 1.0 -> 1[B] + 1[BBAB]  STD 
+[360] 1[B] + 1[BBAA] -- 0.01 -> 1[BBBAA]  STD 
+[361] 1[BBBAA] -- 1.0 -> 1[B] + 1[BBAA]  STD 
+[362] 1[BB] + 1[BAA] -- 0.01 -> 1[BBBAA]  STD 
+[363] 1[BBBAA] -- 1.0 -> 1[BB] + 1[BAA]  STD 
+[364] 1[AA] + 1[BBB] -- 0.01 -> 1[BBBAA]  STD 
+[365] 1[BBBAA] -- 1.0 -> 1[AA] + 1[BBB]  STD 
+[366] 1[A] + 1[BBBA] -- 0.01 -> 1[BBBAA]  STD 
+[367] 1[BBBAA] -- 1.0 -> 1[A] + 1[BBBA]  STD 
+[368] 1[B] + 1[BBAB] -- 0.01 -> 1[BBBAB]  STD 
+[369] 1[BBBAB] -- 1.0 -> 1[B] + 1[BBAB]  STD 
+[370] 1[BB] + 1[BAB] -- 0.01 -> 1[BBBAB]  STD 
+[371] 1[BBBAB] -- 1.0 -> 1[BB] + 1[BAB]  STD 
+[372] 1[AB] + 1[BBB] -- 0.01 -> 1[BBBAB]  STD 
+[373] 1[BBBAB] -- 1.0 -> 1[AB] + 1[BBB]  STD 
+[374] 1[B] + 1[BBBA] -- 0.01 -> 1[BBBAB]  STD 
+[375] 1[BBBAB] -- 1.0 -> 1[B] + 1[BBBA]  STD 
+[376] 1[B] + 1[BBBA] -- 0.01 -> 1[BBBBA]  STD 
+[377] 1[BBBBA] -- 1.0 -> 1[B] + 1[BBBA]  STD 
+[378] 1[BB] + 1[BBA] -- 0.01 -> 1[BBBBA]  STD 
+[379] 1[BBBBA] -- 1.0 -> 1[BB] + 1[BBA]  STD 
+[380] 1[BA] + 1[BBB] -- 0.01 -> 1[BBBBA]  STD 
+[381] 1[BBBBA] -- 1.0 -> 1[BA] + 1[BBB]  STD 
+[382] 1[A] + 1[BBBB] -- 0.01 -> 1[BBBBA]  STD 
+[383] 1[BBBBA] -- 1.0 -> 1[A] + 1[BBBB]  STD 
+[384] 1[B] + 1[BBBB] -- 0.01 -> 1[BBBBB]  STD 
+[385] 1[BBBBB] -- 1.0 -> 1[B] + 1[BBBB]  STD 
+[386] 1[BB] + 1[BBB] -- 0.01 -> 1[BBBBB]  STD 
+[387] 1[BBBBB] -- 1.0 -> 1[BB] + 1[BBB]  STD 
+[388] 1[BB] + 1[BBB] -- 0.01 -> 1[BBBBB]  STD 
+[389] 1[BBBBB] -- 1.0 -> 1[BB] + 1[BBB]  STD 
+[390] 1[B] + 1[BBBB] -- 0.01 -> 1[BBBBB]  STD 
+[391] 1[BBBBB] -- 1.0 -> 1[B] + 1[BBBB]  STD 
+[392] 1[A] + 1[AAAAA] -- 0.01 -> 1[AAAAAA]  STD 
+[393] 1[AAAAAA] -- 1.0 -> 1[A] + 1[AAAAA]  STD 
+[394] 1[AA] + 1[AAAA] -- 0.01 -> 1[AAAAAA]  STD 
+[395] 1[AAAAAA] -- 1.0 -> 1[AA] + 1[AAAA]  STD 
+[396] 2[AAA] -- 0.01 -> 1[AAAAAA]  STD 
+[397] 1[AAAAAA] -- 1.0 -> 2[AAA]  STD 
+[398] 1[AA] + 1[AAAA] -- 0.01 -> 1[AAAAAA]  STD 
+[399] 1[AAAAAA] -- 1.0 -> 1[AA] + 1[AAAA]  STD 
+[400] 1[A] + 1[AAAAA] -- 0.01 -> 1[AAAAAA]  STD 
+[401] 1[AAAAAA] -- 1.0 -> 1[A] + 1[AAAAA]  STD 
+[402] 1[A] + 1[AAAAB] -- 0.01 -> 1[AAAAAB]  STD 
+[403] 1[AAAAAB] -- 1.0 -> 1[A] + 1[AAAAB]  STD 
+[404] 1[AA] + 1[AAAB] -- 0.01 -> 1[AAAAAB]  STD 
+[405] 1[AAAAAB] -- 1.0 -> 1[AA] + 1[AAAB]  STD 
+[406] 1[AAA] + 1[AAB] -- 0.01 -> 1[AAAAAB]  STD 
+[407] 1[AAAAAB] -- 1.0 -> 1[AAA] + 1[AAB]  STD 
+[408] 1[AB] + 1[AAAA] -- 0.01 -> 1[AAAAAB]  STD 
+[409] 1[AAAAAB] -- 1.0 -> 1[AB] + 1[AAAA]  STD 
+[410] 1[B] + 1[AAAAA] -- 0.01 -> 1[AAAAAB]  STD 
+[411] 1[AAAAAB] -- 1.0 -> 1[B] + 1[AAAAA]  STD 
+[412] 1[A] + 1[AAABA] -- 0.01 -> 1[AAAABA]  STD 
+[413] 1[AAAABA] -- 1.0 -> 1[A] + 1[AAABA]  STD 
+[414] 1[AA] + 1[AABA] -- 0.01 -> 1[AAAABA]  STD 
+[415] 1[AAAABA] -- 1.0 -> 1[AA] + 1[AABA]  STD 
+[416] 1[AAA] + 1[ABA] -- 0.01 -> 1[AAAABA]  STD 
+[417] 1[AAAABA] -- 1.0 -> 1[AAA] + 1[ABA]  STD 
+[418] 1[BA] + 1[AAAA] -- 0.01 -> 1[AAAABA]  STD 
+[419] 1[AAAABA] -- 1.0 -> 1[BA] + 1[AAAA]  STD 
+[420] 1[A] + 1[AAAAB] -- 0.01 -> 1[AAAABA]  STD 
+[421] 1[AAAABA] -- 1.0 -> 1[A] + 1[AAAAB]  STD 
+[422] 1[A] + 1[AAABB] -- 0.01 -> 1[AAAABB]  STD 
+[423] 1[AAAABB] -- 1.0 -> 1[A] + 1[AAABB]  STD 
+[424] 1[AA] + 1[AABB] -- 0.01 -> 1[AAAABB]  STD 
+[425] 1[AAAABB] -- 1.0 -> 1[AA] + 1[AABB]  STD 
+[426] 1[AAA] + 1[ABB] -- 0.01 -> 1[AAAABB]  STD 
+[427] 1[AAAABB] -- 1.0 -> 1[AAA] + 1[ABB]  STD 
+[428] 1[BB] + 1[AAAA] -- 0.01 -> 1[AAAABB]  STD 
+[429] 1[AAAABB] -- 1.0 -> 1[BB] + 1[AAAA]  STD 
+[430] 1[B] + 1[AAAAB] -- 0.01 -> 1[AAAABB]  STD 
+[431] 1[AAAABB] -- 1.0 -> 1[B] + 1[AAAAB]  STD 
+[432] 1[A] + 1[AABAA] -- 0.01 -> 1[AAABAA]  STD 
+[433] 1[AAABAA] -- 1.0 -> 1[A] + 1[AABAA]  STD 
+[434] 1[AA] + 1[ABAA] -- 0.01 -> 1[AAABAA]  STD 
+[435] 1[AAABAA] -- 1.0 -> 1[AA] + 1[ABAA]  STD 
+[436] 1[AAA] + 1[BAA] -- 0.01 -> 1[AAABAA]  STD 
+[437] 1[AAABAA] -- 1.0 -> 1[AAA] + 1[BAA]  STD 
+[438] 1[AA] + 1[AAAB] -- 0.01 -> 1[AAABAA]  STD 
+[439] 1[AAABAA] -- 1.0 -> 1[AA] + 1[AAAB]  STD 
+[440] 1[A] + 1[AAABA] -- 0.01 -> 1[AAABAA]  STD 
+[441] 1[AAABAA] -- 1.0 -> 1[A] + 1[AAABA]  STD 
+[442] 1[A] + 1[AABAB] -- 0.01 -> 1[AAABAB]  STD 
+[443] 1[AAABAB] -- 1.0 -> 1[A] + 1[AABAB]  STD 
+[444] 1[AA] + 1[ABAB] -- 0.01 -> 1[AAABAB]  STD 
+[445] 1[AAABAB] -- 1.0 -> 1[AA] + 1[ABAB]  STD 
+[446] 1[AAA] + 1[BAB] -- 0.01 -> 1[AAABAB]  STD 
+[447] 1[AAABAB] -- 1.0 -> 1[AAA] + 1[BAB]  STD 
+[448] 1[AB] + 1[AAAB] -- 0.01 -> 1[AAABAB]  STD 
+[449] 1[AAABAB] -- 1.0 -> 1[AB] + 1[AAAB]  STD 
+[450] 1[B] + 1[AAABA] -- 0.01 -> 1[AAABAB]  STD 
+[451] 1[AAABAB] -- 1.0 -> 1[B] + 1[AAABA]  STD 
+[452] 1[A] + 1[AABBA] -- 0.01 -> 1[AAABBA]  STD 
+[453] 1[AAABBA] -- 1.0 -> 1[A] + 1[AABBA]  STD 
+[454] 1[AA] + 1[ABBA] -- 0.01 -> 1[AAABBA]  STD 
+[455] 1[AAABBA] -- 1.0 -> 1[AA] + 1[ABBA]  STD 
+[456] 1[AAA] + 1[BBA] -- 0.01 -> 1[AAABBA]  STD 
+[457] 1[AAABBA] -- 1.0 -> 1[AAA] + 1[BBA]  STD 
+[458] 1[BA] + 1[AAAB] -- 0.01 -> 1[AAABBA]  STD 
+[459] 1[AAABBA] -- 1.0 -> 1[BA] + 1[AAAB]  STD 
+[460] 1[A] + 1[AAABB] -- 0.01 -> 1[AAABBA]  STD 
+[461] 1[AAABBA] -- 1.0 -> 1[A] + 1[AAABB]  STD 
+[462] 1[A] + 1[AABBB] -- 0.01 -> 1[AAABBB]  STD 
+[463] 1[AAABBB] -- 1.0 -> 1[A] + 1[AABBB]  STD 
+[464] 1[AA] + 1[ABBB] -- 0.01 -> 1[AAABBB]  STD 
+[465] 1[AAABBB] -- 1.0 -> 1[AA] + 1[ABBB]  STD 
+[466] 1[AAA] + 1[BBB] -- 0.01 -> 1[AAABBB]  STD 
+[467] 1[AAABBB] -- 1.0 -> 1[AAA] + 1[BBB]  STD 
+[468] 1[BB] + 1[AAAB] -- 0.01 -> 1[AAABBB]  STD 
+[469] 1[AAABBB] -- 1.0 -> 1[BB] + 1[AAAB]  STD 
+[470] 1[B] + 1[AAABB] -- 0.01 -> 1[AAABBB]  STD 
+[471] 1[AAABBB] -- 1.0 -> 1[B] + 1[AAABB]  STD 
+[472] 1[A] + 1[ABAAA] -- 0.01 -> 1[AABAAA]  STD 
+[473] 1[AABAAA] -- 1.0 -> 1[A] + 1[ABAAA]  STD 
+[474] 1[AA] + 1[BAAA] -- 0.01 -> 1[AABAAA]  STD 
+[475] 1[AABAAA] -- 1.0 -> 1[AA] + 1[BAAA]  STD 
+[476] 1[AAA] + 1[AAB] -- 0.01 -> 1[AABAAA]  STD 
+[477] 1[AABAAA] -- 1.0 -> 1[AAA] + 1[AAB]  STD 
+[478] 1[AA] + 1[AABA] -- 0.01 -> 1[AABAAA]  STD 
+[479] 1[AABAAA] -- 1.0 -> 1[AA] + 1[AABA]  STD 
+[480] 1[A] + 1[AABAA] -- 0.01 -> 1[AABAAA]  STD 
+[481] 1[AABAAA] -- 1.0 -> 1[A] + 1[AABAA]  STD 
+[482] 1[A] + 1[ABAAB] -- 0.01 -> 1[AABAAB]  STD 
+[483] 1[AABAAB] -- 1.0 -> 1[A] + 1[ABAAB]  STD 
+[484] 1[AA] + 1[BAAB] -- 0.01 -> 1[AABAAB]  STD 
+[485] 1[AABAAB] -- 1.0 -> 1[AA] + 1[BAAB]  STD 
+[486] 2[AAB] -- 0.01 -> 1[AABAAB]  STD 
+[487] 1[AABAAB] -- 1.0 -> 2[AAB]  STD 
+[488] 1[AB] + 1[AABA] -- 0.01 -> 1[AABAAB]  STD 
+[489] 1[AABAAB] -- 1.0 -> 1[AB] + 1[AABA]  STD 
+[490] 1[B] + 1[AABAA] -- 0.01 -> 1[AABAAB]  STD 
+[491] 1[AABAAB] -- 1.0 -> 1[B] + 1[AABAA]  STD 
+[492] 1[A] + 1[ABABA] -- 0.01 -> 1[AABABA]  STD 
+[493] 1[AABABA] -- 1.0 -> 1[A] + 1[ABABA]  STD 
+[494] 1[AA] + 1[BABA] -- 0.01 -> 1[AABABA]  STD 
+[495] 1[AABABA] -- 1.0 -> 1[AA] + 1[BABA]  STD 
+[496] 1[AAB] + 1[ABA] -- 0.01 -> 1[AABABA]  STD 
+[497] 1[AABABA] -- 1.0 -> 1[AAB] + 1[ABA]  STD 
+[498] 1[BA] + 1[AABA] -- 0.01 -> 1[AABABA]  STD 
+[499] 1[AABABA] -- 1.0 -> 1[BA] + 1[AABA]  STD 
+[500] 1[A] + 1[AABAB] -- 0.01 -> 1[AABABA]  STD 
+[501] 1[AABABA] -- 1.0 -> 1[A] + 1[AABAB]  STD 
+[502] 1[A] + 1[ABABB] -- 0.01 -> 1[AABABB]  STD 
+[503] 1[AABABB] -- 1.0 -> 1[A] + 1[ABABB]  STD 
+[504] 1[AA] + 1[BABB] -- 0.01 -> 1[AABABB]  STD 
+[505] 1[AABABB] -- 1.0 -> 1[AA] + 1[BABB]  STD 
+[506] 1[AAB] + 1[ABB] -- 0.01 -> 1[AABABB]  STD 
+[507] 1[AABABB] -- 1.0 -> 1[AAB] + 1[ABB]  STD 
+[508] 1[BB] + 1[AABA] -- 0.01 -> 1[AABABB]  STD 
+[509] 1[AABABB] -- 1.0 -> 1[BB] + 1[AABA]  STD 
+[510] 1[B] + 1[AABAB] -- 0.01 -> 1[AABABB]  STD 
+[511] 1[AABABB] -- 1.0 -> 1[B] + 1[AABAB]  STD 
+[512] 1[A] + 1[ABBAA] -- 0.01 -> 1[AABBAA]  STD 
+[513] 1[AABBAA] -- 1.0 -> 1[A] + 1[ABBAA]  STD 
+[514] 1[AA] + 1[BBAA] -- 0.01 -> 1[AABBAA]  STD 
+[515] 1[AABBAA] -- 1.0 -> 1[AA] + 1[BBAA]  STD 
+[516] 1[AAB] + 1[BAA] -- 0.01 -> 1[AABBAA]  STD 
+[517] 1[AABBAA] -- 1.0 -> 1[AAB] + 1[BAA]  STD 
+[518] 1[AA] + 1[AABB] -- 0.01 -> 1[AABBAA]  STD 
+[519] 1[AABBAA] -- 1.0 -> 1[AA] + 1[AABB]  STD 
+[520] 1[A] + 1[AABBA] -- 0.01 -> 1[AABBAA]  STD 
+[521] 1[AABBAA] -- 1.0 -> 1[A] + 1[AABBA]  STD 
+[522] 1[A] + 1[ABBAB] -- 0.01 -> 1[AABBAB]  STD 
+[523] 1[AABBAB] -- 1.0 -> 1[A] + 1[ABBAB]  STD 
+[524] 1[AA] + 1[BBAB] -- 0.01 -> 1[AABBAB]  STD 
+[525] 1[AABBAB] -- 1.0 -> 1[AA] + 1[BBAB]  STD 
+[526] 1[AAB] + 1[BAB] -- 0.01 -> 1[AABBAB]  STD 
+[527] 1[AABBAB] -- 1.0 -> 1[AAB] + 1[BAB]  STD 
+[528] 1[AB] + 1[AABB] -- 0.01 -> 1[AABBAB]  STD 
+[529] 1[AABBAB] -- 1.0 -> 1[AB] + 1[AABB]  STD 
+[530] 1[B] + 1[AABBA] -- 0.01 -> 1[AABBAB]  STD 
+[531] 1[AABBAB] -- 1.0 -> 1[B] + 1[AABBA]  STD 
+[532] 1[A] + 1[ABBBA] -- 0.01 -> 1[AABBBA]  STD 
+[533] 1[AABBBA] -- 1.0 -> 1[A] + 1[ABBBA]  STD 
+[534] 1[AA] + 1[BBBA] -- 0.01 -> 1[AABBBA]  STD 
+[535] 1[AABBBA] -- 1.0 -> 1[AA] + 1[BBBA]  STD 
+[536] 1[AAB] + 1[BBA] -- 0.01 -> 1[AABBBA]  STD 
+[537] 1[AABBBA] -- 1.0 -> 1[AAB] + 1[BBA]  STD 
+[538] 1[BA] + 1[AABB] -- 0.01 -> 1[AABBBA]  STD 
+[539] 1[AABBBA] -- 1.0 -> 1[BA] + 1[AABB]  STD 
+[540] 1[A] + 1[AABBB] -- 0.01 -> 1[AABBBA]  STD 
+[541] 1[AABBBA] -- 1.0 -> 1[A] + 1[AABBB]  STD 
+[542] 1[A] + 1[ABBBB] -- 0.01 -> 1[AABBBB]  STD 
+[543] 1[AABBBB] -- 1.0 -> 1[A] + 1[ABBBB]  STD 
+[544] 1[AA] + 1[BBBB] -- 0.01 -> 1[AABBBB]  STD 
+[545] 1[AABBBB] -- 1.0 -> 1[AA] + 1[BBBB]  STD 
+[546] 1[AAB] + 1[BBB] -- 0.01 -> 1[AABBBB]  STD 
+[547] 1[AABBBB] -- 1.0 -> 1[AAB] + 1[BBB]  STD 
+[548] 1[BB] + 1[AABB] -- 0.01 -> 1[AABBBB]  STD 
+[549] 1[AABBBB] -- 1.0 -> 1[BB] + 1[AABB]  STD 
+[550] 1[B] + 1[AABBB] -- 0.01 -> 1[AABBBB]  STD 
+[551] 1[AABBBB] -- 1.0 -> 1[B] + 1[AABBB]  STD 
+[552] 1[A] + 1[BAAAA] -- 0.01 -> 1[ABAAAA]  STD 
+[553] 1[ABAAAA] -- 1.0 -> 1[A] + 1[BAAAA]  STD 
+[554] 1[AB] + 1[AAAA] -- 0.01 -> 1[ABAAAA]  STD 
+[555] 1[ABAAAA] -- 1.0 -> 1[AB] + 1[AAAA]  STD 
+[556] 1[AAA] + 1[ABA] -- 0.01 -> 1[ABAAAA]  STD 
+[557] 1[ABAAAA] -- 1.0 -> 1[AAA] + 1[ABA]  STD 
+[558] 1[AA] + 1[ABAA] -- 0.01 -> 1[ABAAAA]  STD 
+[559] 1[ABAAAA] -- 1.0 -> 1[AA] + 1[ABAA]  STD 
+[560] 1[A] + 1[ABAAA] -- 0.01 -> 1[ABAAAA]  STD 
+[561] 1[ABAAAA] -- 1.0 -> 1[A] + 1[ABAAA]  STD 
+[562] 1[A] + 1[BAAAB] -- 0.01 -> 1[ABAAAB]  STD 
+[563] 1[ABAAAB] -- 1.0 -> 1[A] + 1[BAAAB]  STD 
+[564] 1[AB] + 1[AAAB] -- 0.01 -> 1[ABAAAB]  STD 
+[565] 1[ABAAAB] -- 1.0 -> 1[AB] + 1[AAAB]  STD 
+[566] 1[AAB] + 1[ABA] -- 0.01 -> 1[ABAAAB]  STD 
+[567] 1[ABAAAB] -- 1.0 -> 1[AAB] + 1[ABA]  STD 
+[568] 1[AB] + 1[ABAA] -- 0.01 -> 1[ABAAAB]  STD 
+[569] 1[ABAAAB] -- 1.0 -> 1[AB] + 1[ABAA]  STD 
+[570] 1[B] + 1[ABAAA] -- 0.01 -> 1[ABAAAB]  STD 
+[571] 1[ABAAAB] -- 1.0 -> 1[B] + 1[ABAAA]  STD 
+[572] 1[A] + 1[BAABA] -- 0.01 -> 1[ABAABA]  STD 
+[573] 1[ABAABA] -- 1.0 -> 1[A] + 1[BAABA]  STD 
+[574] 1[AB] + 1[AABA] -- 0.01 -> 1[ABAABA]  STD 
+[575] 1[ABAABA] -- 1.0 -> 1[AB] + 1[AABA]  STD 
+[576] 2[ABA] -- 0.01 -> 1[ABAABA]  STD 
+[577] 1[ABAABA] -- 1.0 -> 2[ABA]  STD 
+[578] 1[BA] + 1[ABAA] -- 0.01 -> 1[ABAABA]  STD 
+[579] 1[ABAABA] -- 1.0 -> 1[BA] + 1[ABAA]  STD 
+[580] 1[A] + 1[ABAAB] -- 0.01 -> 1[ABAABA]  STD 
+[581] 1[ABAABA] -- 1.0 -> 1[A] + 1[ABAAB]  STD 
+[582] 1[A] + 1[BAABB] -- 0.01 -> 1[ABAABB]  STD 
+[583] 1[ABAABB] -- 1.0 -> 1[A] + 1[BAABB]  STD 
+[584] 1[AB] + 1[AABB] -- 0.01 -> 1[ABAABB]  STD 
+[585] 1[ABAABB] -- 1.0 -> 1[AB] + 1[AABB]  STD 
+[586] 1[ABA] + 1[ABB] -- 0.01 -> 1[ABAABB]  STD 
+[587] 1[ABAABB] -- 1.0 -> 1[ABA] + 1[ABB]  STD 
+[588] 1[BB] + 1[ABAA] -- 0.01 -> 1[ABAABB]  STD 
+[589] 1[ABAABB] -- 1.0 -> 1[BB] + 1[ABAA]  STD 
+[590] 1[B] + 1[ABAAB] -- 0.01 -> 1[ABAABB]  STD 
+[591] 1[ABAABB] -- 1.0 -> 1[B] + 1[ABAAB]  STD 
+[592] 1[A] + 1[BABAA] -- 0.01 -> 1[ABABAA]  STD 
+[593] 1[ABABAA] -- 1.0 -> 1[A] + 1[BABAA]  STD 
+[594] 1[AB] + 1[ABAA] -- 0.01 -> 1[ABABAA]  STD 
+[595] 1[ABABAA] -- 1.0 -> 1[AB] + 1[ABAA]  STD 
+[596] 1[ABA] + 1[BAA] -- 0.01 -> 1[ABABAA]  STD 
+[597] 1[ABABAA] -- 1.0 -> 1[ABA] + 1[BAA]  STD 
+[598] 1[AA] + 1[ABAB] -- 0.01 -> 1[ABABAA]  STD 
+[599] 1[ABABAA] -- 1.0 -> 1[AA] + 1[ABAB]  STD 
+[600] 1[A] + 1[ABABA] -- 0.01 -> 1[ABABAA]  STD 
+[601] 1[ABABAA] -- 1.0 -> 1[A] + 1[ABABA]  STD 
+[602] 1[A] + 1[BABAB] -- 0.01 -> 1[ABABAB]  STD 
+[603] 1[ABABAB] -- 1.0 -> 1[A] + 1[BABAB]  STD 
+[604] 1[AB] + 1[ABAB] -- 0.01 -> 1[ABABAB]  STD 
+[605] 1[ABABAB] -- 1.0 -> 1[AB] + 1[ABAB]  STD 
+[606] 1[ABA] + 1[BAB] -- 0.01 -> 1[ABABAB]  STD 
+[607] 1[ABABAB] -- 1.0 -> 1[ABA] + 1[BAB]  STD 
+[608] 1[AB] + 1[ABAB] -- 0.01 -> 1[ABABAB]  STD 
+[609] 1[ABABAB] -- 1.0 -> 1[AB] + 1[ABAB]  STD 
+[610] 1[B] + 1[ABABA] -- 0.01 -> 1[ABABAB]  STD 
+[611] 1[ABABAB] -- 1.0 -> 1[B] + 1[ABABA]  STD 
+[612] 1[A] + 1[BABBA] -- 0.01 -> 1[ABABBA]  STD 
+[613] 1[ABABBA] -- 1.0 -> 1[A] + 1[BABBA]  STD 
+[614] 1[AB] + 1[ABBA] -- 0.01 -> 1[ABABBA]  STD 
+[615] 1[ABABBA] -- 1.0 -> 1[AB] + 1[ABBA]  STD 
+[616] 1[ABA] + 1[BBA] -- 0.01 -> 1[ABABBA]  STD 
+[617] 1[ABABBA] -- 1.0 -> 1[ABA] + 1[BBA]  STD 
+[618] 1[BA] + 1[ABAB] -- 0.01 -> 1[ABABBA]  STD 
+[619] 1[ABABBA] -- 1.0 -> 1[BA] + 1[ABAB]  STD 
+[620] 1[A] + 1[ABABB] -- 0.01 -> 1[ABABBA]  STD 
+[621] 1[ABABBA] -- 1.0 -> 1[A] + 1[ABABB]  STD 
+[622] 1[A] + 1[BABBB] -- 0.01 -> 1[ABABBB]  STD 
+[623] 1[ABABBB] -- 1.0 -> 1[A] + 1[BABBB]  STD 
+[624] 1[AB] + 1[ABBB] -- 0.01 -> 1[ABABBB]  STD 
+[625] 1[ABABBB] -- 1.0 -> 1[AB] + 1[ABBB]  STD 
+[626] 1[ABA] + 1[BBB] -- 0.01 -> 1[ABABBB]  STD 
+[627] 1[ABABBB] -- 1.0 -> 1[ABA] + 1[BBB]  STD 
+[628] 1[BB] + 1[ABAB] -- 0.01 -> 1[ABABBB]  STD 
+[629] 1[ABABBB] -- 1.0 -> 1[BB] + 1[ABAB]  STD 
+[630] 1[B] + 1[ABABB] -- 0.01 -> 1[ABABBB]  STD 
+[631] 1[ABABBB] -- 1.0 -> 1[B] + 1[ABABB]  STD 
+[632] 1[A] + 1[BBAAA] -- 0.01 -> 1[ABBAAA]  STD 
+[633] 1[ABBAAA] -- 1.0 -> 1[A] + 1[BBAAA]  STD 
+[634] 1[AB] + 1[BAAA] -- 0.01 -> 1[ABBAAA]  STD 
+[635] 1[ABBAAA] -- 1.0 -> 1[AB] + 1[BAAA]  STD 
+[636] 1[AAA] + 1[ABB] -- 0.01 -> 1[ABBAAA]  STD 
+[637] 1[ABBAAA] -- 1.0 -> 1[AAA] + 1[ABB]  STD 
+[638] 1[AA] + 1[ABBA] -- 0.01 -> 1[ABBAAA]  STD 
+[639] 1[ABBAAA] -- 1.0 -> 1[AA] + 1[ABBA]  STD 
+[640] 1[A] + 1[ABBAA] -- 0.01 -> 1[ABBAAA]  STD 
+[641] 1[ABBAAA] -- 1.0 -> 1[A] + 1[ABBAA]  STD 
+[642] 1[A] + 1[BBAAB] -- 0.01 -> 1[ABBAAB]  STD 
+[643] 1[ABBAAB] -- 1.0 -> 1[A] + 1[BBAAB]  STD 
+[644] 1[AB] + 1[BAAB] -- 0.01 -> 1[ABBAAB]  STD 
+[645] 1[ABBAAB] -- 1.0 -> 1[AB] + 1[BAAB]  STD 
+[646] 1[AAB] + 1[ABB] -- 0.01 -> 1[ABBAAB]  STD 
+[647] 1[ABBAAB] -- 1.0 -> 1[AAB] + 1[ABB]  STD 
+[648] 1[AB] + 1[ABBA] -- 0.01 -> 1[ABBAAB]  STD 
+[649] 1[ABBAAB] -- 1.0 -> 1[AB] + 1[ABBA]  STD 
+[650] 1[B] + 1[ABBAA] -- 0.01 -> 1[ABBAAB]  STD 
+[651] 1[ABBAAB] -- 1.0 -> 1[B] + 1[ABBAA]  STD 
+[652] 1[A] + 1[BBABA] -- 0.01 -> 1[ABBABA]  STD 
+[653] 1[ABBABA] -- 1.0 -> 1[A] + 1[BBABA]  STD 
+[654] 1[AB] + 1[BABA] -- 0.01 -> 1[ABBABA]  STD 
+[655] 1[ABBABA] -- 1.0 -> 1[AB] + 1[BABA]  STD 
+[656] 1[ABA] + 1[ABB] -- 0.01 -> 1[ABBABA]  STD 
+[657] 1[ABBABA] -- 1.0 -> 1[ABA] + 1[ABB]  STD 
+[658] 1[BA] + 1[ABBA] -- 0.01 -> 1[ABBABA]  STD 
+[659] 1[ABBABA] -- 1.0 -> 1[BA] + 1[ABBA]  STD 
+[660] 1[A] + 1[ABBAB] -- 0.01 -> 1[ABBABA]  STD 
+[661] 1[ABBABA] -- 1.0 -> 1[A] + 1[ABBAB]  STD 
+[662] 1[A] + 1[BBABB] -- 0.01 -> 1[ABBABB]  STD 
+[663] 1[ABBABB] -- 1.0 -> 1[A] + 1[BBABB]  STD 
+[664] 1[AB] + 1[BABB] -- 0.01 -> 1[ABBABB]  STD 
+[665] 1[ABBABB] -- 1.0 -> 1[AB] + 1[BABB]  STD 
+[666] 2[ABB] -- 0.01 -> 1[ABBABB]  STD 
+[667] 1[ABBABB] -- 1.0 -> 2[ABB]  STD 
+[668] 1[BB] + 1[ABBA] -- 0.01 -> 1[ABBABB]  STD 
+[669] 1[ABBABB] -- 1.0 -> 1[BB] + 1[ABBA]  STD 
+[670] 1[B] + 1[ABBAB] -- 0.01 -> 1[ABBABB]  STD 
+[671] 1[ABBABB] -- 1.0 -> 1[B] + 1[ABBAB]  STD 
+[672] 1[A] + 1[BBBAA] -- 0.01 -> 1[ABBBAA]  STD 
+[673] 1[ABBBAA] -- 1.0 -> 1[A] + 1[BBBAA]  STD 
+[674] 1[AB] + 1[BBAA] -- 0.01 -> 1[ABBBAA]  STD 
+[675] 1[ABBBAA] -- 1.0 -> 1[AB] + 1[BBAA]  STD 
+[676] 1[ABB] + 1[BAA] -- 0.01 -> 1[ABBBAA]  STD 
+[677] 1[ABBBAA] -- 1.0 -> 1[ABB] + 1[BAA]  STD 
+[678] 1[AA] + 1[ABBB] -- 0.01 -> 1[ABBBAA]  STD 
+[679] 1[ABBBAA] -- 1.0 -> 1[AA] + 1[ABBB]  STD 
+[680] 1[A] + 1[ABBBA] -- 0.01 -> 1[ABBBAA]  STD 
+[681] 1[ABBBAA] -- 1.0 -> 1[A] + 1[ABBBA]  STD 
+[682] 1[A] + 1[BBBAB] -- 0.01 -> 1[ABBBAB]  STD 
+[683] 1[ABBBAB] -- 1.0 -> 1[A] + 1[BBBAB]  STD 
+[684] 1[AB] + 1[BBAB] -- 0.01 -> 1[ABBBAB]  STD 
+[685] 1[ABBBAB] -- 1.0 -> 1[AB] + 1[BBAB]  STD 
+[686] 1[ABB] + 1[BAB] -- 0.01 -> 1[ABBBAB]  STD 
+[687] 1[ABBBAB] -- 1.0 -> 1[ABB] + 1[BAB]  STD 
+[688] 1[AB] + 1[ABBB] -- 0.01 -> 1[ABBBAB]  STD 
+[689] 1[ABBBAB] -- 1.0 -> 1[AB] + 1[ABBB]  STD 
+[690] 1[B] + 1[ABBBA] -- 0.01 -> 1[ABBBAB]  STD 
+[691] 1[ABBBAB] -- 1.0 -> 1[B] + 1[ABBBA]  STD 
+[692] 1[A] + 1[BBBBA] -- 0.01 -> 1[ABBBBA]  STD 
+[693] 1[ABBBBA] -- 1.0 -> 1[A] + 1[BBBBA]  STD 
+[694] 1[AB] + 1[BBBA] -- 0.01 -> 1[ABBBBA]  STD 
+[695] 1[ABBBBA] -- 1.0 -> 1[AB] + 1[BBBA]  STD 
+[696] 1[ABB] + 1[BBA] -- 0.01 -> 1[ABBBBA]  STD 
+[697] 1[ABBBBA] -- 1.0 -> 1[ABB] + 1[BBA]  STD 
+[698] 1[BA] + 1[ABBB] -- 0.01 -> 1[ABBBBA]  STD 
+[699] 1[ABBBBA] -- 1.0 -> 1[BA] + 1[ABBB]  STD 
+[700] 1[A] + 1[ABBBB] -- 0.01 -> 1[ABBBBA]  STD 
+[701] 1[ABBBBA] -- 1.0 -> 1[A] + 1[ABBBB]  STD 
+[702] 1[A] + 1[BBBBB] -- 0.01 -> 1[ABBBBB]  STD 
+[703] 1[ABBBBB] -- 1.0 -> 1[A] + 1[BBBBB]  STD 
+[704] 1[AB] + 1[BBBB] -- 0.01 -> 1[ABBBBB]  STD 
+[705] 1[ABBBBB] -- 1.0 -> 1[AB] + 1[BBBB]  STD 
+[706] 1[ABB] + 1[BBB] -- 0.01 -> 1[ABBBBB]  STD 
+[707] 1[ABBBBB] -- 1.0 -> 1[ABB] + 1[BBB]  STD 
+[708] 1[BB] + 1[ABBB] -- 0.01 -> 1[ABBBBB]  STD 
+[709] 1[ABBBBB] -- 1.0 -> 1[BB] + 1[ABBB]  STD 
+[710] 1[B] + 1[ABBBB] -- 0.01 -> 1[ABBBBB]  STD 
+[711] 1[ABBBBB] -- 1.0 -> 1[B] + 1[ABBBB]  STD 
+[712] 1[B] + 1[AAAAA] -- 0.01 -> 1[BAAAAA]  STD 
+[713] 1[BAAAAA] -- 1.0 -> 1[B] + 1[AAAAA]  STD 
+[714] 1[BA] + 1[AAAA] -- 0.01 -> 1[BAAAAA]  STD 
+[715] 1[BAAAAA] -- 1.0 -> 1[BA] + 1[AAAA]  STD 
+[716] 1[AAA] + 1[BAA] -- 0.01 -> 1[BAAAAA]  STD 
+[717] 1[BAAAAA] -- 1.0 -> 1[AAA] + 1[BAA]  STD 
+[718] 1[AA] + 1[BAAA] -- 0.01 -> 1[BAAAAA]  STD 
+[719] 1[BAAAAA] -- 1.0 -> 1[AA] + 1[BAAA]  STD 
+[720] 1[A] + 1[BAAAA] -- 0.01 -> 1[BAAAAA]  STD 
+[721] 1[BAAAAA] -- 1.0 -> 1[A] + 1[BAAAA]  STD 
+[722] 1[B] + 1[AAAAB] -- 0.01 -> 1[BAAAAB]  STD 
+[723] 1[BAAAAB] -- 1.0 -> 1[B] + 1[AAAAB]  STD 
+[724] 1[BA] + 1[AAAB] -- 0.01 -> 1[BAAAAB]  STD 
+[725] 1[BAAAAB] -- 1.0 -> 1[BA] + 1[AAAB]  STD 
+[726] 1[AAB] + 1[BAA] -- 0.01 -> 1[BAAAAB]  STD 
+[727] 1[BAAAAB] -- 1.0 -> 1[AAB] + 1[BAA]  STD 
+[728] 1[AB] + 1[BAAA] -- 0.01 -> 1[BAAAAB]  STD 
+[729] 1[BAAAAB] -- 1.0 -> 1[AB] + 1[BAAA]  STD 
+[730] 1[B] + 1[BAAAA] -- 0.01 -> 1[BAAAAB]  STD 
+[731] 1[BAAAAB] -- 1.0 -> 1[B] + 1[BAAAA]  STD 
+[732] 1[B] + 1[AAABA] -- 0.01 -> 1[BAAABA]  STD 
+[733] 1[BAAABA] -- 1.0 -> 1[B] + 1[AAABA]  STD 
+[734] 1[BA] + 1[AABA] -- 0.01 -> 1[BAAABA]  STD 
+[735] 1[BAAABA] -- 1.0 -> 1[BA] + 1[AABA]  STD 
+[736] 1[ABA] + 1[BAA] -- 0.01 -> 1[BAAABA]  STD 
+[737] 1[BAAABA] -- 1.0 -> 1[ABA] + 1[BAA]  STD 
+[738] 1[BA] + 1[BAAA] -- 0.01 -> 1[BAAABA]  STD 
+[739] 1[BAAABA] -- 1.0 -> 1[BA] + 1[BAAA]  STD 
+[740] 1[A] + 1[BAAAB] -- 0.01 -> 1[BAAABA]  STD 
+[741] 1[BAAABA] -- 1.0 -> 1[A] + 1[BAAAB]  STD 
+[742] 1[B] + 1[AAABB] -- 0.01 -> 1[BAAABB]  STD 
+[743] 1[BAAABB] -- 1.0 -> 1[B] + 1[AAABB]  STD 
+[744] 1[BA] + 1[AABB] -- 0.01 -> 1[BAAABB]  STD 
+[745] 1[BAAABB] -- 1.0 -> 1[BA] + 1[AABB]  STD 
+[746] 1[ABB] + 1[BAA] -- 0.01 -> 1[BAAABB]  STD 
+[747] 1[BAAABB] -- 1.0 -> 1[ABB] + 1[BAA]  STD 
+[748] 1[BB] + 1[BAAA] -- 0.01 -> 1[BAAABB]  STD 
+[749] 1[BAAABB] -- 1.0 -> 1[BB] + 1[BAAA]  STD 
+[750] 1[B] + 1[BAAAB] -- 0.01 -> 1[BAAABB]  STD 
+[751] 1[BAAABB] -- 1.0 -> 1[B] + 1[BAAAB]  STD 
+[752] 1[B] + 1[AABAA] -- 0.01 -> 1[BAABAA]  STD 
+[753] 1[BAABAA] -- 1.0 -> 1[B] + 1[AABAA]  STD 
+[754] 1[BA] + 1[ABAA] -- 0.01 -> 1[BAABAA]  STD 
+[755] 1[BAABAA] -- 1.0 -> 1[BA] + 1[ABAA]  STD 
+[756] 2[BAA] -- 0.01 -> 1[BAABAA]  STD 
+[757] 1[BAABAA] -- 1.0 -> 2[BAA]  STD 
+[758] 1[AA] + 1[BAAB] -- 0.01 -> 1[BAABAA]  STD 
+[759] 1[BAABAA] -- 1.0 -> 1[AA] + 1[BAAB]  STD 
+[760] 1[A] + 1[BAABA] -- 0.01 -> 1[BAABAA]  STD 
+[761] 1[BAABAA] -- 1.0 -> 1[A] + 1[BAABA]  STD 
+[762] 1[B] + 1[AABAB] -- 0.01 -> 1[BAABAB]  STD 
+[763] 1[BAABAB] -- 1.0 -> 1[B] + 1[AABAB]  STD 
+[764] 1[BA] + 1[ABAB] -- 0.01 -> 1[BAABAB]  STD 
+[765] 1[BAABAB] -- 1.0 -> 1[BA] + 1[ABAB]  STD 
+[766] 1[BAA] + 1[BAB] -- 0.01 -> 1[BAABAB]  STD 
+[767] 1[BAABAB] -- 1.0 -> 1[BAA] + 1[BAB]  STD 
+[768] 1[AB] + 1[BAAB] -- 0.01 -> 1[BAABAB]  STD 
+[769] 1[BAABAB] -- 1.0 -> 1[AB] + 1[BAAB]  STD 
+[770] 1[B] + 1[BAABA] -- 0.01 -> 1[BAABAB]  STD 
+[771] 1[BAABAB] -- 1.0 -> 1[B] + 1[BAABA]  STD 
+[772] 1[B] + 1[AABBA] -- 0.01 -> 1[BAABBA]  STD 
+[773] 1[BAABBA] -- 1.0 -> 1[B] + 1[AABBA]  STD 
+[774] 1[BA] + 1[ABBA] -- 0.01 -> 1[BAABBA]  STD 
+[775] 1[BAABBA] -- 1.0 -> 1[BA] + 1[ABBA]  STD 
+[776] 1[BAA] + 1[BBA] -- 0.01 -> 1[BAABBA]  STD 
+[777] 1[BAABBA] -- 1.0 -> 1[BAA] + 1[BBA]  STD 
+[778] 1[BA] + 1[BAAB] -- 0.01 -> 1[BAABBA]  STD 
+[779] 1[BAABBA] -- 1.0 -> 1[BA] + 1[BAAB]  STD 
+[780] 1[A] + 1[BAABB] -- 0.01 -> 1[BAABBA]  STD 
+[781] 1[BAABBA] -- 1.0 -> 1[A] + 1[BAABB]  STD 
+[782] 1[B] + 1[AABBB] -- 0.01 -> 1[BAABBB]  STD 
+[783] 1[BAABBB] -- 1.0 -> 1[B] + 1[AABBB]  STD 
+[784] 1[BA] + 1[ABBB] -- 0.01 -> 1[BAABBB]  STD 
+[785] 1[BAABBB] -- 1.0 -> 1[BA] + 1[ABBB]  STD 
+[786] 1[BAA] + 1[BBB] -- 0.01 -> 1[BAABBB]  STD 
+[787] 1[BAABBB] -- 1.0 -> 1[BAA] + 1[BBB]  STD 
+[788] 1[BB] + 1[BAAB] -- 0.01 -> 1[BAABBB]  STD 
+[789] 1[BAABBB] -- 1.0 -> 1[BB] + 1[BAAB]  STD 
+[790] 1[B] + 1[BAABB] -- 0.01 -> 1[BAABBB]  STD 
+[791] 1[BAABBB] -- 1.0 -> 1[B] + 1[BAABB]  STD 
+[792] 1[B] + 1[ABAAA] -- 0.01 -> 1[BABAAA]  STD 
+[793] 1[BABAAA] -- 1.0 -> 1[B] + 1[ABAAA]  STD 
+[794] 1[BA] + 1[BAAA] -- 0.01 -> 1[BABAAA]  STD 
+[795] 1[BABAAA] -- 1.0 -> 1[BA] + 1[BAAA]  STD 
+[796] 1[AAA] + 1[BAB] -- 0.01 -> 1[BABAAA]  STD 
+[797] 1[BABAAA] -- 1.0 -> 1[AAA] + 1[BAB]  STD 
+[798] 1[AA] + 1[BABA] -- 0.01 -> 1[BABAAA]  STD 
+[799] 1[BABAAA] -- 1.0 -> 1[AA] + 1[BABA]  STD 
+[800] 1[A] + 1[BABAA] -- 0.01 -> 1[BABAAA]  STD 
+[801] 1[BABAAA] -- 1.0 -> 1[A] + 1[BABAA]  STD 
+[802] 1[B] + 1[ABAAB] -- 0.01 -> 1[BABAAB]  STD 
+[803] 1[BABAAB] -- 1.0 -> 1[B] + 1[ABAAB]  STD 
+[804] 1[BA] + 1[BAAB] -- 0.01 -> 1[BABAAB]  STD 
+[805] 1[BABAAB] -- 1.0 -> 1[BA] + 1[BAAB]  STD 
+[806] 1[AAB] + 1[BAB] -- 0.01 -> 1[BABAAB]  STD 
+[807] 1[BABAAB] -- 1.0 -> 1[AAB] + 1[BAB]  STD 
+[808] 1[AB] + 1[BABA] -- 0.01 -> 1[BABAAB]  STD 
+[809] 1[BABAAB] -- 1.0 -> 1[AB] + 1[BABA]  STD 
+[810] 1[B] + 1[BABAA] -- 0.01 -> 1[BABAAB]  STD 
+[811] 1[BABAAB] -- 1.0 -> 1[B] + 1[BABAA]  STD 
+[812] 1[B] + 1[ABABA] -- 0.01 -> 1[BABABA]  STD 
+[813] 1[BABABA] -- 1.0 -> 1[B] + 1[ABABA]  STD 
+[814] 1[BA] + 1[BABA] -- 0.01 -> 1[BABABA]  STD 
+[815] 1[BABABA] -- 1.0 -> 1[BA] + 1[BABA]  STD 
+[816] 1[ABA] + 1[BAB] -- 0.01 -> 1[BABABA]  STD 
+[817] 1[BABABA] -- 1.0 -> 1[ABA] + 1[BAB]  STD 
+[818] 1[BA] + 1[BABA] -- 0.01 -> 1[BABABA]  STD 
+[819] 1[BABABA] -- 1.0 -> 1[BA] + 1[BABA]  STD 
+[820] 1[A] + 1[BABAB] -- 0.01 -> 1[BABABA]  STD 
+[821] 1[BABABA] -- 1.0 -> 1[A] + 1[BABAB]  STD 
+[822] 1[B] + 1[ABABB] -- 0.01 -> 1[BABABB]  STD 
+[823] 1[BABABB] -- 1.0 -> 1[B] + 1[ABABB]  STD 
+[824] 1[BA] + 1[BABB] -- 0.01 -> 1[BABABB]  STD 
+[825] 1[BABABB] -- 1.0 -> 1[BA] + 1[BABB]  STD 
+[826] 1[ABB] + 1[BAB] -- 0.01 -> 1[BABABB]  STD 
+[827] 1[BABABB] -- 1.0 -> 1[ABB] + 1[BAB]  STD 
+[828] 1[BB] + 1[BABA] -- 0.01 -> 1[BABABB]  STD 
+[829] 1[BABABB] -- 1.0 -> 1[BB] + 1[BABA]  STD 
+[830] 1[B] + 1[BABAB] -- 0.01 -> 1[BABABB]  STD 
+[831] 1[BABABB] -- 1.0 -> 1[B] + 1[BABAB]  STD 
+[832] 1[B] + 1[ABBAA] -- 0.01 -> 1[BABBAA]  STD 
+[833] 1[BABBAA] -- 1.0 -> 1[B] + 1[ABBAA]  STD 
+[834] 1[BA] + 1[BBAA] -- 0.01 -> 1[BABBAA]  STD 
+[835] 1[BABBAA] -- 1.0 -> 1[BA] + 1[BBAA]  STD 
+[836] 1[BAA] + 1[BAB] -- 0.01 -> 1[BABBAA]  STD 
+[837] 1[BABBAA] -- 1.0 -> 1[BAA] + 1[BAB]  STD 
+[838] 1[AA] + 1[BABB] -- 0.01 -> 1[BABBAA]  STD 
+[839] 1[BABBAA] -- 1.0 -> 1[AA] + 1[BABB]  STD 
+[840] 1[A] + 1[BABBA] -- 0.01 -> 1[BABBAA]  STD 
+[841] 1[BABBAA] -- 1.0 -> 1[A] + 1[BABBA]  STD 
+[842] 1[B] + 1[ABBAB] -- 0.01 -> 1[BABBAB]  STD 
+[843] 1[BABBAB] -- 1.0 -> 1[B] + 1[ABBAB]  STD 
+[844] 1[BA] + 1[BBAB] -- 0.01 -> 1[BABBAB]  STD 
+[845] 1[BABBAB] -- 1.0 -> 1[BA] + 1[BBAB]  STD 
+[846] 2[BAB] -- 0.01 -> 1[BABBAB]  STD 
+[847] 1[BABBAB] -- 1.0 -> 2[BAB]  STD 
+[848] 1[AB] + 1[BABB] -- 0.01 -> 1[BABBAB]  STD 
+[849] 1[BABBAB] -- 1.0 -> 1[AB] + 1[BABB]  STD 
+[850] 1[B] + 1[BABBA] -- 0.01 -> 1[BABBAB]  STD 
+[851] 1[BABBAB] -- 1.0 -> 1[B] + 1[BABBA]  STD 
+[852] 1[B] + 1[ABBBA] -- 0.01 -> 1[BABBBA]  STD 
+[853] 1[BABBBA] -- 1.0 -> 1[B] + 1[ABBBA]  STD 
+[854] 1[BA] + 1[BBBA] -- 0.01 -> 1[BABBBA]  STD 
+[855] 1[BABBBA] -- 1.0 -> 1[BA] + 1[BBBA]  STD 
+[856] 1[BAB] + 1[BBA] -- 0.01 -> 1[BABBBA]  STD 
+[857] 1[BABBBA] -- 1.0 -> 1[BAB] + 1[BBA]  STD 
+[858] 1[BA] + 1[BABB] -- 0.01 -> 1[BABBBA]  STD 
+[859] 1[BABBBA] -- 1.0 -> 1[BA] + 1[BABB]  STD 
+[860] 1[A] + 1[BABBB] -- 0.01 -> 1[BABBBA]  STD 
+[861] 1[BABBBA] -- 1.0 -> 1[A] + 1[BABBB]  STD 
+[862] 1[B] + 1[ABBBB] -- 0.01 -> 1[BABBBB]  STD 
+[863] 1[BABBBB] -- 1.0 -> 1[B] + 1[ABBBB]  STD 
+[864] 1[BA] + 1[BBBB] -- 0.01 -> 1[BABBBB]  STD 
+[865] 1[BABBBB] -- 1.0 -> 1[BA] + 1[BBBB]  STD 
+[866] 1[BAB] + 1[BBB] -- 0.01 -> 1[BABBBB]  STD 
+[867] 1[BABBBB] -- 1.0 -> 1[BAB] + 1[BBB]  STD 
+[868] 1[BB] + 1[BABB] -- 0.01 -> 1[BABBBB]  STD 
+[869] 1[BABBBB] -- 1.0 -> 1[BB] + 1[BABB]  STD 
+[870] 1[B] + 1[BABBB] -- 0.01 -> 1[BABBBB]  STD 
+[871] 1[BABBBB] -- 1.0 -> 1[B] + 1[BABBB]  STD 
+[872] 1[B] + 1[BAAAA] -- 0.01 -> 1[BBAAAA]  STD 
+[873] 1[BBAAAA] -- 1.0 -> 1[B] + 1[BAAAA]  STD 
+[874] 1[BB] + 1[AAAA] -- 0.01 -> 1[BBAAAA]  STD 
+[875] 1[BBAAAA] -- 1.0 -> 1[BB] + 1[AAAA]  STD 
+[876] 1[AAA] + 1[BBA] -- 0.01 -> 1[BBAAAA]  STD 
+[877] 1[BBAAAA] -- 1.0 -> 1[AAA] + 1[BBA]  STD 
+[878] 1[AA] + 1[BBAA] -- 0.01 -> 1[BBAAAA]  STD 
+[879] 1[BBAAAA] -- 1.0 -> 1[AA] + 1[BBAA]  STD 
+[880] 1[A] + 1[BBAAA] -- 0.01 -> 1[BBAAAA]  STD 
+[881] 1[BBAAAA] -- 1.0 -> 1[A] + 1[BBAAA]  STD 
+[882] 1[B] + 1[BAAAB] -- 0.01 -> 1[BBAAAB]  STD 
+[883] 1[BBAAAB] -- 1.0 -> 1[B] + 1[BAAAB]  STD 
+[884] 1[BB] + 1[AAAB] -- 0.01 -> 1[BBAAAB]  STD 
+[885] 1[BBAAAB] -- 1.0 -> 1[BB] + 1[AAAB]  STD 
+[886] 1[AAB] + 1[BBA] -- 0.01 -> 1[BBAAAB]  STD 
+[887] 1[BBAAAB] -- 1.0 -> 1[AAB] + 1[BBA]  STD 
+[888] 1[AB] + 1[BBAA] -- 0.01 -> 1[BBAAAB]  STD 
+[889] 1[BBAAAB] -- 1.0 -> 1[AB] + 1[BBAA]  STD 
+[890] 1[B] + 1[BBAAA] -- 0.01 -> 1[BBAAAB]  STD 
+[891] 1[BBAAAB] -- 1.0 -> 1[B] + 1[BBAAA]  STD 
+[892] 1[B] + 1[BAABA] -- 0.01 -> 1[BBAABA]  STD 
+[893] 1[BBAABA] -- 1.0 -> 1[B] + 1[BAABA]  STD 
+[894] 1[BB] + 1[AABA] -- 0.01 -> 1[BBAABA]  STD 
+[895] 1[BBAABA] -- 1.0 -> 1[BB] + 1[AABA]  STD 
+[896] 1[ABA] + 1[BBA] -- 0.01 -> 1[BBAABA]  STD 
+[897] 1[BBAABA] -- 1.0 -> 1[ABA] + 1[BBA]  STD 
+[898] 1[BA] + 1[BBAA] -- 0.01 -> 1[BBAABA]  STD 
+[899] 1[BBAABA] -- 1.0 -> 1[BA] + 1[BBAA]  STD 
+[900] 1[A] + 1[BBAAB] -- 0.01 -> 1[BBAABA]  STD 
+[901] 1[BBAABA] -- 1.0 -> 1[A] + 1[BBAAB]  STD 
+[902] 1[B] + 1[BAABB] -- 0.01 -> 1[BBAABB]  STD 
+[903] 1[BBAABB] -- 1.0 -> 1[B] + 1[BAABB]  STD 
+[904] 1[BB] + 1[AABB] -- 0.01 -> 1[BBAABB]  STD 
+[905] 1[BBAABB] -- 1.0 -> 1[BB] + 1[AABB]  STD 
+[906] 1[ABB] + 1[BBA] -- 0.01 -> 1[BBAABB]  STD 
+[907] 1[BBAABB] -- 1.0 -> 1[ABB] + 1[BBA]  STD 
+[908] 1[BB] + 1[BBAA] -- 0.01 -> 1[BBAABB]  STD 
+[909] 1[BBAABB] -- 1.0 -> 1[BB] + 1[BBAA]  STD 
+[910] 1[B] + 1[BBAAB] -- 0.01 -> 1[BBAABB]  STD 
+[911] 1[BBAABB] -- 1.0 -> 1[B] + 1[BBAAB]  STD 
+[912] 1[B] + 1[BABAA] -- 0.01 -> 1[BBABAA]  STD 
+[913] 1[BBABAA] -- 1.0 -> 1[B] + 1[BABAA]  STD 
+[914] 1[BB] + 1[ABAA] -- 0.01 -> 1[BBABAA]  STD 
+[915] 1[BBABAA] -- 1.0 -> 1[BB] + 1[ABAA]  STD 
+[916] 1[BAA] + 1[BBA] -- 0.01 -> 1[BBABAA]  STD 
+[917] 1[BBABAA] -- 1.0 -> 1[BAA] + 1[BBA]  STD 
+[918] 1[AA] + 1[BBAB] -- 0.01 -> 1[BBABAA]  STD 
+[919] 1[BBABAA] -- 1.0 -> 1[AA] + 1[BBAB]  STD 
+[920] 1[A] + 1[BBABA] -- 0.01 -> 1[BBABAA]  STD 
+[921] 1[BBABAA] -- 1.0 -> 1[A] + 1[BBABA]  STD 
+[922] 1[B] + 1[BABAB] -- 0.01 -> 1[BBABAB]  STD 
+[923] 1[BBABAB] -- 1.0 -> 1[B] + 1[BABAB]  STD 
+[924] 1[BB] + 1[ABAB] -- 0.01 -> 1[BBABAB]  STD 
+[925] 1[BBABAB] -- 1.0 -> 1[BB] + 1[ABAB]  STD 
+[926] 1[BAB] + 1[BBA] -- 0.01 -> 1[BBABAB]  STD 
+[927] 1[BBABAB] -- 1.0 -> 1[BAB] + 1[BBA]  STD 
+[928] 1[AB] + 1[BBAB] -- 0.01 -> 1[BBABAB]  STD 
+[929] 1[BBABAB] -- 1.0 -> 1[AB] + 1[BBAB]  STD 
+[930] 1[B] + 1[BBABA] -- 0.01 -> 1[BBABAB]  STD 
+[931] 1[BBABAB] -- 1.0 -> 1[B] + 1[BBABA]  STD 
+[932] 1[B] + 1[BABBA] -- 0.01 -> 1[BBABBA]  STD 
+[933] 1[BBABBA] -- 1.0 -> 1[B] + 1[BABBA]  STD 
+[934] 1[BB] + 1[ABBA] -- 0.01 -> 1[BBABBA]  STD 
+[935] 1[BBABBA] -- 1.0 -> 1[BB] + 1[ABBA]  STD 
+[936] 2[BBA] -- 0.01 -> 1[BBABBA]  STD 
+[937] 1[BBABBA] -- 1.0 -> 2[BBA]  STD 
+[938] 1[BA] + 1[BBAB] -- 0.01 -> 1[BBABBA]  STD 
+[939] 1[BBABBA] -- 1.0 -> 1[BA] + 1[BBAB]  STD 
+[940] 1[A] + 1[BBABB] -- 0.01 -> 1[BBABBA]  STD 
+[941] 1[BBABBA] -- 1.0 -> 1[A] + 1[BBABB]  STD 
+[942] 1[B] + 1[BABBB] -- 0.01 -> 1[BBABBB]  STD 
+[943] 1[BBABBB] -- 1.0 -> 1[B] + 1[BABBB]  STD 
+[944] 1[BB] + 1[ABBB] -- 0.01 -> 1[BBABBB]  STD 
+[945] 1[BBABBB] -- 1.0 -> 1[BB] + 1[ABBB]  STD 
+[946] 1[BBA] + 1[BBB] -- 0.01 -> 1[BBABBB]  STD 
+[947] 1[BBABBB] -- 1.0 -> 1[BBA] + 1[BBB]  STD 
+[948] 1[BB] + 1[BBAB] -- 0.01 -> 1[BBABBB]  STD 
+[949] 1[BBABBB] -- 1.0 -> 1[BB] + 1[BBAB]  STD 
+[950] 1[B] + 1[BBABB] -- 0.01 -> 1[BBABBB]  STD 
+[951] 1[BBABBB] -- 1.0 -> 1[B] + 1[BBABB]  STD 
+[952] 1[B] + 1[BBAAA] -- 0.01 -> 1[BBBAAA]  STD 
+[953] 1[BBBAAA] -- 1.0 -> 1[B] + 1[BBAAA]  STD 
+[954] 1[BB] + 1[BAAA] -- 0.01 -> 1[BBBAAA]  STD 
+[955] 1[BBBAAA] -- 1.0 -> 1[BB] + 1[BAAA]  STD 
+[956] 1[AAA] + 1[BBB] -- 0.01 -> 1[BBBAAA]  STD 
+[957] 1[BBBAAA] -- 1.0 -> 1[AAA] + 1[BBB]  STD 
+[958] 1[AA] + 1[BBBA] -- 0.01 -> 1[BBBAAA]  STD 
+[959] 1[BBBAAA] -- 1.0 -> 1[AA] + 1[BBBA]  STD 
+[960] 1[A] + 1[BBBAA] -- 0.01 -> 1[BBBAAA]  STD 
+[961] 1[BBBAAA] -- 1.0 -> 1[A] + 1[BBBAA]  STD 
+[962] 1[B] + 1[BBAAB] -- 0.01 -> 1[BBBAAB]  STD 
+[963] 1[BBBAAB] -- 1.0 -> 1[B] + 1[BBAAB]  STD 
+[964] 1[BB] + 1[BAAB] -- 0.01 -> 1[BBBAAB]  STD 
+[965] 1[BBBAAB] -- 1.0 -> 1[BB] + 1[BAAB]  STD 
+[966] 1[AAB] + 1[BBB] -- 0.01 -> 1[BBBAAB]  STD 
+[967] 1[BBBAAB] -- 1.0 -> 1[AAB] + 1[BBB]  STD 
+[968] 1[AB] + 1[BBBA] -- 0.01 -> 1[BBBAAB]  STD 
+[969] 1[BBBAAB] -- 1.0 -> 1[AB] + 1[BBBA]  STD 
+[970] 1[B] + 1[BBBAA] -- 0.01 -> 1[BBBAAB]  STD 
+[971] 1[BBBAAB] -- 1.0 -> 1[B] + 1[BBBAA]  STD 
+[972] 1[B] + 1[BBABA] -- 0.01 -> 1[BBBABA]  STD 
+[973] 1[BBBABA] -- 1.0 -> 1[B] + 1[BBABA]  STD 
+[974] 1[BB] + 1[BABA] -- 0.01 -> 1[BBBABA]  STD 
+[975] 1[BBBABA] -- 1.0 -> 1[BB] + 1[BABA]  STD 
+[976] 1[ABA] + 1[BBB] -- 0.01 -> 1[BBBABA]  STD 
+[977] 1[BBBABA] -- 1.0 -> 1[ABA] + 1[BBB]  STD 
+[978] 1[BA] + 1[BBBA] -- 0.01 -> 1[BBBABA]  STD 
+[979] 1[BBBABA] -- 1.0 -> 1[BA] + 1[BBBA]  STD 
+[980] 1[A] + 1[BBBAB] -- 0.01 -> 1[BBBABA]  STD 
+[981] 1[BBBABA] -- 1.0 -> 1[A] + 1[BBBAB]  STD 
+[982] 1[B] + 1[BBABB] -- 0.01 -> 1[BBBABB]  STD 
+[983] 1[BBBABB] -- 1.0 -> 1[B] + 1[BBABB]  STD 
+[984] 1[BB] + 1[BABB] -- 0.01 -> 1[BBBABB]  STD 
+[985] 1[BBBABB] -- 1.0 -> 1[BB] + 1[BABB]  STD 
+[986] 1[ABB] + 1[BBB] -- 0.01 -> 1[BBBABB]  STD 
+[987] 1[BBBABB] -- 1.0 -> 1[ABB] + 1[BBB]  STD 
+[988] 1[BB] + 1[BBBA] -- 0.01 -> 1[BBBABB]  STD 
+[989] 1[BBBABB] -- 1.0 -> 1[BB] + 1[BBBA]  STD 
+[990] 1[B] + 1[BBBAB] -- 0.01 -> 1[BBBABB]  STD 
+[991] 1[BBBABB] -- 1.0 -> 1[B] + 1[BBBAB]  STD 
+[992] 1[B] + 1[BBBAA] -- 0.01 -> 1[BBBBAA]  STD 
+[993] 1[BBBBAA] -- 1.0 -> 1[B] + 1[BBBAA]  STD 
+[994] 1[BB] + 1[BBAA] -- 0.01 -> 1[BBBBAA]  STD 
+[995] 1[BBBBAA] -- 1.0 -> 1[BB] + 1[BBAA]  STD 
+[996] 1[BAA] + 1[BBB] -- 0.01 -> 1[BBBBAA]  STD 
+[997] 1[BBBBAA] -- 1.0 -> 1[BAA] + 1[BBB]  STD 
+[998] 1[AA] + 1[BBBB] -- 0.01 -> 1[BBBBAA]  STD 
+[999] 1[BBBBAA] -- 1.0 -> 1[AA] + 1[BBBB]  STD 
+[1000] 1[A] + 1[BBBBA] -- 0.01 -> 1[BBBBAA]  STD 
+[1001] 1[BBBBAA] -- 1.0 -> 1[A] + 1[BBBBA]  STD 
+[1002] 1[B] + 1[BBBAB] -- 0.01 -> 1[BBBBAB]  STD 
+[1003] 1[BBBBAB] -- 1.0 -> 1[B] + 1[BBBAB]  STD 
+[1004] 1[BB] + 1[BBAB] -- 0.01 -> 1[BBBBAB]  STD 
+[1005] 1[BBBBAB] -- 1.0 -> 1[BB] + 1[BBAB]  STD 
+[1006] 1[BAB] + 1[BBB] -- 0.01 -> 1[BBBBAB]  STD 
+[1007] 1[BBBBAB] -- 1.0 -> 1[BAB] + 1[BBB]  STD 
+[1008] 1[AB] + 1[BBBB] -- 0.01 -> 1[BBBBAB]  STD 
+[1009] 1[BBBBAB] -- 1.0 -> 1[AB] + 1[BBBB]  STD 
+[1010] 1[B] + 1[BBBBA] -- 0.01 -> 1[BBBBAB]  STD 
+[1011] 1[BBBBAB] -- 1.0 -> 1[B] + 1[BBBBA]  STD 
+[1012] 1[B] + 1[BBBBA] -- 0.01 -> 1[BBBBBA]  STD 
+[1013] 1[BBBBBA] -- 1.0 -> 1[B] + 1[BBBBA]  STD 
+[1014] 1[BB] + 1[BBBA] -- 0.01 -> 1[BBBBBA]  STD 
+[1015] 1[BBBBBA] -- 1.0 -> 1[BB] + 1[BBBA]  STD 
+[1016] 1[BBA] + 1[BBB] -- 0.01 -> 1[BBBBBA]  STD 
+[1017] 1[BBBBBA] -- 1.0 -> 1[BBA] + 1[BBB]  STD 
+[1018] 1[BA] + 1[BBBB] -- 0.01 -> 1[BBBBBA]  STD 
+[1019] 1[BBBBBA] -- 1.0 -> 1[BA] + 1[BBBB]  STD 
+[1020] 1[A] + 1[BBBBB] -- 0.01 -> 1[BBBBBA]  STD 
+[1021] 1[BBBBBA] -- 1.0 -> 1[A] + 1[BBBBB]  STD 
+[1022] 1[B] + 1[BBBBB] -- 0.01 -> 1[BBBBBB]  STD 
+[1023] 1[BBBBBB] -- 1.0 -> 1[B] + 1[BBBBB]  STD 
+[1024] 1[BB] + 1[BBBB] -- 0.01 -> 1[BBBBBB]  STD 
+[1025] 1[BBBBBB] -- 1.0 -> 1[BB] + 1[BBBB]  STD 
+[1026] 2[BBB] -- 0.01 -> 1[BBBBBB]  STD 
+[1027] 1[BBBBBB] -- 1.0 -> 2[BBB]  STD 
+[1028] 1[BB] + 1[BBBB] -- 0.01 -> 1[BBBBBB]  STD 
+[1029] 1[BBBBBB] -- 1.0 -> 1[BB] + 1[BBBB]  STD 
+[1030] 1[B] + 1[BBBBB] -- 0.01 -> 1[BBBBBB]  STD 
+[1031] 1[BBBBBB] -- 1.0 -> 1[B] + 1[BBBBB]  STD 

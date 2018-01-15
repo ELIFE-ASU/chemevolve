@@ -1,8 +1,8 @@
 # Copyright 2018 ELIFE. All rights reserved.
 # Use of this source code is governed by a MIT
 # license that can be found in the LICENSE file.
-import unittest
-from chemevolve.Lexer import TokenType, Token, LexerError
+import os, unittest
+from chemevolve.Lexer import TokenType, Token, LexerError, Lexer
 
 class TestTokenType(unittest.TestCase):
     '''
@@ -303,3 +303,214 @@ class TestLexerError(unittest.TestCase):
         self.assertFalse(err.filename)
         self.assertEqual(5, err.linenum)
         self.assertEqual(3, err.charnum)
+
+class TestLexer(unittest.TestCase):
+    '''
+    Ensure that all is well with the `Lexer` class
+    '''
+    def assertLexed(self, tokens, s):
+        '''
+        Create a method for asserting that a string is correctly lexed
+        '''
+        lexer = Lexer()
+        got = lexer.lex(s)
+        if isinstance(tokens, list):
+            self.assertEqual(len(tokens), len(got))
+            for e, g in zip(tokens, got):
+                self.assertEqual(e.type, g.type)
+                self.assertEqual(e.data, g.data)
+        else:
+            self.assertEqual(tokens.type, got[0].type)
+            self.assertEqual(tokens.data, got[0].data)
+
+    def test_init(self):
+        '''
+        Ensure that the internal state of the `Lexer` is correctly initialized
+        '''
+        lexer = Lexer()
+        self.assertFalse(lexer.filename)
+        self.assertEqual(1, lexer.linenum)
+        self.assertEqual(0, lexer.charnum)
+        self.assertEqual([], lexer.tokens)
+        self.assertEqual(None, lexer.token_type)
+        self.assertEqual('', lexer.data)
+
+        lexer = Lexer('file.txt')
+        self.assertEqual('file.txt', lexer.filename)
+        self.assertEqual(1, lexer.linenum)
+        self.assertEqual(0, lexer.charnum)
+        self.assertEqual([], lexer.tokens)
+        self.assertEqual(None, lexer.token_type)
+        self.assertEqual('', lexer.data)
+
+    def test_empty(self):
+        '''
+        Ensure that (most) whitespace is lexed as nothing.
+        '''
+        self.assertLexed([], '')
+        self.assertLexed([], ' ')
+        self.assertLexed([], '  ')
+        self.assertLexed([], '\r')
+        self.assertLexed([], '    ')
+
+    def test_basic_tokens(self):
+        '''
+        Ensure that we can lex the basic tokens.
+        '''
+        self.assertLexed(Token(TokenType.NL, '\n'), '\n')
+        self.assertLexed(Token(TokenType.LT, '<'), '<')
+        self.assertLexed(Token(TokenType.GT, '>'), '>')
+        self.assertLexed(Token(TokenType.EQ, '='), '=')
+        self.assertLexed(Token(TokenType.PLUS, '+'), '+')
+        self.assertLexed(Token(TokenType.MINUS, '-'), '-')
+        self.assertLexed(Token(TokenType.DASH, '--'), '--')
+        self.assertLexed(Token(TokenType.ARROW, '->'), '->')
+        self.assertLexed(Token(TokenType.OBRACKET, '['), '[')
+        self.assertLexed(Token(TokenType.CBRACKET, ']'), ']')
+        self.assertLexed(Token(TokenType.OPAREN, '('), '(')
+        self.assertLexed(Token(TokenType.CPAREN, ')'), ')')
+        self.assertLexed(Token(TokenType.COMMA, ','), ',')
+
+    def test_integers(self):
+        '''
+        Ensure that we can lex the basic integers.
+        '''
+        self.assertLexed(Token(TokenType.INTEGER, '1'), '1')
+        self.assertLexed(Token(TokenType.INTEGER, '10'), '10')
+
+    def test_float(self):
+        '''
+        Ensure that we can lex the basic floats.
+        '''
+        self.assertLexed(Token(TokenType.FLOAT, '.1'), '.1')
+        self.assertLexed(Token(TokenType.FLOAT, '0.1'), '0.1')
+        self.assertLexed(Token(TokenType.FLOAT, '1e2'), '1e2')
+        self.assertLexed(Token(TokenType.FLOAT, '1e+2'), '1e+2')
+        self.assertLexed(Token(TokenType.FLOAT, '1e-2'), '1e-2')
+        self.assertLexed(Token(TokenType.FLOAT, '1E2'), '1E2')
+        self.assertLexed(Token(TokenType.FLOAT, '1E+2'), '1E+2')
+        self.assertLexed(Token(TokenType.FLOAT, '1E-2'), '1E-2')
+        self.assertLexed(Token(TokenType.FLOAT, '1.e2'), '1.e2')
+        self.assertLexed(Token(TokenType.FLOAT, '1.e+2'), '1.e+2')
+        self.assertLexed(Token(TokenType.FLOAT, '1.e-2'), '1.e-2')
+        self.assertLexed(Token(TokenType.FLOAT, '1.E2'), '1.E2')
+        self.assertLexed(Token(TokenType.FLOAT, '1.E+2'), '1.E+2')
+        self.assertLexed(Token(TokenType.FLOAT, '1.E-2'), '1.E-2')
+        self.assertLexed(Token(TokenType.FLOAT, '1.0e2'), '1.0e2')
+        self.assertLexed(Token(TokenType.FLOAT, '1.0e+2'), '1.0e+2')
+        self.assertLexed(Token(TokenType.FLOAT, '1.0e-2'), '1.0e-2')
+        self.assertLexed(Token(TokenType.FLOAT, '1.0E2'), '1.0E2')
+        self.assertLexed(Token(TokenType.FLOAT, '1.0E+2'), '1.0E+2')
+        self.assertLexed(Token(TokenType.FLOAT, '1.0E-2'), '1.0E-2')
+
+    def test_string(self):
+        '''
+        Ensure that we can lex strings.
+        '''
+        self.assertLexed(Token(TokenType.STRING, 'apple'), 'apple')
+        self.assertLexed(Token(TokenType.STRING, 'meta-data'), 'meta-data')
+        self.assertLexed(Token(TokenType.STRING, 'meta.data'), 'meta.data')
+        self.assertLexed(Token(TokenType.STRING, 'AABBA'), 'AABBA')
+
+    def test_invalid_numeric(self):
+        '''
+        Raise an error if an invalid numeric value is encountered
+        '''
+        with self.assertRaises(LexerError):
+            Lexer().lex('1t')
+        with self.assertRaises(LexerError):
+            Lexer().lex('.1t')
+        with self.assertRaises(LexerError):
+            Lexer().lex('.')
+        with self.assertRaises(LexerError):
+            Lexer().lex('.+')
+        with self.assertRaises(LexerError):
+            Lexer().lex('.-')
+        with self.assertRaises(LexerError):
+            Lexer().lex('1.1t')
+        with self.assertRaises(LexerError):
+            Lexer().lex('1.1e')
+        with self.assertRaises(LexerError):
+            Lexer().lex('1e.')
+        with self.assertRaises(LexerError):
+            Lexer().lex('1e+.')
+        with self.assertRaises(LexerError):
+            Lexer().lex('.e+.')
+
+    def test_compound_statements(self):
+        '''
+        Ensure that compound statements are lexed as expected.
+        '''
+        self.assertLexed([Token(TokenType.LT,'<'),
+                          Token(TokenType.STRING,'meta-data'),
+                          Token(TokenType.GT,'>'),
+                          Token(TokenType.NL,'\n'),
+                          Token(TokenType.NL,'\n')],
+                          '< meta-data >\n\n')
+        self.assertLexed([Token(TokenType.LT,'<'),
+                          Token(TokenType.DASH,'--')],
+                          '<--')
+        self.assertLexed([Token(TokenType.LT,'<'),
+                          Token(TokenType.DASH,'--'),
+                          Token(TokenType.GT,'>')],
+                          '<-->')
+        self.assertLexed([Token(TokenType.LT,'<'),
+                          Token(TokenType.ARROW,'->')],
+                          '<->')
+        self.assertLexed([Token(TokenType.OBRACKET,'['),
+                          Token(TokenType.INTEGER,'12'),
+                          Token(TokenType.CBRACKET,']'),
+                          Token(TokenType.STRING,'AABA')],
+                          '[12] AABA')
+
+        reaction = [Token(TokenType.OBRACKET,'['),
+                    Token(TokenType.INTEGER,'3'),
+                    Token(TokenType.CBRACKET,']'),
+                    Token(TokenType.OBRACKET,'['),
+                    Token(TokenType.STRING,'AA'),
+                    Token(TokenType.CBRACKET,']'),
+                    Token(TokenType.PLUS,'+'),
+                    Token(TokenType.INTEGER,'2'),
+                    Token(TokenType.OBRACKET,'['),
+                    Token(TokenType.STRING,'AB'),
+                    Token(TokenType.CBRACKET,']'),
+                    Token(TokenType.DASH,'--'),
+                    Token(TokenType.FLOAT,'1.e-1'),
+                    Token(TokenType.ARROW,'->'),
+                    Token(TokenType.OBRACKET,'['),
+                    Token(TokenType.STRING,'ABAAAB'),
+                    Token(TokenType.CBRACKET,']'),
+                    Token(TokenType.STRING, 'STD'),
+                    Token(TokenType.OPAREN,'('),
+                    Token(TokenType.FLOAT,'1E2'),
+                    Token(TokenType.OBRACKET,'['),
+                    Token(TokenType.STRING,'ABA'),
+                    Token(TokenType.CBRACKET,']'),
+                    Token(TokenType.COMMA,','),
+                    Token(TokenType.OBRACKET,'['),
+                    Token(TokenType.STRING,'BAB'),
+                    Token(TokenType.CBRACKET,']'),
+                    Token(TokenType.CPAREN,')'),
+                    Token(TokenType.NL,'\n')]
+        self.assertLexed(reaction,
+             '[3][AA]+2[AB]--1.e-1->[ABAAAB]STD(1E2[ABA],[BAB])\n')
+        self.assertLexed(reaction,
+             '[3] [AA] + 2[AB] -- 1.e-1 -> [ABAAAB] STD (1E2[ABA], [BAB])\n')
+
+    def test_configs_from_string(self):
+        '''
+        Ensure that the configuration files in configs/lexer/valid all lex
+        without error while those in configs/lexer/invalid do not.
+        '''
+        valid = 'test/configs/lexer/valid'
+        for filename in os.listdir(valid):
+            with open(os.path.join(valid, filename)) as f:
+                expect = int(os.path.splitext(filename)[0])
+                tokens = Lexer().lex(f.read())
+                self.assertEqual(expect, len(tokens))
+
+        invalid = 'test/configs/lexer/invalid'
+        for filename in os.listdir(invalid):
+            with open(os.path.join(invalid, filename)) as f:
+                with self.assertRaises(LexerError):
+                    Lexer().lex(f.read())
