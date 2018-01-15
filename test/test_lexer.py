@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2018 ELIFE. All rights reserved.
 # Use of this source code is governed by a MIT
 # license that can be found in the LICENSE file.
@@ -496,6 +497,23 @@ class TestLexer(unittest.TestCase):
              '[3][AA]+2[AB]--1.e-1->[ABAAAB]STD(1E2[ABA],[BAB])\n')
         self.assertLexed(reaction,
              '[3] [AA] + 2[AB] -- 1.e-1 -> [ABAAAB] STD (1E2[ABA], [BAB])\n')
+
+    def test_lex_unicode(self):
+        '''
+        Ensure that we can properly lex (most) unicode (UTF-8) characters.
+        '''
+        self.assertLexed(Token(TokenType.STRING, u'α'), u'α')
+        self.assertLexed([Token(TokenType.OBRACKET, u'['),
+                          Token(TokenType.STRING, u'αβ-apple'),
+                          Token(TokenType.CBRACKET, u']')],
+                          u'[αβ-apple]')
+
+        self.assertLexed(Token(TokenType.STRING, u'α'), 'α')
+        self.assertLexed([Token(TokenType.OBRACKET, u'['),
+                          Token(TokenType.STRING, u'αβ-apple'),
+                          Token(TokenType.CBRACKET, u']')],
+                          '[αβ-apple]')
+
 
     def test_configs_from_string(self):
         '''

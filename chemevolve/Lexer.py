@@ -2,7 +2,26 @@
 Provide a Lexer class and support classes (e.g. TokenType and Token) for lexing
 (tokenizing) ChemEvolve configuration files.
 '''
+import sys
 from enum import Enum
+
+'''
+Is the running python version, version 2?
+'''
+is_python2 = (sys.version_info.major == 2)
+
+'''
+Is the running python version, version 3?
+'''
+is_python3 = (sys.version_info.major == 3)
+
+'''
+Create the `unicode` type as an alias for `str` in Python 3.
+
+This makes unicode support a little cleaner.
+'''
+if is_python3:
+    unicode = str
 
 class TokenType(Enum):
     '''
@@ -48,8 +67,8 @@ class Token(object):
         '''
         if not isinstance(type, TokenType):
             raise TypeError('type argument must be a TokenType')
-        elif not isinstance(data, str):
-            raise TypeError('data argument must be a string')
+        elif not isinstance(data, str) and not isinstance(data, unicode):
+            raise TypeError('data argument must be a string or unicode')
 
         self.type = type
         self.data = data
@@ -202,8 +221,20 @@ class Lexer(object):
         else:
             self.restart(filename)
 
-        for char in s:
-            self.handle_character(char)
+        if isinstance(s, str) and is_python2:
+            # If the current python version is Python 2 and the `s` argument is
+            # a string, then we need to decode it as UTF-8 unicode.
+            for char in s.decode('utf-8'):
+                self.handle_character(char)
+        elif isinstance(s, unicode):
+            # If the argument is of type `unicode` then, regardless of whether
+            # we are using Python 2 or 3, all is well.
+            for char in s:
+                self.handle_character(char)
+        else:
+            # No other argument types are supported.
+            raise TypeError('argument is not of type "str" or "unicode"')
+
         self.append_token()
 
         return self.tokens
