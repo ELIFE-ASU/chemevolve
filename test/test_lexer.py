@@ -494,6 +494,24 @@ class TestLexer(unittest.TestCase):
         self.assertLexed(reaction,
              '[3] [AA] + 2[AB] -- 1.e-1 -> [ABAAAB] STD (1E2[ABA], [BAB])\n')
 
+    def test_lex_override_filename(self):
+        '''
+        Ensure that the `Lexer` properly handles the filename overrides when
+        `lex` is called.
+        '''
+        lexer = Lexer('<no-filename>')
+        lexer.lex('apples')
+        self.assertEqual('<no-filename>', lexer.filename)
+        lexer.lex('bananas', filename='<hardcoded>')
+        self.assertEqual('<hardcoded>', lexer.filename)
+
+        lexer = Lexer('<no-filename>')
+        lexer.lex('apples', reset=False)
+        self.assertEqual('<no-filename>', lexer.filename)
+        lexer.lex('bananas', filename='<hardcoded>', reset=False)
+        self.assertEqual('<hardcoded>', lexer.filename)
+
+
     def test_lex_unicode(self):
         '''
         Ensure that we can properly lex (most) unicode (UTF-8) characters.

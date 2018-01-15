@@ -196,6 +196,7 @@ class Lexer(object):
         '''
         Initialize the `Lexer` with an optional filename.
         '''
+        self.filename = None
         self.reset(filename)
 
     def reset(self, filename=None):
@@ -210,7 +211,8 @@ class Lexer(object):
         Restart the lexing without discarding previously lexed tokens. This
         allows multiple inputs to be concatentated into a single lexed output.
         '''
-        self.filename = filename
+        if filename:
+            self.filename = filename
         self.linenum = 1
         self.charnum = 0
         self.data = ''
