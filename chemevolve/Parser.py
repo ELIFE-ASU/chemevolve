@@ -2,6 +2,8 @@
 Provide a Parser class and support classes (e.g. ParserError) for parsing
 Chemevolve configuration files.
 '''
+from enum import Enum
+
 class ParserError(Exception):
     '''
     The `ParserError` class provides a basic error type to be raised when an
@@ -30,4 +32,18 @@ class ParserError(Exception):
             return '{} ({}:{})'.format(msg, filename, linenum)
         else:
             return '{} (:{})'.format(msg, linenum)
+
+class ParserPhase(Enum):
+    '''
+    The `ParserPhase` enumeration provides a type for representing the states in
+    which the parser may be found.
+    '''
+    START     = 0 # The phase when the parser is initialized or restarted
+    HEADING   = 1 # The phase when a header is being read, e.g. <meta-data>
+    METADATA  = 2 # The phase after 'meta-data' is encountered
+    MOLECULES = 3 # The phase after 'molecules' is encountered
+    REACTIONS = 4 # The phase after 'reactions' is encountered
+    KEYVALUE  = 5 # The phase while parsing a key-value pair: nrMolecules = 100
+    MOLECULE  = 6 # The phase while parsing a molecule, [0] A
+    REACTION  = 7 # The phase while parsing a reaction, [0] 2[A] -- 1.0 -> [AA]
 
