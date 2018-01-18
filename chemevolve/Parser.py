@@ -47,3 +47,16 @@ class ParserPhase(Enum):
     MOLECULE  = 6 # The phase while parsing a molecule, [0] A
     REACTION  = 7 # The phase while parsing a reaction, [0] 2[A] -- 1.0 -> [AA]
 
+class Parser(object):
+    '''
+    The `Parser` class parses a configuraiton file into a full
+    `CoreClasses.CRS` object.
+    '''
+    def __init__(self, filename=None):
+        '''
+        Initialize the `Parser` object.
+        '''
+        self.filename = filename
+        self.linenum = 1
+        self.phase = ParserPhase.START
+
