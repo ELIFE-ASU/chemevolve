@@ -66,6 +66,9 @@ class Parser(object):
         self.tokens = []
         self.numtokens = 0
         self.metadata = dict()
+        self.molecule_list = list()
+        self.molecule_dict = dict()
+        self.reaction_list = list()
 
         self.restart(filename)
 
@@ -285,6 +288,7 @@ class Parser(object):
             value = self.metadata['nrMolecules']
             if not isinstance(value, int) or value < 1:
                 self.error('value of nrMolecules must be a positive, non-zero integer')
+            self.molecule_list = [None] * value
         except KeyError:
             self.error('nrMolecules must be provided in meta-data')
 
@@ -292,6 +296,7 @@ class Parser(object):
             value = self.metadata['nrReactions']
             if not isinstance(value, int) or value < 1:
                 self.error('value of nrReactions must be a positive, non-zero integer')
+            self.reaction_list = [None] * value
         except KeyError:
             self.error('nrReactions must be provided in meta-data')
 

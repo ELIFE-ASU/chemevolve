@@ -97,23 +97,35 @@ class TestParser(unittest.TestCase):
         p.parse('<meta-data> nrMolecules = 2 nrReactions = 10')
         self.assertEqual( 2, p.metadata['nrMolecules'])
         self.assertEqual(10, p.metadata['nrReactions'])
-        self.assertEqual(2, len(p.metadata))
+        self.assertEqual( 2, len(p.metadata))
+        self.assertEqual( 2, len(p.molecule_list))
+        self.assertEqual( 0, len(p.molecule_dict))
+        self.assertEqual(10, len(p.reaction_list))
 
         p.parse('<meta-data> nrMolecules = 2 nrReactions = 8')
         self.assertEqual(2, p.metadata['nrMolecules'])
         self.assertEqual(8, p.metadata['nrReactions'])
         self.assertEqual(2, len(p.metadata))
+        self.assertEqual(2, len(p.molecule_list))
+        self.assertEqual(0, len(p.molecule_dict))
+        self.assertEqual(8, len(p.reaction_list))
 
         p.parse('<meta-data> nrMolecules = 2 nrReactions = 100 nrMolecules = 3')
-        self.assertEqual( 3, p.metadata['nrMolecules'])
+        self.assertEqual(  3, p.metadata['nrMolecules'])
         self.assertEqual(100, p.metadata['nrReactions'])
-        self.assertEqual(2, len(p.metadata))
+        self.assertEqual(  2, len(p.metadata))
+        self.assertEqual(  3, len(p.molecule_list))
+        self.assertEqual(  0, len(p.molecule_dict))
+        self.assertEqual(100, len(p.reaction_list))
 
         p.parse('<meta-data> nrMolecules = 10 nrReactions = 100 apples = fruit')
         self.assertEqual( 10, p.metadata['nrMolecules'])
         self.assertEqual(100, p.metadata['nrReactions'])
         self.assertEqual('fruit', p.metadata['apples'])
-        self.assertEqual(3, len(p.metadata))
+        self.assertEqual(  3, len(p.metadata))
+        self.assertEqual( 10, len(p.molecule_list))
+        self.assertEqual(  0, len(p.molecule_dict))
+        self.assertEqual(100, len(p.reaction_list))
 
     def test_parse_reset(self):
         '''
@@ -137,4 +149,3 @@ class TestParser(unittest.TestCase):
         self.assertEqual( 10, p.metadata['nrMolecules'])
         self.assertEqual(100, p.metadata['nrReactions'])
         self.assertEqual(2, len(p.metadata))
-
