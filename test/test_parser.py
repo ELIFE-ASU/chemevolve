@@ -114,3 +114,27 @@ class TestParser(unittest.TestCase):
         self.assertEqual(100, p.metadata['nrReactions'])
         self.assertEqual('fruit', p.metadata['apples'])
         self.assertEqual(3, len(p.metadata))
+
+    def test_parse_reset(self):
+        '''
+        Ensure that parse resets at the beginning of each parse.
+        '''
+        p = Parser()
+
+        p.parse('<meta-data> nrMolecules = 2 nrReactions = 10 apple = 5')
+        self.assertEqual( 2, p.metadata['nrMolecules'])
+        self.assertEqual(10, p.metadata['nrReactions'])
+        self.assertEqual( 5, p.metadata['apple'])
+        self.assertEqual(3, len(p.metadata))
+
+        p.parse('<meta-data> nrMolecules = 1 nrReactions = 8', reset=False)
+        self.assertEqual(1, p.metadata['nrMolecules'])
+        self.assertEqual(8, p.metadata['nrReactions'])
+        self.assertEqual(5, p.metadata['apple'])
+        self.assertEqual(3, len(p.metadata))
+
+        p.parse('<meta-data> nrMolecules = 10 nrReactions = 100')
+        self.assertEqual( 10, p.metadata['nrMolecules'])
+        self.assertEqual(100, p.metadata['nrReactions'])
+        self.assertEqual(2, len(p.metadata))
+

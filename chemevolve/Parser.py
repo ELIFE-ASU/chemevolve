@@ -57,18 +57,33 @@ class Parser(object):
         '''
         Initialize the `Parser` object.
         '''
-        self.filename = filename
-        self.linenum = 1
-        self.phase = ParserPhase.START
+        self.filename = None
         self.lexer = Lexer(filename)
+        self.reset(filename)
+
+    def reset(self, filename=None):
+        self.lexer.reset(filename)
         self.tokens = []
         self.numtokens = 0
         self.metadata = dict()
 
-    def parse(self, s):
+        self.restart(filename)
+
+    def restart(self, filename=None):
+        if filename:
+            self.filename = filename
+        self.linenum = 1
+        self.phase = ParserPhase.START
+
+    def parse(self, s, filename=None, reset=True):
         '''
         Parse a string into a `CoreClasses.CRS` object.
         '''
+        if reset:
+            self.reset(filename)
+        else:
+            self.restart(filename)
+
         self.tokens = self.lexer.lex(s)
         self.numtokens = len(self.tokens)
         if self.numtokens == 0:
