@@ -157,6 +157,36 @@ class Token(object):
         '''
         return self.type.__eq__(other.type) and self.data.__eq__(other.data)
 
+    def isnewline(self):
+        '''
+        Is the token type NL?
+        '''
+        return self.type == TokenType.NL
+
+    def islessthan(self):
+        '''
+        Is the token type LT?
+        '''
+        return self.type == TokenType.LT
+
+    def isstring(self):
+        '''
+        Is the token type STRING?
+        '''
+        return self.type == TokenType.STRING
+
+    def isplus(self):
+        '''
+        Is the token type PLUS?
+        '''
+        return self.type == TokenType.PLUS
+
+    def isminus(self):
+        '''
+        Is the token type MINUS?
+        '''
+        return self.type == TokenType.MINUS
+
 class LexerError(Exception):
     '''
     The `LexerError` class provides a basic error type to be raised when an
