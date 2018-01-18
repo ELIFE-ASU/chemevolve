@@ -37,3 +37,13 @@ class TestParser(unittest.TestCase):
         self.assertEqual('file.txt', p.filename)
         self.assertEqual(1, p.linenum)
         self.assertEqual(ParserPhase.START, p.phase)
+
+    def test_parse_empty(self):
+        '''
+        The first parse should return None if the text is empty or only contains
+        spaces.
+        '''
+        self.assertFalse(Parser().parse(''))
+        self.assertFalse(Parser().parse(' '))
+        self.assertFalse(Parser().parse(' \t'))
+        self.assertFalse(Parser().parse(' \n\t '))

@@ -2,6 +2,7 @@
 Provide a Parser class and support classes (e.g. ParserError) for parsing
 Chemevolve configuration files.
 '''
+from Lexer import Lexer
 from enum import Enum
 
 class ParserError(Exception):
@@ -59,4 +60,14 @@ class Parser(object):
         self.filename = filename
         self.linenum = 1
         self.phase = ParserPhase.START
+        self.lexer = Lexer(filename)
+        self.tokens = []
+
+    def parse(self, s):
+        '''
+        Parse a string into a `CoreClasses.CRS` object.
+        '''
+        self.tokens = self.lexer.lex(s)
+        if len(self.tokens) == 0:
+            return None
 
