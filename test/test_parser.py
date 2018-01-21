@@ -2,8 +2,9 @@
 # Copyright 2018 ELIFE. All rights reserved.
 # Use of this source code is governed by a MIT
 # license that can be found in the LICENSE file.
-import unittest
+import unittest, os
 from chemevolve.Parser import ParserError, ParserPhase, Parser
+from chemevolve.CoreClasses import Reaction
 
 class TestParserError(unittest.TestCase):
     '''
@@ -94,58 +95,89 @@ class TestParser(unittest.TestCase):
         '''
         p = Parser()
 
-        p.parse('<meta-data> nrMolecules = 2 nrReactions = 10')
-        self.assertEqual( 2, p.metadata['nrMolecules'])
-        self.assertEqual(10, p.metadata['nrReactions'])
-        self.assertEqual( 2, len(p.metadata))
-        self.assertEqual( 2, len(p.molecule_list))
-        self.assertEqual( 0, len(p.molecule_dict))
-        self.assertEqual(10, len(p.reaction_list))
-
-        p.parse('<meta-data> nrMolecules = 2 nrReactions = 8')
-        self.assertEqual(2, p.metadata['nrMolecules'])
-        self.assertEqual(8, p.metadata['nrReactions'])
+        p.parse('''<meta-data>
+                   nrMolecules = 4
+                   nrReactions = 4
+                   <molecules>
+                   [0] A
+                   [1] AA
+                   [2] B
+                   [3] AB
+                   <reactions>
+                   [0] 2[A] -- 1.0 -> [AA] STD
+                   [1] [A] + [B] -- 0.5 -> [AB] QED
+                   [2] [AA] -- 1.5 -> 2[A] STD (2.3[AA])
+                   [3] [AB] -- 2.5e-1 -> [A] + 1[B] STD (1e-3[A],1e-2[B])''')
         self.assertEqual(2, len(p.metadata))
-        self.assertEqual(2, len(p.molecule_list))
-        self.assertEqual(0, len(p.molecule_dict))
-        self.assertEqual(8, len(p.reaction_list))
+        self.assertEqual(4, p.metadata['nrMolecules'])
+        self.assertEqual(4, p.metadata['nrReactions'])
+        self.assertEqual(['A','AA','B','AB'], p.molecule_list)
+        self.assertEqual({'A':0, 'AA':1, 'B':2, 'AB': 3}, p.molecule_dict)
+        self.assertEqual(4, len(p.reaction_list))
 
-        p.parse('<meta-data> nrMolecules = 2 nrReactions = 100 nrMolecules = 3')
-        self.assertEqual(  3, p.metadata['nrMolecules'])
-        self.assertEqual(100, p.metadata['nrReactions'])
-        self.assertEqual(  2, len(p.metadata))
-        self.assertEqual(  3, len(p.molecule_list))
-        self.assertEqual(  0, len(p.molecule_dict))
-        self.assertEqual(100, len(p.reaction_list))
+        reactions = [
+                Reaction(0, ['A'], [2], ['AA'], [1], 1.0, [], [], 'STD'),
+                Reaction(1, ['A','B'], [1,1], ['AB'], [1], 0.5, [], [], 'QED'),
+                Reaction(2, ['AA'], [1], ['A'], [2], 1.5, ['AA'], [2.3], 'STD'),
+                Reaction(3, ['AB'], [1], ['A','B'], [1,1], 0.25, ['A','B'], [1e-3,1e-2], 'STD')
+                ]
+        for expect, got in zip(reactions, p.reaction_list):
+            self.assertEqual(expect.ID, got.ID)
+            self.assertEqual(expect.reactants, got.reactants)
+            self.assertEqual(expect.reactant_coeff, got.reactant_coeff)
+            self.assertEqual(expect.products, got.products)
+            self.assertEqual(expect.product_coeff, got.product_coeff)
+            self.assertEqual(expect.catalysts, got.catalysts)
+            self.assertEqual(expect.catalyzed_constants, got.catalyzed_constants)
+            self.assertEqual(expect.constant, got.constant)
+            self.assertEqual(expect.prop, got.prop)
 
-        p.parse('<meta-data> nrMolecules = 10 nrReactions = 100 apples = fruit')
-        self.assertEqual( 10, p.metadata['nrMolecules'])
-        self.assertEqual(100, p.metadata['nrReactions'])
-        self.assertEqual('fruit', p.metadata['apples'])
-        self.assertEqual(  3, len(p.metadata))
-        self.assertEqual( 10, len(p.molecule_list))
-        self.assertEqual(  0, len(p.molecule_dict))
-        self.assertEqual(100, len(p.reaction_list))
-
-    def test_parse_reset(self):
+    def test_configs_from_string(self):
         '''
-        Ensure that parse resets at the beginning of each parse.
+        Ensure that the configuration files in configs/parser/valid all parse
+        without error while those in configs/parser/invalid do not.
         '''
-        p = Parser()
+        valid = 'test/configs/parser/valid'
+        for filename in os.listdir(valid):
+            with open(os.path.join(valid, filename)) as f:
+                crs = Parser().parse(f.read())
+                self.assertTrue(crs)
 
-        p.parse('<meta-data> nrMolecules = 2 nrReactions = 10 apple = 5')
-        self.assertEqual( 2, p.metadata['nrMolecules'])
-        self.assertEqual(10, p.metadata['nrReactions'])
-        self.assertEqual( 5, p.metadata['apple'])
-        self.assertEqual(3, len(p.metadata))
+        invalid = 'test/configs/parser/invalid'
+        for filename in os.listdir(invalid):
+            with open(os.path.join(invalid, filename)) as f:
+                with self.assertRaises(Exception):
+                    Parser().parse(f.read())
 
-        p.parse('<meta-data> nrMolecules = 1 nrReactions = 8', reset=False)
-        self.assertEqual(1, p.metadata['nrMolecules'])
-        self.assertEqual(8, p.metadata['nrReactions'])
-        self.assertEqual(5, p.metadata['apple'])
-        self.assertEqual(3, len(p.metadata))
+    def test_parse_file(self):
+        '''
+        Ensure that the configuration files in configs/parse/valid all parse
+        without error and produce the same CRS when using `parse_file` as when
+        using `parse`. Ensure that files in configs/parse/invalid raise errors.
+        '''
+        valid = 'test/configs/parser/valid'
+        for filename in os.listdir(valid):
+            path = os.path.join(valid, filename)
+            parser = Parser()
+            with open(path) as f:
+                expected = parser.parse(f.read())
 
-        p.parse('<meta-data> nrMolecules = 10 nrReactions = 100')
-        self.assertEqual( 10, p.metadata['nrMolecules'])
-        self.assertEqual(100, p.metadata['nrReactions'])
-        self.assertEqual(2, len(p.metadata))
+            # Parse the file from a file handle
+            with open(path) as f:
+                got = parser.parse_file(f)
+            self.assertEqual(expected, got)
+
+            # Parse the file from a filename
+            got = parser.parse_file(path)
+            self.assertEqual(expected, got)
+
+
+        invalid = 'test/configs/parser/invalid'
+        for filename in os.listdir(invalid):
+            path = os.path.join(invalid, filename)
+            with open(path) as f:
+                with self.assertRaises(Exception):
+                    Parser().parse_file(f)
+            with self.assertRaises(Exception):
+                Parser().parse_file(path)
+
