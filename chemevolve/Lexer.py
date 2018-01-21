@@ -169,11 +169,17 @@ class Token(object):
         '''
         return self.type == TokenType.LT
 
-    def isstring(self):
+    def isgreaterthan(self):
         '''
-        Is the token type STRING?
+        Is the token type GT?
         '''
-        return self.type == TokenType.STRING
+        return self.type == TokenType.GT
+
+    def isequalto(self):
+        '''
+        Is the token type EQ?
+        '''
+        return self.type == TokenType.EQ
 
     def isplus(self):
         '''
@@ -186,6 +192,66 @@ class Token(object):
         Is the token type MINUS?
         '''
         return self.type == TokenType.MINUS
+
+    def isdash(self):
+        '''
+        Is the token type DASH?
+        '''
+        return self.type == TokenType.DASH
+
+    def isarrow(self):
+        '''
+        Is the token type ARROW?
+        '''
+        return self.type == TokenType.ARROW
+
+    def isobracket(self):
+        '''
+        Is the token type OBRACKET?
+        '''
+        return self.type == TokenType.OBRACKET
+
+    def iscbracket(self):
+        '''
+        Is the token type CBRACKET?
+        '''
+        return self.type == TokenType.CBRACKET
+
+    def isoparen(self):
+        '''
+        Is the token type OPAREN?
+        '''
+        return self.type == TokenType.OPAREN
+
+    def iscparen(self):
+        '''
+        Is the token type CPAREN?
+        '''
+        return self.type == TokenType.CPAREN
+
+    def iscomma(self):
+        '''
+        Is the token type COMMA?
+        '''
+        return self.type == TokenType.COMMA
+
+    def isinteger(self):
+        '''
+        Is the token type INTEGER?
+        '''
+        return self.type == TokenType.INTEGER
+
+    def isfloat(self):
+        '''
+        Is the token type FLOAT?
+        '''
+        return self.type == TokenType.FLOAT
+
+    def isstring(self):
+        '''
+        Is the token type STRING?
+        '''
+        return self.type == TokenType.STRING
 
 class LexerError(Exception):
     '''
@@ -279,13 +345,13 @@ class Lexer(object):
 
     def lex_file(self, f, name=None, reset=True):
         '''
-        Lex a the contents of a file `f` using the optional `name` argument for
+        Lex the contents of a file `f` using the optional `name` argument for
         error reporting. If `reset` is `True`, then any previously lexed tokens
         are discarded; otherwise, they are retained.
 
         If `f` is a file, then we attempt to read from it and lex the contents.
-        If the `f` argument is a filename then we attempt to open it
-        (read-only) and it is closed upon exit.
+        If the `f` argument is a filename, then we attempt to open it
+        (read-only), lex it, and closes it upon exiting.
 
         If `name is not None`, then that value is used as the filename for
         error reporting purposes. If `name is None` and `f` is a filename, then

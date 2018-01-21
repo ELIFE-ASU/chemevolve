@@ -288,6 +288,119 @@ class TestToken(unittest.TestCase):
         check_repr(Token(TokenType.STRING, '+'))
         check_repr(Token(TokenType.STRING, 'apple'))
 
+    def test_isnewline(self):
+        '''
+        Ensure that isnewline performs as expected.
+        '''
+        self.assertTrue(Token(TokenType.NL, '\n').isnewline())
+        self.assertFalse(Token(TokenType.LT, '<').isnewline())
+
+    def test_islessthan(self):
+        '''
+        Ensure that islessthan performs as expected.
+        '''
+        self.assertTrue(Token(TokenType.LT, '<').islessthan())
+        self.assertFalse(Token(TokenType.NL, '\n').islessthan())
+
+    def test_isgreaterthan(self):
+        '''
+        Ensure that isgreaterthan performs as expected.
+        '''
+        self.assertTrue(Token(TokenType.GT, '>').isgreaterthan())
+        self.assertFalse(Token(TokenType.LT, '<').isgreaterthan())
+
+    def test_isequalto(self):
+        '''
+        Ensure that isequalto performs as expected.
+        '''
+        self.assertTrue(Token(TokenType.EQ, '=').isequalto())
+        self.assertFalse(Token(TokenType.LT, '<').isequalto())
+
+    def test_isplus(self):
+        '''
+        Ensure that isplus performs as expected.
+        '''
+        self.assertTrue(Token(TokenType.PLUS, '+').isplus())
+        self.assertFalse(Token(TokenType.EQ, '=').isplus())
+
+    def test_isminus(self):
+        '''
+        Ensure that isminus performs as expected.
+        '''
+        self.assertTrue(Token(TokenType.MINUS, '-').isminus())
+        self.assertFalse(Token(TokenType.EQ, '=').isminus())
+
+    def test_isdash(self):
+        '''
+        Ensure that isdash performs as expected.
+        '''
+        self.assertTrue(Token(TokenType.DASH, '--').isdash())
+        self.assertFalse(Token(TokenType.EQ, '=').isdash())
+
+    def test_isarrow(self):
+        '''
+        Ensure that isarrow performs as expected.
+        '''
+        self.assertTrue(Token(TokenType.ARROW, '->').isarrow())
+        self.assertFalse(Token(TokenType.PLUS, '+').isarrow())
+
+    def test_isobracket(self):
+        '''
+        Ensure that isobracket performs as expected.
+        '''
+        self.assertTrue(Token(TokenType.OBRACKET, '[').isobracket())
+        self.assertFalse(Token(TokenType.ARROW, '->').isobracket())
+
+    def test_iscbracket(self):
+        '''
+        Ensure that iscbracket performs as expected.
+        '''
+        self.assertTrue(Token(TokenType.CBRACKET, ']').iscbracket())
+        self.assertFalse(Token(TokenType.OBRACKET, '[').iscbracket())
+
+    def test_isoparen(self):
+        '''
+        Ensure that isoparen performs as expected.
+        '''
+        self.assertTrue(Token(TokenType.OPAREN, '(').isoparen())
+        self.assertFalse(Token(TokenType.ARROW, '->').isoparen())
+
+    def test_iscparen(self):
+        '''
+        Ensure that iscparen performs as expected.
+        '''
+        self.assertTrue(Token(TokenType.CPAREN, ')').iscparen())
+        self.assertFalse(Token(TokenType.OPAREN, '(').iscparen())
+
+    def test_iscomma(self):
+        '''
+        Ensure that iscomma performs as expected.
+        '''
+        self.assertTrue(Token(TokenType.COMMA, ',').iscomma())
+        self.assertFalse(Token(TokenType.CPAREN, ')').iscomma())
+
+    def test_isinteger(self):
+        '''
+        Ensure that isinteger performs as expected.
+        '''
+        self.assertTrue(Token(TokenType.INTEGER, '2').isinteger())
+        self.assertFalse(Token(TokenType.FLOAT, '2.3').isinteger())
+
+    def test_isfloat(self):
+        '''
+        Ensure that isfloat performs as expected.
+        '''
+        self.assertTrue(Token(TokenType.FLOAT, '2.3').isfloat())
+        self.assertFalse(Token(TokenType.INTEGER, '2').isfloat())
+
+    def test_isstring(self):
+        '''
+        Ensure that isstring performs as expected.
+        '''
+        self.assertTrue(Token(TokenType.STRING, 'apples').isstring())
+        self.assertFalse(Token(TokenType.FLOAT, '2.3').isstring())
+        self.assertFalse(Token(TokenType.INTEGER, '2').isstring())
+
 class TestLexerError(unittest.TestCase):
     '''
     Ensure that all is well with the `LexerError` class.
@@ -527,7 +640,6 @@ class TestLexer(unittest.TestCase):
                           Token(TokenType.STRING, u'αβ-apple'),
                           Token(TokenType.CBRACKET, u']')],
                           '[αβ-apple]')
-
 
     def test_configs_from_string(self):
         '''
