@@ -10,11 +10,9 @@ def create_reaction_system(filename):
 
 	Returns:
 		- CRS: Reaction System Object of the CRS class.'''
-	import CoreClasses as Core
-	CRS = Core.CRS(molecule_list = [], molecule_dict = dict(), reactions = [])
-	print filename
-	CRS.readtxt(filename)
-	return CRS
+	from Parser import Parser
+	print(filename)
+	return Parser.parse_file(filename)
 	
 def read_concentration_files_old(file_prefix):
 	'''Opens a concentration file (.npy array) and a molecule list file 
