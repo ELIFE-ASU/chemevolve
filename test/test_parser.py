@@ -141,13 +141,13 @@ class TestParser(unittest.TestCase):
         '''
         valid = 'test/configs/parser/valid'
         for filename in os.listdir(valid):
-            with open(os.path.join(valid, filename)) as f:
+            with open(os.path.join(valid, filename), 'rb') as f:
                 crs = Parser().parse(f.read())
                 self.assertTrue(crs)
 
         invalid = 'test/configs/parser/invalid'
         for filename in os.listdir(invalid):
-            with open(os.path.join(invalid, filename)) as f:
+            with open(os.path.join(invalid, filename), 'rb') as f:
                 with self.assertRaises(Exception):
                     Parser().parse(f.read())
 
@@ -161,11 +161,11 @@ class TestParser(unittest.TestCase):
         for filename in os.listdir(valid):
             path = os.path.join(valid, filename)
             parser = Parser()
-            with open(path) as f:
+            with open(path, 'rb') as f:
                 expected = parser.parse(f.read())
 
             # Parse the file from a file handle
-            with open(path) as f:
+            with open(path, 'rb') as f:
                 got = parser.parse_file(f)
             self.assertEqual(expected, got)
 
@@ -177,7 +177,7 @@ class TestParser(unittest.TestCase):
         invalid = 'test/configs/parser/invalid'
         for filename in os.listdir(invalid):
             path = os.path.join(invalid, filename)
-            with open(path) as f:
+            with open(path, 'rb') as f:
                 with self.assertRaises(Exception):
                     Parser().parse_file(f)
             with self.assertRaises(Exception):

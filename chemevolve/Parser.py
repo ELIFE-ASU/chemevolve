@@ -2,9 +2,9 @@
 Provide a Parser class and support classes (e.g. ParserError) for parsing
 Chemevolve configuration files.
 '''
-from Lexer import TokenType, Lexer
 from enum import Enum
-from CoreClasses import CRS, Reaction
+from .Lexer import TokenType, Lexer
+from .CoreClasses import CRS, Reaction
 
 class ParserError(Exception):
     '''

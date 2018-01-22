@@ -325,7 +325,7 @@ class Lexer(object):
         else:
             self.restart(filename)
 
-        if isinstance(s, str) and is_python2:
+        if (isinstance(s, str) and is_python2) or isinstance(s, bytes):
             # If the current python version is Python 2 and the `s` argument is
             # a string, then we need to decode it as UTF-8 unicode.
             for char in s.decode('utf-8'):
@@ -370,7 +370,7 @@ class Lexer(object):
                     return self.lex_file(filehandle, name=f, reset=reset)
                 else:
                     return self.lex_file(filehandle, name=name, reset=reset)
-        elif isinstance(f, file):
+        else:
             if reset:
                 self.reset(name)
             else:
@@ -381,8 +381,6 @@ class Lexer(object):
             self.append_token()
 
             return self.tokens
-        else:
-            raise TypeError('argument must be a filename or a file')
 
     def handle_character(self, char):
         '''
