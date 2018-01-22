@@ -732,10 +732,10 @@ def get_all_EIC_comp_data():
 
 
 def check_CRS(fname, target, total_mass = 10000):
+    from Parser import Parser
 
 	evolution_iterations = 10
-	CRS = Core.CRS()
-	CRS.readtxt(fname)
+	CRS = Parser().parse_file(fname)
 	r_seed = random.randint(0, sys.maxint)
 	#### Get the target concentrations from the data
 	target_concentrations = generate_concentrations_from_data(target, CRS, total_mass)

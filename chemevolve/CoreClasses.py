@@ -108,7 +108,21 @@ class Reaction(object):
             rep += str(self.product_coeff[i]) + '[' + str(self.products[i]) + '] + '
         rep = rep[:-2]
         return rep
-        
+
+    def __eq__(self, other):
+        '''
+        Compare two reactions for equality up to reordering of reactants,
+        products and catalysts.
+        '''
+        return self.ID == other.ID and \
+            abs(self.constant - other.constant) < 1e-6 and \
+            self.prop == other.prop and \
+            set(self.catalysts) == set(other.catalysts) and \
+            set(self.catalyzed_constants) == set(other.catalyzed_constants) and \
+            set(self.reactants) == set(other.reactants) and \
+            set(self.reactant_coeff) == set(other.reactant_coeff) and \
+            set(self.products) == set(other.products) and \
+            set(self.product_coeff) == set(other.product_coeff)
         
 ## Reaction System Class     
 class CRS(object):
@@ -134,7 +148,15 @@ class CRS(object):
     #     for r in self.reaction_dict:
     #         rep += self.reaction_dict[r].__str__()+"\n"
     #     return rep
-   
+
+    def __eq__(self, other):
+        '''
+        Compare two CRS objects for ordered equality, i.e. the molecule lists
+        and reaction lists must have the same values in the same order.
+        '''
+        print("Calling CRS.__eq__")
+        return self.molecule_list == other.molecule_list and \
+               self.reactions == other.reactions
         
     def savetxt(self, file_name):
         """Writes CRS to textfile"""
