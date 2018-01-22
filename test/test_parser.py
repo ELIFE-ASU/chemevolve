@@ -13,11 +13,13 @@ class TestParserError(unittest.TestCase):
     def test_init(self):
         err = ParserError('message', 'file.txt', 5)
         self.assertEqual('message (file.txt:5)', err.args[0])
+        self.assertEqual('message', err.message)
         self.assertEqual('file.txt', err.filename)
         self.assertEqual(5, err.linenum)
 
         err = ParserError('message', None, 5)
         self.assertEqual('message (:5)', err.args[0])
+        self.assertEqual('message', err.message)
         self.assertFalse(err.filename)
         self.assertEqual(5, err.linenum)
 

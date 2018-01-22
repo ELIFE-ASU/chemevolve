@@ -12,28 +12,28 @@ class ParserError(Exception):
     error is encountered during the parsing phase of parsing a Chemevolve
     configuration.
     '''
-    def __init__(self, msg, filename, linenum):
+    def __init__(self, message, filename, linenum):
         '''
         Initialize a `ParserError` providing a message to describe the error,
         the filename, and the line number at which the error occurred.
         '''
-        message = ParserError.format(msg, filename, linenum)
-
-        super(ParserError, self).__init__(message)
-
+        self.message = message
         self.filename = filename
         self.linenum = linenum
 
+        msg = ParserError.format(self.message, self.filename, self.linenum)
+        super(ParserError, self).__init__(msg)
+
     @staticmethod
-    def format(msg, filename, linenum):
+    def format(message, filename, linenum):
         '''
-        Format an error message include a base message (msg) and the filename,
-        line at which the error occurred.
+        Format an error message include a base message and the filename, line
+        at which the error occurred.
         '''
         if filename is not None:
-            return '{} ({}:{})'.format(msg, filename, linenum)
+            return '{} ({}:{})'.format(message, filename, linenum)
         else:
-            return '{} (:{})'.format(msg, linenum)
+            return '{} (:{})'.format(message, linenum)
 
 class ParserPhase(Enum):
     '''
@@ -199,7 +199,7 @@ class Parser(object):
 
             return i
         except ParserError as e:
-            self.error(e.args[0] + ' while parsing heading')
+            self.error(e.message + ' while parsing heading')
 
     def metadata_phase(self, i):
         '''
@@ -233,7 +233,7 @@ class Parser(object):
 
             return i
         except ParserError as e:
-            self.error(e.args[0] + ' while parsing key-value pair')
+            self.error(e.message + ' while parsing key-value pair')
 
     def molecules_phase(self, i):
         '''
@@ -258,7 +258,7 @@ class Parser(object):
             index, i = self.index(i)
             name, i = self.string(i)
         except ParserError as e:
-            self.error(e.args[0] + ' while parsing molecule')
+            self.error(e.message + ' while parsing molecule')
 
         if index >= len(self.molecule_list):
             self.error('invalid reaction ID (too large, see meta-data.nrMolecules)')
@@ -326,7 +326,7 @@ class Parser(object):
 
             return j
         except ParserError as e:
-            self.error(e.args[0] + ' while parsing reaction')
+            self.error(e.message + ' while parsing reaction')
 
     def reactants(self, i, optional=False):
         '''
