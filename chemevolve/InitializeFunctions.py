@@ -10,11 +10,9 @@ def create_reaction_system(filename):
 
 	Returns:
 		- CRS: Reaction System Object of the CRS class.'''
-	import CoreClasses as Core
-	CRS = Core.CRS(molecule_list = [], molecule_dict = dict(), reactions = [])
-	print filename
-	CRS.readtxt(filename)
-	return CRS
+	from Parser import Parser
+	print(filename)
+	return Parser.parse_file(filename)
 	
 def read_concentration_files_old(file_prefix):
 	'''Opens a concentration file (.npy array) and a molecule list file 
@@ -50,7 +48,7 @@ def create_concentration_files_old(file_prefix, N_L, molecules, concentrations, 
 	coordinates - list of tuples, coordinates in the lattice '''
 
 	molecule_list = []
-	print len(molecules), len(concentrations), len(coordinates)
+	print(len(molecules), len(concentrations), len(coordinates))
 	assert(len(molecules) == len(concentrations) and len(molecules) == len(coordinates))
 	assert(len(coordinates[0]) == dimensions)
 	# Initialize the lattice 

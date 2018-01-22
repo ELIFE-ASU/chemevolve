@@ -1,9 +1,9 @@
-import numpy as np
-import PropensityFunctions as Propensity
-import CoreClasses as Core 
 import random
-import OutputFunctions as Out
-import InitializeFunctions as Init
+import numpy as np
+from . import PropensityFunctions as Propensity
+from . import CoreClasses as Core 
+from . import OutputFunctions as Out
+from . import InitializeFunctions as Init
 
 ####################################################
 ### Load C library
@@ -120,7 +120,7 @@ def SSA_evolve(tau, tau_max, concentrations, CRS, random_seed, output_prefix= No
 		tau = c_tau
 		# Update random seed
 		random.jumpahead(tau-freq_counter)
-		print tau
+		print(tau)
 		# Output data
 		Out.output_concentrations(concentrations, 'tutorial_data',time = freq_counter)
 		freq_counter += t_out
