@@ -140,7 +140,7 @@ def pick_xy(Ap_arr):
 			break
 	return x,y
 ####################################################
-def SSA_evolve_python(tau, tau_max, concentrations, CRS, random_seed, output_prefix= None,  t_out= None):
+def SSA_evolve_python(tau, tau_max, concentrations, CRS, random_seed=None, output_prefix=None, t_out=None):
 
 	if (output_prefix != None and t_out == None):
 		raise ValueError('Output file prefix specified but no output frequency given, please provide an output time frequency')
@@ -151,7 +151,8 @@ def SSA_evolve_python(tau, tau_max, concentrations, CRS, random_seed, output_pre
 	import sys
 	import random
 	freq_counter = 0.0
-	random.seed(random_seed)
+    if random_seed is not None:
+        random.seed(random_seed)
 	prop_arr = Propensity.calculate_propensities(CRS, concentrations)
 	while tau < tau_max:
 		# Pick location
