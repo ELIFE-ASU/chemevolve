@@ -3,15 +3,16 @@
 # license that can be found in the LICENSE file.
 from setuptools import setup, find_packages
 
-with open('docs/README.rst') as f:
+with open('README.rst') as f:
     readme = f.read()
 
 with open('LICENSE') as f:
     license = f.read()
 
+
 setup(
     name='chemevolve',
-    version='0.0.8',
+    version='0.1.4',
     description='Tools for Simulating Chemical Evoltion',
     long_description=readme,
     maintainer='Cole Mathis',

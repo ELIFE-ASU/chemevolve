@@ -1,0 +1,14 @@
+<meta-data>
+nrMolecules = 3
+nrReactions = 4
+
+<molecules>
+[0] A
+[1] B
+[2] E
+
+<reactions>
+[0] 1[A] + 1[E] -- 1.00 -> 2[A] + 1[E]  STD 
+[1] 1[A] + 1[B] -- 0.01 -> 2[B]  STD 
+[2] 1[A] -- 10.00 -> 0[E]  STD
+[3] 1[B] -- 10.00 -> 0[E]  STD

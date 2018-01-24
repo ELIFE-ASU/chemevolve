@@ -20,10 +20,10 @@ def standard_propensity(rxn, CRS, concentrations):
 	catalyzed_constants = rxn.catalyzed_constants
 
 	#Calculate Propensity
-	Ap = 1.0 #rxn.constant #*np.prod( np.power(reactant_concentrations, reactant_coeff) )
+	Ap = rxn.constant #*np.prod( np.power(reactant_concentrations, reactant_coeff) )
 	num_reactants = len(reactant_concentrations)
 	for i in range(num_reactants):
-		Ap = Ap*np.power(rxn.constant*reactant_concentrations[i],reactant_coeff[i])
+		Ap = Ap*np.power(reactant_concentrations[i],reactant_coeff[i])
 	
 	# Ap = rxn.constant
 	#Ap = Ap*np.prod(std_propensity_helper1(reactant_concentrations, reactant_coeff))
