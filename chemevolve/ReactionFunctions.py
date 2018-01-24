@@ -33,11 +33,11 @@ def get_libpath():
 
     return os.path.join(root, 'clibs', library)
 
-_SSA_LIB = cdll.LoadLibrary(get_libpath())
-#                               current_t, next_t,  r_seed, max_x, max_y, num_m, num_r, concentrations,     constants         propensity_ints, reaction_arr,  catalyst_arr
-_SSA_LIB.SSA_update.argtypes = (c_double, c_double, c_int, c_int, c_int, c_int, c_int, POINTER(c_double), POINTER(c_double), POINTER(c_int), POINTER(c_int), POINTER(c_double))
-_SSA_LIB.SSA_update.restype = c_double
-SSA_update = _SSA_LIB.SSA_update ### Renaming function for convinence
+# _SSA_LIB = cdll.LoadLibrary(get_libpath())
+# #                               current_t, next_t,  r_seed, max_x, max_y, num_m, num_r, concentrations,     constants         propensity_ints, reaction_arr,  catalyst_arr
+# _SSA_LIB.SSA_update.argtypes = (c_double, c_double, c_int, c_int, c_int, c_int, c_int, POINTER(c_double), POINTER(c_double), POINTER(c_int), POINTER(c_int), POINTER(c_double))
+# _SSA_LIB.SSA_update.restype = c_double
+# SSA_update = _SSA_LIB.SSA_update ### Renaming function for convinence
 ####################################################
 ####################################################
 def pick_reaction(dice_roll, CRS, concentrations, **kwargs):
@@ -168,7 +168,7 @@ def SSA_evolve_python(tau, tau_max, concentrations, CRS, random_seed, output_pre
 			# Output data
 			Out.output_concentrations(concentrations, output_prefix,time = freq_counter)
 			freq_counter += t_out
-			print tau
+			print(tau)
 	Out.tidy_timeseries(CRS.molecule_list, output_prefix, delete_dat = True)
 
 	return concentrations

@@ -1,1 +1,3 @@
 recursive-include chemevolve/clibs
+recursive-include docs
+include LICENSE
