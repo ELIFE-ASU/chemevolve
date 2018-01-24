@@ -118,11 +118,12 @@ class TestParser(unittest.TestCase):
         self.assertEqual(4, len(p.reaction_list))
 
         reactions = [
-                Reaction(0, ['A'], [2], ['AA'], [1], 1.0, [], [], 'STD'),
-                Reaction(1, ['A','B'], [1,1], ['AB'], [1], 0.5, [], [], 'QED'),
-                Reaction(2, ['AA'], [1], ['A'], [2], 1.5, ['AA'], [2.3], 'STD'),
-                Reaction(3, ['AB'], [1], ['A','B'], [1,1], 0.25, ['A','B'], [1e-3,1e-2], 'STD')
+                Reaction(0, [0], [2], [1], [1], 1.0, [], [], 'STD'),
+                Reaction(1, [0,2], [1,1], [3], [1], 0.5, [], [], 'QED'),
+                Reaction(2, [1], [1], [0], [2], 1.5, [1], [2.3], 'STD'),
+                Reaction(3, [3], [1], [0,2], [1,1], 0.25, [0,2], [1e-3,1e-2], 'STD')
                 ]
+
         for expect, got in zip(reactions, p.reaction_list):
             self.assertEqual(expect.ID, got.ID)
             self.assertEqual(expect.reactants, got.reactants)
