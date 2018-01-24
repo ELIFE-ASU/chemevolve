@@ -1,5 +1,6 @@
 import random
 import numpy as np
+import math
 from . import PropensityFunctions as Propensity
 from . import CoreClasses as Core 
 from . import OutputFunctions as Out
@@ -125,5 +126,49 @@ def SSA_evolve(tau, tau_max, concentrations, CRS, random_seed, output_prefix= No
 		Out.output_concentrations(concentrations, 'tutorial_data',time = freq_counter)
 		freq_counter += t_out
 	Out.tidy_timeseries(CRS.molecule_list, 'tutorial_data', delete_dat = True)
+
+	return concentrations
+####################################################
+def pick_xy(Ap_arr):
+	dice_roll = random.random()*np.sum(Ap_arr)
+	checkpoint = 0.0
+	for site_index, site_Ap in np.ndenumerate(Ap_arr):
+		#
+		checkpoint += site_Ap
+		if checkpoint > dice_roll:
+			(x,y) = site_index
+			break
+	return x,y
+####################################################
+def SSA_evolve_python(tau, tau_max, concentrations, CRS, random_seed, output_prefix= None,  t_out= None):
+
+	if (output_prefix != None and t_out == None):
+		raise ValueError('Output file prefix specified but no output frequency given, please provide an output time frequency')
+		
+	elif (output_prefix == None and type(t_out) == float):
+		raise ValueError('Output frequency provided but output file prefix was not provided, please provide a file prefix name')
+		
+	import sys
+	import random
+	freq_counter = 0.0
+	random.seed(random_seed)
+	prop_arr = Propensity.calculate_propensities(CRS, concentrations)
+	while tau < tau_max:
+		# Pick location
+		x,y = pick_xy(prop_arr)
+		# Pick Reaction
+		picked_reaction = pick_reaction(random.random()*prop_arr[x,y], CRS, concentrations[x,y,:])
+		# Execute Reaction
+		concentrations[x,y,:] = execute_rxn(picked_reaction, CRS, concentrations[x,y,:])
+		# Update propensities and time
+		prop_arr = Propensity.calculate_propensities(CRS, concentrations)
+		Ap_tot = np.sum(prop_arr)
+		tau -= math.log(random.random())/Ap_tot
+		if tau > freq_counter:
+			# Output data
+			Out.output_concentrations(concentrations, output_prefix,time = freq_counter)
+			freq_counter += t_out
+			print tau
+	Out.tidy_timeseries(CRS.molecule_list, output_prefix, delete_dat = True)
 
 	return concentrations

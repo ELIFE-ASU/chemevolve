@@ -314,12 +314,12 @@ class Parser(object):
                 self.error('duplicate reaction ID')
 
             self.reaction_list[ID] = Reaction(ID=ID,
-                    reactants=reactants,
+                    reactants=[self.molecule_dict[r] for r in reactants],
                     reactant_coeff=reactant_coeffs,
-                    products=products,
+                    products=[self.molecule_dict[r] for r in products],
                     product_coeff=product_coeffs,
                     constant=rate_constant,
-                    catalysts=catalysts,
+                    catalysts=[self.molecule_dict[r] for r in catalysts],
                     catalyzed_constants=catalyzed_constants,
                     prop=propensity)
             self.phase = ParserPhase.REACTIONS
@@ -335,7 +335,7 @@ class Parser(object):
         coefficients = []
         reactants = []
         c, r, j = self.reactant(i, optional)
-        if c and r:
+        if c != None and r != None:
             coefficients.append(c)
             reactants.append(r)
             plus, j = self.eat(j, TokenType.PLUS, optional=True)
@@ -354,7 +354,10 @@ class Parser(object):
         '''
         coefficient, j = self.eat(i, TokenType.INTEGER, optional=True)
         if not coefficient:
-            coefficient = 1
+            if coefficient == None:
+                coefficient = 1
+            elif coefficient == 0:
+                coefficient = 0
         else:
             optional=False
 
