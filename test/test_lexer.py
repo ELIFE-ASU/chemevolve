@@ -654,10 +654,11 @@ class TestLexer(unittest.TestCase):
                 self.assertEqual(expect, len(tokens))
 
         invalid = 'test/configs/lexer/invalid'
-        for filename in os.listdir(invalid):
-            with open(os.path.join(invalid, filename), 'rb') as f:
-                with self.assertRaises(LexerError):
-                    Lexer().lex(f.read())
+        if os.path.isdir(invalid):
+            for filename in os.listdir(invalid):
+                with open(os.path.join(invalid, filename), 'rb') as f:
+                    with self.assertRaises(LexerError):
+                        Lexer().lex(f.read())
 
     def test_lex_file(self):
         '''
@@ -684,11 +685,12 @@ class TestLexer(unittest.TestCase):
 
 
         invalid = 'test/configs/lexer/invalid'
-        for filename in os.listdir(invalid):
-            path = os.path.join(invalid, filename)
-            with open(path, 'rb') as f:
+        if os.path.isdir(invalid):
+            for filename in os.listdir(invalid):
+                path = os.path.join(invalid, filename)
+                with open(path, 'rb') as f:
+                    with self.assertRaises(LexerError):
+                        Lexer().lex_file(f)
                 with self.assertRaises(LexerError):
-                    Lexer().lex_file(f)
-            with self.assertRaises(LexerError):
-                Lexer().lex_file(path)
+                    Lexer().lex_file(path)
 

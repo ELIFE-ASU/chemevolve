@@ -147,10 +147,11 @@ class TestParser(unittest.TestCase):
                 self.assertTrue(crs)
 
         invalid = 'test/configs/parser/invalid'
-        for filename in os.listdir(invalid):
-            with open(os.path.join(invalid, filename), 'rb') as f:
-                with self.assertRaises(Exception):
-                    Parser().parse(f.read())
+        if os.path.isdir(invalid):
+            for filename in os.listdir(invalid):
+                with open(os.path.join(invalid, filename), 'rb') as f:
+                    with self.assertRaises(Exception):
+                        Parser().parse(f.read())
 
     def test_parse_file(self):
         '''
@@ -176,11 +177,12 @@ class TestParser(unittest.TestCase):
 
 
         invalid = 'test/configs/parser/invalid'
-        for filename in os.listdir(invalid):
-            path = os.path.join(invalid, filename)
-            with open(path, 'rb') as f:
+        if os.path.isdir(invalid):
+            for filename in os.listdir(invalid):
+                path = os.path.join(invalid, filename)
+                with open(path, 'rb') as f:
+                    with self.assertRaises(Exception):
+                        Parser().parse_file(f)
                 with self.assertRaises(Exception):
-                    Parser().parse_file(f)
-            with self.assertRaises(Exception):
-                Parser().parse_file(path)
+                    Parser().parse_file(path)
 
