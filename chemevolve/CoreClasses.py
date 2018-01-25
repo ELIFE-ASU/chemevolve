@@ -154,7 +154,6 @@ class CRS(object):
         Compare two CRS objects for ordered equality, i.e. the molecule lists
         and reaction lists must have the same values in the same order.
         '''
-        print("Calling CRS.__eq__")
         return self.molecule_list == other.molecule_list and \
                self.reactions == other.reactions
         
