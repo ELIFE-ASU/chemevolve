@@ -141,10 +141,11 @@ class TestParser(unittest.TestCase):
         without error while those in configs/parser/invalid do not.
         '''
         valid = 'test/configs/parser/valid'
-        for filename in os.listdir(valid):
-            with open(os.path.join(valid, filename), 'rb') as f:
-                crs = Parser().parse(f.read())
-                self.assertTrue(crs)
+        if os.path.isdir(valid):
+            for filename in os.listdir(valid):
+                with open(os.path.join(valid, filename), 'rb') as f:
+                    crs = Parser().parse(f.read())
+                    self.assertTrue(crs)
 
         invalid = 'test/configs/parser/invalid'
         if os.path.isdir(invalid):
@@ -160,21 +161,21 @@ class TestParser(unittest.TestCase):
         using `parse`. Ensure that files in configs/parse/invalid raise errors.
         '''
         valid = 'test/configs/parser/valid'
-        for filename in os.listdir(valid):
-            path = os.path.join(valid, filename)
-            parser = Parser()
-            with open(path, 'rb') as f:
-                expected = parser.parse(f.read())
+        if os.path.isdir(valid):
+            for filename in os.listdir(valid):
+                path = os.path.join(valid, filename)
+                parser = Parser()
+                with open(path, 'rb') as f:
+                    expected = parser.parse(f.read())
 
-            # Parse the file from a file handle
-            with open(path, 'rb') as f:
-                got = parser.parse_file(f)
-            self.assertEqual(expected, got)
+                # Parse the file from a file handle
+                with open(path, 'rb') as f:
+                    got = parser.parse_file(f)
+                self.assertEqual(expected, got)
 
-            # Parse the file from a filename
-            got = parser.parse_file(path)
-            self.assertEqual(expected, got)
-
+                # Parse the file from a filename
+                got = parser.parse_file(path)
+                self.assertEqual(expected, got)
 
         invalid = 'test/configs/parser/invalid'
         if os.path.isdir(invalid):
