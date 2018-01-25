@@ -151,8 +151,8 @@ def SSA_evolve_python(tau, tau_max, concentrations, CRS, random_seed=None, outpu
 	import sys
 	import random
 	freq_counter = 0.0
-    if random_seed is not None:
-        random.seed(random_seed)
+	if random_seed is not None:
+		random.seed(random_seed)
 	prop_arr = Propensity.calculate_propensities(CRS, concentrations)
 	while tau < tau_max:
 		# Pick location
@@ -169,8 +169,8 @@ def SSA_evolve_python(tau, tau_max, concentrations, CRS, random_seed=None, outpu
 			# Output data
 			Out.output_concentrations(concentrations, output_prefix,time = freq_counter)
 			freq_counter += t_out
-            if verbose:
-                print(tau)
+			if verbose:
+				print(tau)
 	Out.tidy_timeseries(CRS.molecule_list, output_prefix, delete_dat = True)
 
 	return concentrations
