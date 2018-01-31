@@ -647,17 +647,19 @@ class TestLexer(unittest.TestCase):
         without error while those in configs/lexer/invalid do not.
         '''
         valid = 'test/configs/lexer/valid'
-        for filename in os.listdir(valid):
-            with open(os.path.join(valid, filename), 'rb') as f:
-                expect = int(os.path.splitext(filename)[0])
-                tokens = Lexer().lex(f.read())
-                self.assertEqual(expect, len(tokens))
+        if os.path.isdir(valid):
+            for filename in os.listdir(valid):
+                with open(os.path.join(valid, filename), 'rb') as f:
+                    expect = int(os.path.splitext(filename)[0])
+                    tokens = Lexer().lex(f.read())
+                    self.assertEqual(expect, len(tokens))
 
         invalid = 'test/configs/lexer/invalid'
-        for filename in os.listdir(invalid):
-            with open(os.path.join(invalid, filename), 'rb') as f:
-                with self.assertRaises(LexerError):
-                    Lexer().lex(f.read())
+        if os.path.isdir(invalid):
+            for filename in os.listdir(invalid):
+                with open(os.path.join(invalid, filename), 'rb') as f:
+                    with self.assertRaises(LexerError):
+                        Lexer().lex(f.read())
 
     def test_lex_file(self):
         '''
@@ -667,28 +669,29 @@ class TestLexer(unittest.TestCase):
         configs/lexer/invalid raise errors.
         '''
         valid = 'test/configs/lexer/valid'
-        for filename in os.listdir(valid):
-            path = os.path.join(valid, filename)
-            lexer = Lexer()
-            with open(path, 'rb') as f:
-                expected = lexer.lex(f.read(), reset=True)
+        if os.path.isdir(valid):
+            for filename in os.listdir(valid):
+                path = os.path.join(valid, filename)
+                lexer = Lexer()
+                with open(path, 'rb') as f:
+                    expected = lexer.lex(f.read(), reset=True)
 
-            # Lex the file from a file handle
-            with open(path, 'rb') as f:
-                got = lexer.lex_file(f, reset=True)
-            self.assertEqual(expected, got)
+                # Lex the file from a file handle
+                with open(path, 'rb') as f:
+                    got = lexer.lex_file(f, reset=True)
+                self.assertEqual(expected, got)
 
-            # Lex the file from a filename
-            got = lexer.lex_file(path, reset=True)
-            self.assertEqual(expected, got)
-
+                # Lex the file from a filename
+                got = lexer.lex_file(path, reset=True)
+                self.assertEqual(expected, got)
 
         invalid = 'test/configs/lexer/invalid'
-        for filename in os.listdir(invalid):
-            path = os.path.join(invalid, filename)
-            with open(path, 'rb') as f:
+        if os.path.isdir(invalid):
+            for filename in os.listdir(invalid):
+                path = os.path.join(invalid, filename)
+                with open(path, 'rb') as f:
+                    with self.assertRaises(LexerError):
+                        Lexer().lex_file(f)
                 with self.assertRaises(LexerError):
-                    Lexer().lex_file(f)
-            with self.assertRaises(LexerError):
-                Lexer().lex_file(path)
+                    Lexer().lex_file(path)
 

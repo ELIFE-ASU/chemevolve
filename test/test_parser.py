@@ -118,11 +118,12 @@ class TestParser(unittest.TestCase):
         self.assertEqual(4, len(p.reaction_list))
 
         reactions = [
-                Reaction(0, ['A'], [2], ['AA'], [1], 1.0, [], [], 'STD'),
-                Reaction(1, ['A','B'], [1,1], ['AB'], [1], 0.5, [], [], 'QED'),
-                Reaction(2, ['AA'], [1], ['A'], [2], 1.5, ['AA'], [2.3], 'STD'),
-                Reaction(3, ['AB'], [1], ['A','B'], [1,1], 0.25, ['A','B'], [1e-3,1e-2], 'STD')
+                Reaction(0, [0], [2], [1], [1], 1.0, [], [], 'STD'),
+                Reaction(1, [0,2], [1,1], [3], [1], 0.5, [], [], 'QED'),
+                Reaction(2, [1], [1], [0], [2], 1.5, [1], [2.3], 'STD'),
+                Reaction(3, [3], [1], [0,2], [1,1], 0.25, [0,2], [1e-3,1e-2], 'STD')
                 ]
+
         for expect, got in zip(reactions, p.reaction_list):
             self.assertEqual(expect.ID, got.ID)
             self.assertEqual(expect.reactants, got.reactants)
@@ -140,16 +141,18 @@ class TestParser(unittest.TestCase):
         without error while those in configs/parser/invalid do not.
         '''
         valid = 'test/configs/parser/valid'
-        for filename in os.listdir(valid):
-            with open(os.path.join(valid, filename), 'rb') as f:
-                crs = Parser().parse(f.read())
-                self.assertTrue(crs)
+        if os.path.isdir(valid):
+            for filename in os.listdir(valid):
+                with open(os.path.join(valid, filename), 'rb') as f:
+                    crs = Parser().parse(f.read())
+                    self.assertTrue(crs)
 
         invalid = 'test/configs/parser/invalid'
-        for filename in os.listdir(invalid):
-            with open(os.path.join(invalid, filename), 'rb') as f:
-                with self.assertRaises(Exception):
-                    Parser().parse(f.read())
+        if os.path.isdir(invalid):
+            for filename in os.listdir(invalid):
+                with open(os.path.join(invalid, filename), 'rb') as f:
+                    with self.assertRaises(Exception):
+                        Parser().parse(f.read())
 
     def test_parse_file(self):
         '''
@@ -158,28 +161,29 @@ class TestParser(unittest.TestCase):
         using `parse`. Ensure that files in configs/parse/invalid raise errors.
         '''
         valid = 'test/configs/parser/valid'
-        for filename in os.listdir(valid):
-            path = os.path.join(valid, filename)
-            parser = Parser()
-            with open(path, 'rb') as f:
-                expected = parser.parse(f.read())
+        if os.path.isdir(valid):
+            for filename in os.listdir(valid):
+                path = os.path.join(valid, filename)
+                parser = Parser()
+                with open(path, 'rb') as f:
+                    expected = parser.parse(f.read())
 
-            # Parse the file from a file handle
-            with open(path, 'rb') as f:
-                got = parser.parse_file(f)
-            self.assertEqual(expected, got)
+                # Parse the file from a file handle
+                with open(path, 'rb') as f:
+                    got = parser.parse_file(f)
+                self.assertEqual(expected, got)
 
-            # Parse the file from a filename
-            got = parser.parse_file(path)
-            self.assertEqual(expected, got)
-
+                # Parse the file from a filename
+                got = parser.parse_file(path)
+                self.assertEqual(expected, got)
 
         invalid = 'test/configs/parser/invalid'
-        for filename in os.listdir(invalid):
-            path = os.path.join(invalid, filename)
-            with open(path, 'rb') as f:
+        if os.path.isdir(invalid):
+            for filename in os.listdir(invalid):
+                path = os.path.join(invalid, filename)
+                with open(path, 'rb') as f:
+                    with self.assertRaises(Exception):
+                        Parser().parse_file(f)
                 with self.assertRaises(Exception):
-                    Parser().parse_file(f)
-            with self.assertRaises(Exception):
-                Parser().parse_file(path)
+                    Parser().parse_file(path)
 
