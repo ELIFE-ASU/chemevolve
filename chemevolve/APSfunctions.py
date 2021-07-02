@@ -12,6 +12,8 @@ import copy
 import math
 
 
+### DEPRECIATED!!!!
+
 
 def check_mass(original_mass, CRS, concentrations):
     ''' Checks conservation of mass
