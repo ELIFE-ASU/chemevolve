@@ -4,7 +4,7 @@ import math
 
 import chemevolve as ce
 from chemevolve import APSfunctions as APS # Since we'll use a APS module here
-from chemevolve import PlottingFunctions as Plots # Since we'll plot the data at the end
+from chemevolve import Plotting as Plots # Since we'll plot the data at the end
 
 #### Generate a chemical Reaction System (CRS)
 max_length = 4 # Maximum Length of binary polymers

@@ -1,5 +1,5 @@
-import CoreClasses as Core
-import InitializeFunctions as Initialize
+from .CoreClasses import *
+from .InitializeFunctions import *
 
 import numpy as np
 import time
@@ -14,48 +14,48 @@ import math
 
 
 def check_mass(original_mass, CRS, concentrations):
-	''' Checks conservation of mass
-	Arguements
-		- original_mass: integer mass of the original system
-		- CRS: CRS object
-		- concentrations: array of molecule abundances
+    ''' Checks conservation of mass
+    Arguements
+        - original_mass: integer mass of the original system
+        - CRS: CRS object
+        - concentrations: array of molecule abundances
 
-		 '''
-	print concentrations
-	mass_conserved = False
-	test_mass = 0.0
-	molecules = CRS.molecule_list
-	for m in molecules:
-		index =	molecules.index(m)
+            '''
+    print(concentrations)
+    mass_conserved = False
+    test_mass = 0.0
+    molecules = CRS.molecule_list
+    for m in molecules:
+        index =	molecules.index(m)
 
-		molecule_size = len(m)
-		molecule_count = np.sum(concentrations[:,:, index])
-		mass = molecule_count*molecule_size
-		test_mass += mass 
-	if test_mass == original_mass:
-		mass_conserved = True
-	return mass_conserved, test_mass
+        molecule_size = len(m)
+        molecule_count = np.sum(concentrations[:, :, index])
+        mass = molecule_count*molecule_size
+        test_mass += mass
+    if test_mass == original_mass:
+        mass_conserved = True
+    return mass_conserved, test_mass
 
 def calculate_mass_fraction_by_composition(concentrations, CRS, total_mass):
-	''' Takes an abundace distribution and returns a mass fraction distribution (which is a dictionary, keys are composition, values are mass_fraction) '''
-	
-	molecules = CRS.molecule_list
-	mass_fraction = {}
+    ''' Takes an abundace distribution and returns a mass fraction distribution (which is a dictionary, keys are composition, values are mass_fraction) '''
 
-	for m in molecules:
-			index = molecules.index(m)
-			comp = get_composition(m)
-			molecule_size = len(m)
-			molecule_count = float(np.sum(concentrations[:,:,index]))
+    molecules = CRS.molecule_list
+    mass_fraction = {}
 
-			mass = molecule_count*molecule_size
+    for m in molecules:
+            index = molecules.index(m)
+            comp = get_composition(m)
+            molecule_size = len(m)
+            molecule_count = float(np.sum(concentrations[:,:,index]))
 
-			if comp in mass_fraction.keys():
-				mass_fraction[comp] += float(mass)/float(total_mass)
-			else:
-				mass_fraction[comp] = float(mass)/float(total_mass)
+            mass = molecule_count*molecule_size
 
-	return mass_fraction
+            if comp in mass_fraction.keys():
+                mass_fraction[comp] += float(mass)/float(total_mass)
+            else:
+                mass_fraction[comp] = float(mass)/float(total_mass)
+
+    return mass_fraction
 
 def calculate_molecule_fraction_by_composition(concentrations, CRS, total_mass):
 	''' Takes an abundace distribution and returns a mass fraction distribution (which is a dictionary, keys are composition, values are mass_fraction) '''
@@ -118,7 +118,6 @@ def generate_random_distribution(CRS, total_mass, N_L = 1):
 				monomers_in_seqs[aa[a]] += coef[a]
 			else:
 				monomers_in_seqs[aa[a]] = coef[a]
-	#print mass
 	diff = total_mass- mass 
 	monomer_names= monomers_in_seqs.keys()
 	concentrations[0,0,0] += int( (monomers_in_seqs[monomer_names[0]] - monomers_in_seqs[monomer_names[1]])/(2.0) + (diff/2.0) )
@@ -299,18 +298,18 @@ def generate_seq_peptides_CRS(amino_acids, max_length, kl = 0.0001, kd = 1.0, ca
 				reactant_coeff = [1,1]
 				product_coeff = [1]
 				products = [ molecule_dict[s] ]
-				reaction_list.append( Core.Reaction(rxn_ID, reactants = reactants, reactant_coeff = reactant_coeff , products = products, product_coeff = product_coeff, constant = np.random.normal(kl, 0.05*kl), prop = 'STD') )
+				reaction_list.append( Reaction(rxn_ID, reactants = reactants, reactant_coeff = reactant_coeff , products = products, product_coeff = product_coeff, constant = np.random.normal(kl, 0.05*kl), prop = 'STD') )
 				#print 'Reaction List index: ', rxn_ID, 'Reaction ID: ', reaction_list[rxn_ID].ID 
 				rxn_IDs.append(rxn_ID)
 				
 				# Backward Reaction
 				rxn_ID = len(reaction_list)
-				reaction_list.append( Core.Reaction(rxn_ID, products = reactants, product_coeff = reactant_coeff, reactants = products, reactant_coeff= reactant_coeff, constant = kd, prop = 'STD') )
+				reaction_list.append( Reaction(rxn_ID, products = reactants, product_coeff = reactant_coeff, reactants = products, reactant_coeff= reactant_coeff, constant = kd, prop = 'STD') )
 				#print 'Reaction List index: ', rxn_ID, 'Reaction ID: ', reaction_list[rxn_ID].ID 
 				rxn_IDs.append(rxn_ID)
 				
 	#print molecule_dict
-	newCRS = Core.CRS(molecule_list = molecule_list, molecule_dict = molecule_dict, reactions = reaction_list)
+	newCRS = CRS(molecule_list = molecule_list, molecule_dict = molecule_dict, reactions = reaction_list)
 	#print newCRS.molecule_dict
 	
 
@@ -385,7 +384,7 @@ def plot_length_dist(length_dist):
 	plt.plot(l, f)
 	plt.plot(test_line)
 	#plt.yscale('log')
-	print m, b
+	print(m, b)
 	plt.show()
 
 
@@ -541,18 +540,18 @@ def generate_CRS_from_AA_intensities(fname, amino_acids, max_length, beta, kd= 1
 				reactant_coeff = [1,1]
 				product_coeff = [1]
 				products = [ molecule_dict[s] ]
-				reaction_list.append( Core.Reaction(rxn_ID, reactants = reactants, reactant_coeff = reactant_coeff , products = products, product_coeff = product_coeff, constant = kl, prop = 'STD') )
+				reaction_list.append( Reaction(rxn_ID, reactants = reactants, reactant_coeff = reactant_coeff , products = products, product_coeff = product_coeff, constant = kl, prop = 'STD') )
 				#print 'Reaction List index: ', rxn_ID, 'Reaction ID: ', reaction_list[rxn_ID].ID 
 				rxn_IDs.append(rxn_ID)
 				
 				# Backward Reaction
 				rxn_ID = len(reaction_list)
-				reaction_list.append( Core.Reaction(rxn_ID, products = reactants, product_coeff = reactant_coeff, reactants = products, reactant_coeff= reactant_coeff, constant = kd, prop = 'STD') )
+				reaction_list.append( Reaction(rxn_ID, products = reactants, product_coeff = reactant_coeff, reactants = products, reactant_coeff= reactant_coeff, constant = kd, prop = 'STD') )
 				#print 'Reaction List index: ', rxn_ID, 'Reaction ID: ', reaction_list[rxn_ID].ID 
 				rxn_IDs.append(rxn_ID)
 				
 	
-	newCRS = Core.CRS(molecule_list = molecule_list, molecule_dict = molecule_dict, reactions = reaction_list)
+	newCRS = CRS(molecule_list = molecule_list, molecule_dict = molecule_dict, reactions = reaction_list)
 	
 	return newCRS
 
@@ -606,9 +605,9 @@ def anneal_rate_constants(target, original_CRS, total_mass = 20000):
 	molecules = original_CRS.molecule_list
 
 	#### Determine reasonable Tmax by running for 10X evolution iterations
-	original_constants, propensity_ints, reaction_arr, catalyst_arr = Initialize.convert_CRS_to_npArrays(original_CRS)
+	original_constants, propensity_ints, reaction_arr, catalyst_arr = convert_CRS_to_npArrays(original_CRS)
 	original_concentrations = generate_concentrations_from_data(target, original_CRS, total_mass)
-	original_concentrations_ptr, original_constants_ptr, propensity_ints_ptr, reaction_arr_ptr, catalyst_arr_ptr= Initialize.get_c_pointers(original_concentrations, original_constants, propensity_ints, reaction_arr, catalyst_arr)
+	original_concentrations_ptr, original_constants_ptr, propensity_ints_ptr, reaction_arr_ptr, catalyst_arr_ptr= get_c_pointers(original_concentrations, original_constants, propensity_ints, reaction_arr, catalyst_arr)
 	c_tau = _SSA_LIB.SSA_update(c_double(0.0), c_double(10*evolution_time),r_seed, c_int(1),c_int(1), c_int(len(molecules)), c_int(len(original_constants)), original_concentrations_ptr, original_constants_ptr, propensity_ints_ptr, reaction_arr_ptr, catalyst_arr_ptr )
 	original_mass_fraction = calculate_molecule_fraction_by_composition(original_concentrations, original_CRS, total_mass)
 
@@ -628,7 +627,7 @@ def anneal_rate_constants(target, original_CRS, total_mass = 20000):
 		############################################################################################################################################
 		### Evolve Original
 		#original_ds = []
-		original_constants, propensity_ints, reaction_arr, catalyst_arr = Initialize.convert_CRS_to_npArrays(original_CRS)
+		original_constants, propensity_ints, reaction_arr, catalyst_arr = convert_CRS_to_npArrays(original_CRS)
 		#original_concentrations = generate_concentrations_from_data(target, original_CRS, total_mass)
 		original_constants_dict = get_reaction_constants(original_CRS)
 		#new_ds = []
@@ -636,7 +635,7 @@ def anneal_rate_constants(target, original_CRS, total_mass = 20000):
 		original_concentrations = generate_random_distribution(original_CRS, total_mass)
 		new_concentrations = copy.deepcopy(original_concentrations)
 		
-		original_concentrations_ptr, original_constants_ptr, propensity_ints_ptr, reaction_arr_ptr, catalyst_arr_ptr= Initialize.get_c_pointers(original_concentrations, original_constants, propensity_ints, reaction_arr, catalyst_arr)
+		original_concentrations_ptr, original_constants_ptr, propensity_ints_ptr, reaction_arr_ptr, catalyst_arr_ptr= get_c_pointers(original_concentrations, original_constants, propensity_ints, reaction_arr, catalyst_arr)
 		c_tau = _SSA_LIB.SSA_update(c_double(0.0), c_double(evolution_time),r_seed, c_int(1),c_int(1), c_int(len(molecules)), c_int(len(original_constants)), original_concentrations_ptr, original_constants_ptr, propensity_ints_ptr, reaction_arr_ptr, catalyst_arr_ptr )
 		
 		#print check_mass(total_mass, original_CRS, original_concentrations)	
@@ -647,10 +646,10 @@ def anneal_rate_constants(target, original_CRS, total_mass = 20000):
 		#original_ds.append(original_d)
 		new_constants_dict = mutate(original_constants_dict, mu, epsilion, as_percentage = False)
 		new_CRS = set_reaction_constants(original_CRS, new_constants_dict)
-		new_constants, propensity_ints, reaction_arr, catalyst_arr = Initialize.convert_CRS_to_npArrays(new_CRS)
+		new_constants, propensity_ints, reaction_arr, catalyst_arr = convert_CRS_to_npArrays(new_CRS)
 		#### Evolve new
 		
-		new_concentrations_ptr, new_constants_ptr, propensity_ints_ptr, reaction_arr_ptr, catalyst_arr_ptr= Initialize.get_c_pointers(new_concentrations, new_constants, propensity_ints, reaction_arr, catalyst_arr)
+		new_concentrations_ptr, new_constants_ptr, propensity_ints_ptr, reaction_arr_ptr, catalyst_arr_ptr= get_c_pointers(new_concentrations, new_constants, propensity_ints, reaction_arr, catalyst_arr)
 		c_tau = _SSA_LIB.SSA_update(c_double(0.0), c_double(evolution_time),r_seed, c_int(1),c_int(1), c_int(len(molecules)), c_int(len(new_constants)), new_concentrations_ptr, new_constants_ptr, propensity_ints_ptr, reaction_arr_ptr, catalyst_arr_ptr )
 		
 		new_mass_fraction = calculate_molecule_fraction_by_composition(new_concentrations, new_CRS, total_mass)
@@ -673,21 +672,21 @@ def anneal_rate_constants(target, original_CRS, total_mass = 20000):
 		elif D > 0.0:
 			p = np.exp(-D/T)
 		
-		print 'Current D: %.5f  Delta: %.6f  T: %.5f  P: %.2f' %(original_d, D, T, p)
+		print('Current D: %.5f  Delta: %.6f  T: %.5f  P: %.2f' %(original_d, D, T, p))
 		dice_roll = random.random()
 		
 		if dice_roll <= p:
-			print 'Update Accepted'
+			print('Update Accepted')
 			#plot_mass_distributions(target_mass_fraction, new_mass_fraction)
 			original_CRS = set_reaction_constants(original_CRS, new_constants_dict)
 		else:
 			original_CRS = copy.deepcopy(original_CRS)	
 		T = update_temp(Tmax, float(t)/num_trials)
-		print time.time() -start_time	
+		print(time.time() -start_time)	
 	
-	original_constants, propensity_ints, reaction_arr, catalyst_arr = Initialize.convert_CRS_to_npArrays(original_CRS)
+	original_constants, propensity_ints, reaction_arr, catalyst_arr = convert_CRS_to_npArrays(original_CRS)
 	original_concentrations = generate_concentrations_from_data(target, original_CRS, total_mass)
-	original_concentrations_ptr, original_constants_ptr, propensity_ints_ptr, reaction_arr_ptr, catalyst_arr_ptr= Initialize.get_c_pointers(original_concentrations, original_constants, propensity_ints, reaction_arr, catalyst_arr)
+	original_concentrations_ptr, original_constants_ptr, propensity_ints_ptr, reaction_arr_ptr, catalyst_arr_ptr= get_c_pointers(original_concentrations, original_constants, propensity_ints, reaction_arr, catalyst_arr)
 	c_tau = _SSA_LIB.SSA_update(c_double(0.0), c_double(evolution_time),r_seed, c_int(1),c_int(1), c_int(len(molecules)), c_int(len(original_constants)), original_concentrations_ptr, original_constants_ptr, propensity_ints_ptr, reaction_arr_ptr, catalyst_arr_ptr )
 	original_mass_fraction = calculate_mass_fraction_by_composition(original_concentrations, original_CRS, total_mass)
 		
@@ -706,7 +705,7 @@ def compare_affinity_mass(affinity, mass_fraction):
 		a.append(affinity[comp])
 		m.append(mass_fraction[comp])
 	slope, intercept, r_value, p_value, std_err = stats.linregress(a,m)
-	print slope, p_value, r_value**2
+	print(slope, p_value, r_value**2)
 	plt.scatter(np.log(m), np.log(a))
 	plt.ylabel('log(predicted CHNOSZ)')
 	plt.xlabel('log(abundace data)')
@@ -734,7 +733,7 @@ def get_all_EIC_comp_data():
 def check_CRS(fname, target, total_mass = 10000):
 
 	evolution_iterations = 10
-	CRS = Core.CRS()
+	CRS = CRS()
 	CRS.readtxt(fname)
 	r_seed = random.randint(0, sys.maxint)
 	#### Get the target concentrations from the data
@@ -743,9 +742,9 @@ def check_CRS(fname, target, total_mass = 10000):
 	molecules = CRS.molecule_list
 
 	#### Determine reasonable Tmax by running for 10X evolution iterations
-	original_constants, propensity_ints, reaction_arr, catalyst_arr = Initialize.convert_CRS_to_npArrays(CRS)
+	original_constants, propensity_ints, reaction_arr, catalyst_arr = convert_CRS_to_npArrays(CRS)
 	original_concentrations = generate_concentrations_from_data(target, CRS, total_mass)
-	original_concentrations_ptr, original_constants_ptr, propensity_ints_ptr, reaction_arr_ptr, catalyst_arr_ptr= Initialize.get_c_pointers(original_concentrations, original_constants, propensity_ints, reaction_arr, catalyst_arr)
+	original_concentrations_ptr, original_constants_ptr, propensity_ints_ptr, reaction_arr_ptr, catalyst_arr_ptr= get_c_pointers(original_concentrations, original_constants, propensity_ints, reaction_arr, catalyst_arr)
 	c_tau = _SSA_LIB.SSA_update(c_double(0.0), c_double(-100*evolution_iterations),r_seed, c_int(1),c_int(1), c_int(len(molecules)), c_int(len(original_constants)), original_concentrations_ptr, original_constants_ptr, propensity_ints_ptr, reaction_arr_ptr, catalyst_arr_ptr )
 	original_mass_fraction = calculate_mass_fraction_by_composition(original_concentrations, CRS, total_mass)
 

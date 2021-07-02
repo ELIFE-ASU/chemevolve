@@ -1,6 +1,7 @@
 import numpy as np
 import pickle
-from InitializeFunctions import *
+from .CoreClasses import *
+from .InitializeFunctions import *
 ####################################################
 def check_mass(original_mass, CRS, concentrations):
 	''' Checks conservation of mass
@@ -33,7 +34,7 @@ def generate_all_binary_reactions(max_length, fconstant = 1.0, bconstant = None)
 		- fconstant: reaction rate constant for forward reactions
 		- bconstant: reaction rate constant for reverse reactions, if None given, it will be assigned to be equal to fconstant
 	 '''
-	import CoreClasses as Core
+	
 	import itertools
 	rxn_IDs = []
 	reaction_list = []
@@ -60,18 +61,18 @@ def generate_all_binary_reactions(max_length, fconstant = 1.0, bconstant = None)
 				reactant_coeff = [1,1]
 				product_coeff = [1]
 				products = [ molecule_dict[s] ]
-				reaction_list.append( Core.Reaction(rxn_ID, reactants = reactants, reactant_coeff = reactant_coeff , products = products, product_coeff = product_coeff, constant = fconstant, prop = 'STD') )
+				reaction_list.append( Reaction(rxn_ID, reactants = reactants, reactant_coeff = reactant_coeff , products = products, product_coeff = product_coeff, constant = fconstant, prop = 'STD') )
 				#print 'Reaction List index: ', rxn_ID, 'Reaction ID: ', reaction_list[rxn_ID].ID 
 				rxn_IDs.append(rxn_ID)
 				
 				# Backward Reaction
 				rxn_ID = len(reaction_list)
-				reaction_list.append( Core.Reaction(rxn_ID, products = reactants, product_coeff = reactant_coeff, reactants = products, reactant_coeff= reactant_coeff, constant = bconstant, prop = 'STD') )
+				reaction_list.append( Reaction(rxn_ID, products = reactants, product_coeff = reactant_coeff, reactants = products, reactant_coeff= reactant_coeff, constant = bconstant, prop = 'STD') )
 				#print 'Reaction List index: ', rxn_ID, 'Reaction ID: ', reaction_list[rxn_ID].ID 
 				rxn_IDs.append(rxn_ID)
 				
 	#print molecule_dict
-	newCRS = Core.CRS(molecule_list = molecule_list, molecule_dict = molecule_dict, reactions = reaction_list)
+	newCRS = CRS(molecule_list = molecule_list, molecule_dict = molecule_dict, reactions = reaction_list)
 	#print newCRS.molecule_dict
 	# fname = 'reversible_binary_length_%i.txt' % max_length
 	# newCRS.savetxt(fname)
@@ -85,7 +86,7 @@ def generate_wim_RAF(max_length, fconstant = 1.0, bconstant = None, f_cat = 1.0)
 		- fconstant: reaction rate constant for forward reactions
 		- bconstant: reaction rate constant for reverse reactions, if None given, it will be assigned to be equal to fconstant
 	 '''
-	import CoreClasses as Core
+	
 	import itertools
 	rxn_IDs = []
 	reaction_list = []
@@ -128,7 +129,7 @@ def generate_wim_RAF(max_length, fconstant = 1.0, bconstant = None, f_cat = 1.0)
 					f_list = [f_cat]
 			elif s == 'BAA':
 				if [s[:i], s[i:]] == ['BA', 'A']:
-					print s, s[:i], s[i:]
+					print(s, s[:i], s[i:])
 					catalysts = [molecule_dict['AAA']]
 					f_list = [f_cat]
 			elif s == 'BB':
@@ -147,22 +148,22 @@ def generate_wim_RAF(max_length, fconstant = 1.0, bconstant = None, f_cat = 1.0)
 					catalysts = [molecule_dict['BBB']]
 					f_list = [f_cat]
 			
-			reaction_list.append( Core.Reaction(rxn_ID, reactants = reactants, reactant_coeff = reactant_coeff , products = products, product_coeff = product_coeff, constant = fconstant, catalysts = catalysts, catalyzed_constants = f_list, prop = 'STD') )
+			reaction_list.append( Reaction(rxn_ID, reactants = reactants, reactant_coeff = reactant_coeff , products = products, product_coeff = product_coeff, constant = fconstant, catalysts = catalysts, catalyzed_constants = f_list, prop = 'STD') )
 			#print 'Reaction List index: ', rxn_ID, 'Reaction ID: ', reaction_list[rxn_ID].ID 
 			rxn_IDs.append(rxn_ID)
 			
 			# Backward Reaction
 			rxn_ID = len(reaction_list)
-			reaction_list.append( Core.Reaction(rxn_ID, products = reactants, product_coeff = reactant_coeff, reactants = products, reactant_coeff= reactant_coeff, constant = bconstant, prop = 'STD') )
+			reaction_list.append( Reaction(rxn_ID, products = reactants, product_coeff = reactant_coeff, reactants = products, reactant_coeff= reactant_coeff, constant = bconstant, prop = 'STD') )
 			#print 'Reaction List index: ', rxn_ID, 'Reaction ID: ', reaction_list[rxn_ID].ID 
 			rxn_IDs.append(rxn_ID)
 			
 	#print molecule_dict
-	newCRS = Core.CRS(molecule_list = molecule_list, molecule_dict = molecule_dict, reactions = reaction_list)
+	newCRS = CRS(molecule_list = molecule_list, molecule_dict = molecule_dict, reactions = reaction_list)
 	#print newCRS.molecule_dict
 	fname = 'RandomRAF/data/wim_RAF/wim_RAF_f_%.4f_length_%i.txt' % (f_cat, max_length)
 	newCRS.savetxt(fname)
-	print "Wim CRS saved"
+	print("Wim CRS saved")
 	return fname
 
 ####################################################
@@ -174,7 +175,7 @@ def generate_random_rate_polymerization_reactions(output_name, max_length, fcons
 		- fconstant: mean reaction rate constant for forward reactions
 		- bconstant: mean reaction rate constant for reverse reactions, if None given, it will be assigned to be equal to fconstant
 	 '''
-	import CoreClasses as Core
+	
 	import itertools
 	rxn_IDs = []
 	reaction_list = []
@@ -206,7 +207,7 @@ def generate_random_rate_polymerization_reactions(output_name, max_length, fcons
 				reactant_coeff = [1,1]
 				product_coeff = [1]
 				products = [ molecule_dict[s] ]
-				reaction_list.append( Core.Reaction(rxn_ID, reactants = reactants, reactant_coeff = reactant_coeff , products = products, product_coeff = product_coeff, constant = f_rate, prop = 'STD') )
+				reaction_list.append( Reaction(rxn_ID, reactants = reactants, reactant_coeff = reactant_coeff , products = products, product_coeff = product_coeff, constant = f_rate, prop = 'STD') )
 				#print 'Reaction List index: ', rxn_ID, 'Reaction ID: ', reaction_list[rxn_ID].ID 
 				rxn_IDs.append(rxn_ID)
 				
@@ -217,7 +218,7 @@ def generate_random_rate_polymerization_reactions(output_name, max_length, fcons
 					alpha = 1.0 - (1.0/bconstant)
 					b_rate = np.random.pareto(alpha)
 				rxn_ID = len(reaction_list)
-				reaction_list.append( Core.Reaction(rxn_ID, products = reactants, product_coeff = reactant_coeff, reactants = products, reactant_coeff= reactant_coeff, constant = b_rate, prop = 'STD') )
+				reaction_list.append( Reaction(rxn_ID, products = reactants, product_coeff = reactant_coeff, reactants = products, reactant_coeff= reactant_coeff, constant = b_rate, prop = 'STD') )
 				#print 'Reaction List index: ', rxn_ID, 'Reaction ID: ', reaction_list[rxn_ID].ID 
 				rxn_IDs.append(rxn_ID)
 
@@ -233,7 +234,7 @@ def generate_random_rate_polymerization_reactions(output_name, max_length, fcons
 					reactant_coeff = [1,1]
 					product_coeff = [1]
 					products = [ molecule_dict[s] ]
-					reaction_list.append( Core.Reaction(rxn_ID, reactants = reactants, reactant_coeff = reactant_coeff , products = products, product_coeff = product_coeff, constant = f_rate, prop = 'STD') )
+					reaction_list.append( Reaction(rxn_ID, reactants = reactants, reactant_coeff = reactant_coeff , products = products, product_coeff = product_coeff, constant = f_rate, prop = 'STD') )
 					#print 'Reaction List index: ', rxn_ID, 'Reaction ID: ', reaction_list[rxn_ID].ID 
 					rxn_IDs.append(rxn_ID)
 					
@@ -244,17 +245,17 @@ def generate_random_rate_polymerization_reactions(output_name, max_length, fcons
 						alpha = 1.0 - (1.0/bconstant)
 						b_rate = np.random.pareto(alpha)
 					rxn_ID = len(reaction_list)
-					reaction_list.append( Core.Reaction(rxn_ID, products = reactants, product_coeff = reactant_coeff, reactants = products, reactant_coeff= reactant_coeff, constant = b_rate, prop = 'STD') )
+					reaction_list.append( Reaction(rxn_ID, products = reactants, product_coeff = reactant_coeff, reactants = products, reactant_coeff= reactant_coeff, constant = b_rate, prop = 'STD') )
 					#print 'Reaction List index: ', rxn_ID, 'Reaction ID: ', reaction_list[rxn_ID].ID 
 					rxn_IDs.append(rxn_ID)
 
 				
 	#print molecule_dict
-	newCRS = Core.CRS(molecule_list = molecule_list, molecule_dict = molecule_dict, reactions = reaction_list)
+	newCRS = CRS(molecule_list = molecule_list, molecule_dict = molecule_dict, reactions = reaction_list)
 	#print newCRS.molecule_dict
 	
 	newCRS.savetxt(output_name)
-	print "New CRS saved"
+	print("New CRS saved")
 
 ####################################################
 def generate_uniform_monomers(CRS, N_L, total_mass):

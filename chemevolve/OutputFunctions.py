@@ -66,7 +66,7 @@ def tidy_timeseries(molecules,prefix, delete_dat = True):
 			position_index = tuple([int(i) for i in position_index])
 			positions = [position_index]*len(molecules)
 			times = [time]*len(molecules)
-			observations = zip(times, positions, molecules, concentrations[position_index].tolist())
+			observations = list(zip(times, positions, molecules, concentrations[position_index].tolist()))
 			for m in range(num_molecules):
 				
 				observation = list(observations[m])

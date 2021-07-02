@@ -1,9 +1,7 @@
 import numpy as np
-import PropensityFunctions as Propensity
-import CoreClasses as Core 
-import random
-import OutputFunctions as Out
-import InitializeFunctions as Init
+from .PropensityFunctions import *
+from .OutputFunctions import *
+from .InitializeFunctions import *
 
 ####################################################
 ### Load C library
@@ -61,7 +59,7 @@ def pick_reaction(dice_roll, CRS, concentrations, **kwargs):
 		if rxn.prop == 'STD':
 			# print "Reactant concentrations: ", reactant_concentrations
 			# print 'Product ID numbers: ',rxn.products
-			checkpoint += Propensity.standard_propensity(rxn, CRS, concentrations)
+			checkpoint += standard_propensity(rxn, CRS, concentrations)
 			#print "dice_roll: ", dice_roll, ' checkpoint: ', checkpoint
 			if checkpoint >= dice_roll:
 				break
@@ -98,32 +96,32 @@ def execute_rxn(rxn, CRS, concentrations):
 ####################################################
 def SSA_evolve(tau, tau_max, concentrations, CRS, random_seed, output_prefix= None,  t_out= None):
 
-	if (output_prefix != None and t_out == None):
-		raise ValueError('Output file prefix specified but no output frequency given, please provide an output time frequency')
-		
-	elif (output_prefix == None and type(t_out) == float):
-		raise ValueError('Output frequency provided but output file prefix was not provided, please provide a file prefix name')
-		
-	import sys
-	import random
-	from ctypes import c_int,  c_double, POINTER
-	constants, propensity_ints, reaction_arr, catalyst_arr = Init.convert_CRS_to_npArrays(CRS)
-	concentrations_ptr, constants_ptr, propensity_ints_ptr, reaction_arr_ptr, catalyst_arr_ptr= Init.get_c_pointers(concentrations, constants, propensity_ints, reaction_arr, catalyst_arr)
-	freq_counter = 0.0
-	random.seed(random_seed)
-	while tau < tau_max:
-		# Get seed
-		r_seed = random.randint(0, sys.maxint)
-		# Update concentrations in place using C function
-		c_tau = SSA_update(c_double(tau), c_double(freq_counter),r_seed, c_int(1),c_int(1), c_int(len(CRS.molecule_list)), c_int(len(constants)), concentrations_ptr, constants_ptr, propensity_ints_ptr, reaction_arr_ptr, catalyst_arr_ptr )
-		# Update Time
-		tau = c_tau
-		# Update random seed
-		random.jumpahead(tau-freq_counter)
-		print tau
-		# Output data
-		Out.output_concentrations(concentrations, 'tutorial_data',time = freq_counter)
-		freq_counter += t_out
-	Out.tidy_timeseries(CRS.molecule_list, 'tutorial_data', delete_dat = True)
+    if (output_prefix != None and t_out == None):
+        raise ValueError('Output file prefix specified but no output frequency given, please provide an output time frequency')
+        
+    elif (output_prefix == None and type(t_out) == float):
+        raise ValueError('Output frequency provided but output file prefix was not provided, please provide a file prefix name')
+        
+    import sys
+    import random
+    from ctypes import c_int,  c_double, POINTER
+    constants, propensity_ints, reaction_arr, catalyst_arr = convert_CRS_to_npArrays(CRS)
+    concentrations_ptr, constants_ptr, propensity_ints_ptr, reaction_arr_ptr, catalyst_arr_ptr= get_c_pointers(concentrations, constants, propensity_ints, reaction_arr, catalyst_arr)
+    freq_counter = 0.0
+    random.seed(random_seed)
+    while tau < tau_max:
+        # Get seed
+        r_seed = random.randint(0, sys.maxsize)
+        # Update concentrations in place using C function
+        c_tau = SSA_update(c_double(tau), c_double(freq_counter),r_seed, c_int(1),c_int(1), c_int(len(CRS.molecule_list)), c_int(len(constants)), concentrations_ptr, constants_ptr, propensity_ints_ptr, reaction_arr_ptr, catalyst_arr_ptr )
+        # Update Time
+        tau = c_tau
+        # Update random seed
+        random.seed(tau-freq_counter)
+        print(tau)
+        # Output data
+        output_concentrations(concentrations, 'tutorial_data',time = freq_counter)
+        freq_counter += t_out
+    tidy_timeseries(CRS.molecule_list, 'tutorial_data', delete_dat = True)
 
-	return concentrations
+    return concentrations
