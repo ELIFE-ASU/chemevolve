@@ -7,7 +7,7 @@ ChemEvolve provides a standard format to specify chemical reaction systems (incl
 
 Requirements
 ------------
-ChemEvolve requires Python 2.7.x, with `NumPy <http://www.numpy.org/>`_, `pandas <http://pandas.pydata.org/>`_, and both `matplotlib <https://matplotlib.org/>`_ and  `Seaborn <http://seaborn.pydata.org/>`_ for plotting and visualization. 
+ChemEvolve requires Python 3.7.x, with `NumPy <http://www.numpy.org/>`_, `pandas <http://pandas.pydata.org/>`_, and both `matplotlib <https://matplotlib.org/>`_ and  `Seaborn <http://seaborn.pydata.org/>`_ for plotting and visualization. 
 
 
 Installation
